@@ -11,7 +11,7 @@ function Clock() {
   }, []);
   
   return (
-    <div className="text-4xl">
+    <div className="text-4xl font-Do">
       <span id="clock">{time.toLocaleTimeString()}</span>
     </div>
   )

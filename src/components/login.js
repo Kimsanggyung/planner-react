@@ -29,7 +29,7 @@ function Login(){
 
 
   return(
-    <div>
+    <div className="font-Do">
       <input 
         type="text"
         onChange={inputIdChange}
