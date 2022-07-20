@@ -6,7 +6,7 @@ function today(){
     date: date.getDate()
   }
   return (
-    <div className="text-4xl">
+    <div className="text-4xl font-Do">
       <span id="clock">오늘날짜: {getDate.year}년 {getDate.month}월 {getDate.date}일</span>
     </div>
   )

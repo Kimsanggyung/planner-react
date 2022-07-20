@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "Do";
+  src: url("../public/fonts/DoHyeon-Regular.ttf") format("truetype");
+}
