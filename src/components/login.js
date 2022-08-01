@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LoginError from '../parts/loginError'
 
-function Login({signUpState, setSignUpState, loginState, setLoginState}){
+function Login({setSignUpState, loginState, setLoginState}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('')

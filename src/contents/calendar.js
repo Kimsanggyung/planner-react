@@ -15,7 +15,6 @@ function Calendar({loginState, dailyState, weeklyState, monthlyState}){
 
   return (
     <>{selectedCalendar}</>
-    
   )
 }
 
