@@ -19,7 +19,7 @@ function SelectTodo({setTodoState, loginState, addTodoState, setAddTodoState, ch
 
   if(loginState){
     return(
-      <span className="font-jua text-s mr-8 mt-10 flex justify-end">
+      <span className="font-Do text-s mr-8 mt-10 flex justify-end">
         <button onClick={viweAddTodo} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-2">오늘일정추가</button>
         <button onClick={viweCheckTodo} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">전체일정확인</button>
       </span>
