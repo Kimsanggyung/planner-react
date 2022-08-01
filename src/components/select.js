@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import  { stateContext } from "../context/stateContext"
-
-function Select({dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState}){
-  const { loginState } = useContext(stateContext)
+function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState}){
 
   const viweMonth = () => {
     if(weeklyState === true){

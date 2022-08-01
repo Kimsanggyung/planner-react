@@ -1,12 +1,10 @@
-import { useContext, useState } from "react"
+import { useState } from 'react';
 import LoginError from '../parts/loginError'
-import { stateContext } from "../context/stateContext";
 
-function Login({signUpState, setSignUpState}){
+function Login({signUpState, setSignUpState, loginState, setLoginState}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('')
-  const {loginState, setLoginState} = useContext(stateContext)
 
   const userData = [
     {id: 'a', pwd: '123'},
