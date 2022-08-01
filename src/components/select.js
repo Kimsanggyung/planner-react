@@ -44,7 +44,7 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
   if(loginState){
     return(
       <div>
-        <span className="font-jua flex item-center text-white flex flex justify-center text-xl float-left float-right ml-96 mt-6">
+        <span className="font-Do flex item-center text-white flex flex justify-center text-xl float-left float-right ml-96 mt-6">
           <span onClick={viweMonth} className="bg-red-500 hover:bg-green-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
             <button>월간</button>
           </span>
