@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LoginError from '../parts/loginError'
 
-function Login({setSignUpState, loginState, setLoginState}){
+function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('')
@@ -15,6 +15,7 @@ function Login({setSignUpState, loginState, setLoginState}){
 		const findUser = userData.find(user => user.id === inputID && user.pwd === inputPWD)
     if(findUser){
       console.log("성공")
+      setLoggedUser(inputID)
       setLoginState(!loginState)
     }
     else{
