@@ -11,6 +11,7 @@ import { useState } from "react";
 function App(){
   let selectSign = null;
   let selected = null;
+  let now = null;
   const [loginState, setLoginState] = useState(false);
   const [dailyState, setDailyState] = useState(false);
   const [weeklyState, setWeeklyState] = useState(false);
@@ -19,26 +20,36 @@ function App(){
   const [todoState, setTodoState] = useState(false);
   const [addTodoState, setAddTodoState] = useState(false);
   const [checkTodoState, setCheckTodoState] = useState(false);
+  const [loggedUser, setLoggedUser] = useState('')
 
   if(todoState === true){
-    selected = <Todo loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState}/>
+    selected = <Todo loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState}/>
   }else if(todoState === false){
     selected = <Calendar loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState}/>
   };
 
   if(signUpState === true){
     selectSign = <SignUp setSignUpState = {setSignUpState}/>
-  }
-  else if(signUpState === false){
-    selectSign = <Login loginState={loginState} setLoginState={setLoginState} signUpState={signUpState} setSignUpState={setSignUpState} />
+  }else if(signUpState === false){
+    selectSign = <Login setLoggedUser={setLoggedUser} loginState={loginState} setLoginState={setLoginState} signUpState={signUpState} setSignUpState={setSignUpState} />
   };
-  console.log(loginState)
+
+  if(!loginState){
+    now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4">
+    <Today/>
+    <Clock/>
+  </div>
+  }else if(loginState){
+    now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4 float-left">
+    <Today/>
+    <Clock/>
+  </div>
+  }
+
+
   return (
       <>
-        <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4">
-          <Today/>
-          <Clock/>
-        </div>
+        {now}
         <div>
           {selectSign}
         </div>
