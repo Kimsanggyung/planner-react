@@ -1,14 +1,13 @@
 import AddTodo from "../components/addTodo";
 import CheckTodo from "../components/checkTodo";
 
-function Todo({loginState, addTodoState, checkTodoState, loggedUser}){
+function Todo({loginState, addTodoState, checkTodoState, loggedUser, setCheckTodoState, setTodoState}){
   let selectedTodo = null;
-  console.log(loginState, addTodoState, checkTodoState)
   if(loginState && addTodoState){
-    selectedTodo = <AddTodo loggedUser={loggedUser}/>
+    selectedTodo = <AddTodo loggedUser={loggedUser} setTodoState={setTodoState}/>
   }
   else if(loginState && checkTodoState){
-    selectedTodo =  <CheckTodo/>
+    selectedTodo =  <CheckTodo loggedUser={loggedUser} setCheckTodoState={setCheckTodoState}/>
   }
 
   return (
