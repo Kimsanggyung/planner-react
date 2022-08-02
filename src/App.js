@@ -22,9 +22,12 @@ function App(){
   const [addTodoState, setAddTodoState] = useState(false);
   const [checkTodoState, setCheckTodoState] = useState(false);
   const [loggedUser, setLoggedUser] = useState('')
+  const [targetID, setTargetID] =useState('')
+  const [editTodoState, setEditTodoState] = useState(false);
+
 
   if(todoState === true){
-    selected = <Todo  loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState}/>
+    selected = <Todo editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState}/>
   }else if(todoState === false){
     selected = <Calendar loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState}/>
   };
