@@ -6,6 +6,7 @@ import Select from "./components/select";
 import SignUp from "./components/signUp";
 import Todo from "./contents/todo";
 import SelectTodo from "./components/selectTodo";
+import Welcome from "./components/welcome";
 import { useState } from "react";
 
 function App(){
@@ -23,7 +24,7 @@ function App(){
   const [loggedUser, setLoggedUser] = useState('')
 
   if(todoState === true){
-    selected = <Todo loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState}/>
+    selected = <Todo  loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState}/>
   }else if(todoState === false){
     selected = <Calendar loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState}/>
   };
@@ -40,7 +41,8 @@ function App(){
     <Clock/>
   </div>
   }else if(loginState){
-    now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4 float-left">
+    now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-2 pl-4 float-left">
+    <Welcome loggedUser={loggedUser}/>
     <Today/>
     <Clock/>
   </div>
