@@ -11,7 +11,6 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setMonthlyState(true)
-    console.log(monthlyState)
   }
   const viweWeek = () =>{
     if(monthlyState === true){
@@ -24,7 +23,6 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setWeeklyState(true)
-    console.log(weeklyState)
   }
 
   const viweDaily = () => {
@@ -38,7 +36,6 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setDailyState(true)
-    console.log(dailyState)
   }
 
   if(loginState){

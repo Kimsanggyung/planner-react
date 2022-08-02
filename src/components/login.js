@@ -24,9 +24,11 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
     }
     if(inputPWD === ''){
       setError("비밀번호를 입력해주세요")
+      console.log("비밀번호를 입력해주세요")
     }
     if(inputID === ''){
       setError("아이디를 입력해주세요")
+      console.log("아이디를 입력해주세요")
     }
 		return findUser;
 	}

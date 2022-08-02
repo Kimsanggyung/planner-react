@@ -22,7 +22,6 @@ function SignUp({setSignUpState}){
   const submit = () => {
     if(inputPWD !== checkPWD){
       setError("입력하신 비밀번호가 다릅니다.")
-      console.log("error")
     };
     if(checkPWD === ""){
       setError("비밀번호를 한번더 입력해주세요.");
@@ -32,7 +31,6 @@ function SignUp({setSignUpState}){
     }
     if(inputID === ""){
       setError("아이디를 입력해주세요");
-      console.log(error);
     };
     if(inputID !== "" && inputPWD !== "" && checkPWD !== "" && checkPWD === inputPWD){
       console.log('성공');

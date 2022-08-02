@@ -6,7 +6,6 @@ function SelectTodo({setTodoState, loginState, addTodoState, setAddTodoState, ch
     }
     setTodoState(true);
     setAddTodoState(true);
-    console.log("viweAddTodo");
   }
   const viweCheckTodo = () => {
     if(addTodoState === true){
@@ -14,7 +13,6 @@ function SelectTodo({setTodoState, loginState, addTodoState, setAddTodoState, ch
     };
     setTodoState(true);
     setCheckTodoState(true);
-    console.log("viweCheckTodo");
   }
 
   if(loginState){

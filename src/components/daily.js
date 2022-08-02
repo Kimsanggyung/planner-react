@@ -29,7 +29,6 @@ function Daily(){
   const spans =  time.map((data, idx)=>{
     return <div className='mb-4' key={idx}>{data.num}시</div>
   }) 
-  console.log(spans)
   return(
     <div>
       <div className="w-full h-32 bg-blue-400 mt-24 p-6 font-Do">
