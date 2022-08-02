@@ -2,7 +2,7 @@ import AddTodoError from "../parts/addTodoError";
 import { setItem } from '../context/indexed'
 import { useState } from "react";
 
-function AddTodo({loggedUser}){
+function AddTodo({loggedUser, setTodoState}){
   let getDate = new Date();
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
@@ -58,8 +58,9 @@ function AddTodo({loggedUser}){
       console.log("정확한 날짜를 입력해주세요")
     }
     if(selectTime !== "시간선택" && selectTime !== "" && details !== "" && todo !== "" && pattern.test(todayDate)){
-      setError("")
-      setItem({setTodoList})
+      setError("");
+      setItem({setTodoList});
+      setTodoState(false);
     }
   }
 
