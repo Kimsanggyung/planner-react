@@ -13,6 +13,7 @@ function App(){
   let selectSign = null;
   let selected = null;
   let now = null;
+  const [date, setDate] = useState(new Date());
   const [loginState, setLoginState] = useState(false);
   const [dailyState, setDailyState] = useState(false);
   const [weeklyState, setWeeklyState] = useState(false);
@@ -24,12 +25,14 @@ function App(){
   const [loggedUser, setLoggedUser] = useState('')
   const [targetID, setTargetID] =useState('')
   const [editTodoState, setEditTodoState] = useState(false);
+  const [checkDetailState, setCheckDetailState] = useState(false);
+  const [selectedTime, setSelectedTime] = useState("시간선택");
 
 
   if(todoState === true){
-    selected = <Todo editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState}/>
+    selected = <Todo selectedTime={selectedTime} checkDetailState={checkDetailState} setCheckDetailState={setCheckDetailState} editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState}/>
   }else if(todoState === false){
-    selected = <Calendar loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState}/>
+    selected = <Calendar setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState}/>
   };
 
   if(signUpState === true){
@@ -58,8 +61,8 @@ function App(){
         <div>
           {selectSign}
         </div>
-        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState}/>
-        <SelectTodo loginState={loginState} addTodoState={addTodoState} setTodoState={setTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState}/>
+        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState} />
+        <SelectTodo loginState={loginState} addTodoState={addTodoState} setTodoState={setTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} setSelectedTime={setSelectedTime} />
         {selected}
       </>
   )
