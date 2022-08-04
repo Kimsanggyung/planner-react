@@ -1,39 +1,189 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getItem } from "../context/indexed"
+import WeeklyItem from '../parts/weeklyItem';
 
-function Weekly(){
+
+function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
   const [getDate, setGetDate] = useState(new Date());
+  const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
   let week = getDate.getDay();
-
-  let weekStart = new Date(year, month, date - week);
-  let weekEnd = new Date(year, month, date + (6 - week));
-  const time = [
-    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
-  ]
-  const timeLoop =  time.map((data, idx)=>{
-    return <div className="mt-4"key={idx}>  
-      <span>{data.num}시:</span> 
-    </div>
-  })
-
-/*<div className="mt-4">  
-  <span on:click={()=>viweAddTodo(num, {getWeekStart})}>{num}시:</span> 
-  <WeeklyItem data={findWeekData(num, data, "일")} />
-</div>*/
-
 
   const getAddDate = (date, num) => {
     const temp = new Date(date);
     temp.setDate(temp.getDate() + num);
     return temp.getDate();
   }
+
+  let weekStart = new Date(year, month, date - week);
+  let weekMon = new Date(year, month, date - (week-1));
+  let weekTue = new Date(year, month, date - (week-2));
+  let weekWed = new Date(year, month, date - (week-3));
+  let weekThu = new Date(year, month, date - (week-4));
+  let weekFri = new Date(year, month, date - (week-5));
+  let weekEnd = new Date(year, month, date + (week-6));
+  console.log(weekStart.getMonth())
+  console.log(weekMon)
+  console.log(weekTue)
+  console.log(weekWed)
+  console.log(weekThu)
+  console.log(weekFri)
+
+  let sunDate = weekStart.getDate()
   let monDate = getAddDate(weekStart, 1);
   let tueDate = getAddDate(weekStart, 2);
   let wedDate = getAddDate(weekStart, 3);
   let thuDate = getAddDate(weekStart, 4);
   let friDate = getAddDate(weekStart, 5);
+  let setdayDate = weekEnd.getDate()
+  console.log(sunDate)
+  console.log(monDate)
+  console.log(setdayDate)
+
+
+  const time = [
+    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
+  ]
+
+  useEffect(()=>{
+    getItem().then((data)=> setTodoData(data));
+  },[]);
+
+  const viweAddTodo = (num, date) => {
+    setSelectedTime(num);
+    setTodoState(true);
+    setAddTodoState(true)
+    console.log(date)
+    const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate()
+    console.log(selectDate)
+    setAddDate(selectDate)
+  }
+
+  const findWeekData = (time, data, weekStr) => {
+    const weekDataArr = [
+      {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: setdayDate}
+    ];
+    const findWeekDay = weekDataArr.find((data)=>{
+      return data.day === weekStr
+    });
+    const result = data.find(({setTodoList})=>{
+      if (!setTodoList) return false;
+      const {setTime, setDate, setUser} = setTodoList;
+      const dateCheck = (setDate === year+"."+(month)+'.'+(findWeekDay.weekInt)) || (setDate === year+"."+(month-1)+'.'+(findWeekDay.weekInt)) || (time && setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt))
+      return (parseInt(setTime) === time && dateCheck && setUser === loggedUser)
+    });
+    return result;
+  };
+
+  const sunDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const monDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekMon)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "월")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const tueDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekTue)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "화")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const wedDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekWed)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "수")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const thuDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekThu)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "목")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const friDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekFri)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "금")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+  const setDay = time.map((data, idx)=>{
+    return(
+      <div className="mt-4" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
+        {todoData?
+          <>
+            <WeeklyItem getList={findWeekData(data.num, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+          </>
+          :
+          <span>데이터를 불러오는 중입니다.</span>
+        }          
+      </div>
+    )
+  })
+
+
+
 
   const nextWeek = () => {
     const nextDate = (getDate) => {
@@ -67,31 +217,31 @@ function Weekly(){
         <div className="cursor-pointer flex ml-6">
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100 ">{weekStart.getDate()} 일</div>
-            {timeLoop}
+            {sunDay}
           </div>
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100">{monDate} 월</div>
-            {timeLoop}
+            {monDay}
           </div>
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100">{tueDate} 화</div>
-            {timeLoop}
+            {tueDay}
           </div>
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100">{wedDate} 수</div>
-            {timeLoop}
+            {wedDay}
           </div>
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100">{thuDate} 목</div>
-            {timeLoop}
+            {thuDay}
           </div>
           <div className="w-1/4">
             <span className="text-2xl bg-cyan-100">{friDate} 금</span>
-            {timeLoop}
+            {friDay}
           </div>
           <div className="w-1/4">
             <div className="text-2xl bg-cyan-100">{weekEnd.getDate()} 토</div>
-            {timeLoop}
+            {setDay}
           </div>
         </div>
       </div>

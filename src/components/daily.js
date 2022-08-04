@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getItem } from "../context/indexed"
+import DaillyItem from "../parts/dailyItem"
 
-function Daily(){
-  const [date, setDate] = useState(new Date());
+function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState}){
+
+  const [todoData, setTodoData] = useState(null);
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},
     {num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ];
 
+  useEffect(()=>{
+    getItem().then((data)=> setTodoData(data));
+  },[]);
+
+  const viweAddTodo = (num) => {
+    setSelectedTime(num);
+    setTodoState(true);
+    setAddTodoState(true)
+  }
 
   const nextDay = () => {
     const adddDate = (date) => {
@@ -26,9 +38,31 @@ function Daily(){
     }
     return setDate(minusDate(date))
   } 
-  const spans =  time.map((data, idx)=>{
-    return <div className='mb-4' key={idx}>{data.num}시</div>
-  }) 
+
+  const findData = (time, data) => {
+    const result = data.find(({setTodoList})=>{
+      if (!setTodoList) return false;
+      const {setTime, setDate, setUser} = setTodoList;
+      return (parseInt(setTime) === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)
+    })
+    return result;
+  }
+
+  const parts = time.map((data, idx)=>{
+    return( 
+            <div className="text-xl font-Do mb-4 underline cursor-pointer" key={idx}> 
+              <span className='mr-4' onClick={()=>viweAddTodo(data.num)}>{data.num}시:</span>
+              {todoData?
+                <>
+                <DaillyItem getList={findData(data.num, todoData, date.getDate())} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
+                </>
+                :
+                <span>데이터를 불러오는 중입니다.</span>
+              }              
+            </div>
+    )
+  });
+
   return(
     <div>
       <div className="w-full h-32 bg-blue-400 mt-24 p-6 font-Do">
@@ -42,7 +76,7 @@ function Daily(){
 
       <div className="p-6 bg-violet-100">
         <div className="text-xl font-Do mb-4 underline cursor-pointer"> 
-          {spans}
+          {parts}
         </div>
       </div>
 
