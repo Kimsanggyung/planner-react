@@ -80,7 +80,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
   const sunDay = time.map((data, idx)=>{
     return(
       <div className="mt-4" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
+        <span className='mr-2 text-red-500' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
         {todoData?
           <>
             <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
@@ -170,7 +170,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
   const setDay = time.map((data, idx)=>{
     return(
       <div className="mt-4" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
+        <span className='mr-2 text-blue-500' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
         {todoData?
           <>
             <WeeklyItem getList={findWeekData(data.num, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
@@ -216,7 +216,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
       <div className="text-xl w-full bg-sky-100 p-4 font-Do">
         <div className="cursor-pointer flex ml-6">
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100 ">{weekStart.getDate()} 일</div>
+            <div className="text-2xl bg-cyan-100 text-red-500">{weekStart.getDate()} 일</div>
             {sunDay}
           </div>
           <div className="w-1/4">
@@ -240,7 +240,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
             {friDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100">{weekEnd.getDate()} 토</div>
+            <div className="text-2xl bg-cyan-100 text-blue-500">{weekEnd.getDate()} 토</div>
             {setDay}
           </div>
         </div>
