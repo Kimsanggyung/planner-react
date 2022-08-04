@@ -2,17 +2,13 @@ import AddTodoError from "../parts/addTodoError";
 import { setItem } from '../context/indexed'
 import { useState } from "react";
 
-function AddTodo({loggedUser, setTodoState}){
-  let getDate = new Date();
-  let year = getDate.getFullYear();
-  let month = getDate.getMonth()+1;
-  let date = getDate.getDate();
-  const [todayDate, setDate] = useState(year + '.' + month + '.' + date)
+function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDate, setAddDate}){
+ 
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
-  const [selectTime, setTime] = useState('');
   const [error, setError] = useState('')
   const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/
+  console.log(addDate)
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
@@ -21,8 +17,8 @@ function AddTodo({loggedUser, setTodoState}){
   let setTodoList = {
 	  setTodo: todo,
 	  setDetails: details,
-    setDate: todayDate,
-    setTime: selectTime,
+    setDate: addDate,
+    setTime: selectedTime,
     setUser: loggedUser
   }
 
@@ -33,16 +29,17 @@ function AddTodo({loggedUser, setTodoState}){
     setDetails(event.target.value)
   }
 
-  const selectTimeChange = event => {
-    setTime(event.target.value)
+  const selectTimeChange = event => { 
+    setSelectedTime(event.target.value)
   }
   const setTodoDate = event => {
-    setDate(event.target.value)
+    setAddDate(event.target.value)
   }
+
 
 
   const submit = () => {
-    if(selectTime === "시간선택" || selectTime === ""){ 
+    if(selectedTime === "시간선택" || selectedTime === ""){ 
       setError("일정시간을 선택해주세요")
       console.log("일정시간을 선택해주세요")
     }
@@ -53,11 +50,11 @@ function AddTodo({loggedUser, setTodoState}){
     if(todo === ""){
       setError("제목을 입력해주세요")
       console.log("제목을 입력해주세요")
-    }if(!pattern.test(todayDate)){
+    }if(!pattern.test(addDate)){
       setError("정확한 날짜를 입력해주세요")
       console.log("정확한 날짜를 입력해주세요")
     }
-    if(selectTime !== "시간선택" && selectTime !== "" && details !== "" && todo !== "" && pattern.test(todayDate)){
+    if(selectedTime !== "시간선택" && selectedTime !== "" && details !== "" && todo !== "" && pattern.test(addDate)){
       setError("");
       setItem({setTodoList});
       setTodoState(false);
@@ -83,8 +80,8 @@ function AddTodo({loggedUser, setTodoState}){
 
         <div className="mb-8">
           <label>예정일:</label>
-          <input type="text" name="start" onChange={setTodoDate} value={todayDate} className="border border-gray-500 w-24"></input>
-          <select id="time" onChange={selectTimeChange}>
+          <input type="text" name="start" onChange={setTodoDate} value={addDate} className="border border-gray-500 w-24"></input>
+          <select id="time" value={selectedTime} onChange={selectTimeChange}>
             <option value="시간선택">시간선택</option>
             {timeOptions}
           </select>

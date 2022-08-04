@@ -1,4 +1,10 @@
-function SelectTodo({setTodoState, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState}){
+function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState, setAddDate}){
+
+  let getDate = new Date();
+  let year = getDate.getFullYear();
+  let month = getDate.getMonth()+1;
+  let date = getDate.getDate();
+  let today = year + '.' + month + '.' + date;
 
   const viweAddTodo = () => {
     if(checkTodoState === true){
@@ -6,6 +12,8 @@ function SelectTodo({setTodoState, loginState, addTodoState, setAddTodoState, ch
     }
     setTodoState(true);
     setAddTodoState(true);
+    setSelectedTime("시간선택")
+    setAddDate(today)
   }
   const viweCheckTodo = () => {
     if(addTodoState === true){
