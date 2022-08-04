@@ -1,4 +1,10 @@
-function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState}){
+function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState, setAddDate, setDate}){
+
+  let getDate = new Date();
+  let year = getDate.getFullYear();
+  let month = getDate.getMonth()+1;
+  let date = getDate.getDate();
+  let today = year + '.' + month + '.' + date;
 
   const viweMonth = () => {
     if(weeklyState === true){
@@ -11,6 +17,8 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setMonthlyState(true)
+    setAddDate(today)
+    setDate(getDate)
   }
   const viweWeek = () =>{
     if(monthlyState === true){
@@ -23,6 +31,8 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setWeeklyState(true)
+    setAddDate(today)
+    setDate(getDate)
   }
 
   const viweDaily = () => {
@@ -36,6 +46,8 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false)
     }
     setDailyState(true)
+    setAddDate(today)
+    setDate(getDate)
   }
 
   if(loginState){

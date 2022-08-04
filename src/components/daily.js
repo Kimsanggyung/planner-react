@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getItem } from "../context/indexed"
 import DaillyItem from "../parts/dailyItem"
 
-function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState}){
+function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
 
   const [todoData, setTodoData] = useState(null);
 
@@ -27,6 +27,7 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, ta
       result.setDate(result.getDate() + 1);
       return result;
     }
+    setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1))
     return setDate(adddDate(date))
   }
 

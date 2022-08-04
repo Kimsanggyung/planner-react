@@ -62,7 +62,7 @@ function App(){
         <div>
           {selectSign}
         </div>
-        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState} />
+        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState} setAddDate={setAddDate} setDate={setDate}/>
         <SelectTodo loginState={loginState} addTodoState={addTodoState} setTodoState={setTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} setSelectedTime={setSelectedTime} setAddDate={setAddDate}/>
         {selected}
       </>
