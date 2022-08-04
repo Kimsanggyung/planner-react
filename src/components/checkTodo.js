@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {getItem, deleteTodo, } from "../context/indexed"
 
-function CheckTodo({loggedUser, setTodoState, setEditTodoState, setCheckTodoState, setTargetID}){
-  let [getList, setGetList] = useState(null);
+function CheckTodo({loggedUser, setTodoState, setCheckTodoState, setTargetID, setCheckDetailState}){
+  const [getList, setGetList] = useState(null);
 
   useEffect(() => {
 
@@ -11,8 +11,8 @@ function CheckTodo({loggedUser, setTodoState, setEditTodoState, setCheckTodoStat
       setTodoState(false)
     }
 
-    const editMode = (id) =>{
-      setEditTodoState(true)
+    const checkDetail = (id) =>{
+      setCheckDetailState(true)
       setCheckTodoState(false)
       setTargetID(id)
     }
@@ -30,7 +30,7 @@ function CheckTodo({loggedUser, setTodoState, setEditTodoState, setCheckTodoStat
             if(setTodoList.setUser === loggedUser){
               return(
                 <div className="mb-2 pl-4" key={id}>
-                  <div onClick={()=>editMode(id)} className="float-left">
+                  <div onClick={()=>checkDetail(id)} className="float-left">
                     {index+1}. 일자:{setTodoList.setDate} 제목:{setTodoList.setTodo} 내용:{setTodoList.setDetails}
                   </div>
                   <button className="text-red-500" onClick={()=> {cancel(id)}}>X</button>
