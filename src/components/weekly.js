@@ -9,7 +9,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
-  let week = getDate.getDay();
+  let day = getDate.getDay();
 
   const getAddDate = (date, num) => {
     const temp = new Date(date);
@@ -17,14 +17,13 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     return temp.getDate();
   }
 
-  let weekStart = new Date(year, month, date - week);
-  let weekMon = new Date(year, month, date - (week-1));
-  let weekTue = new Date(year, month, date - (week-2));
-  let weekWed = new Date(year, month, date - (week-3));
-  let weekThu = new Date(year, month, date - (week-4));
-  let weekFri = new Date(year, month, date - (week-5));
-  let weekEnd = new Date(year, month, date + (week-6));
-
+  let weekStart = new Date(year, month, date - day);
+  let weekMon = new Date(year, month, date - (day-1));
+  let weekTue = new Date(year, month, date - (day-2));
+  let weekWed = new Date(year, month, date - (day-3));
+  let weekThu = new Date(year, month, date - (day-4));
+  let weekFri = new Date(year, month, date - (day-5));
+  let weekEnd = new Date(year, month, date - (day-6)); 
 
   let sunDate = weekStart.getDate()
   let monDate = getAddDate(weekStart, 1);
@@ -32,7 +31,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   let wedDate = getAddDate(weekStart, 3);
   let thuDate = getAddDate(weekStart, 4);
   let friDate = getAddDate(weekStart, 5);
-  let setdayDate = weekEnd.getDate()
+  let setdayDate = weekEnd.getDate()           
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
@@ -229,7 +228,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
             {friDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100 text-blue-500">{weekEnd.getDate()} 토</div>
+            <div className="text-2xl bg-cyan-100 text-blue-500">{setdayDate} 토</div>
             {setDay}
           </div>
         </div>
