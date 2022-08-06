@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getItem } from "../context/indexed"
 import DaillyItem from "../parts/dailyItem"
 
-function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
+function Daily({date, setDate, setTodoState, setCheckDetailState, setEditTodoState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
 
   const [todoData, setTodoData] = useState(null);
 
@@ -55,7 +55,7 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, loggedUser, ta
               <span className='mr-4' onClick={()=>viweAddTodo(data.num)}>{data.num}시:</span>
               {todoData?
                 <>
-                <DaillyItem getList={findData(data.num, todoData, date.getDate())} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
+                <DaillyItem getList={findData(data.num, todoData, date.getDate())} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
                 </>
                 :
                 <span>데이터를 불러오는 중입니다.</span>
