@@ -14,14 +14,8 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   useEffect(()=>{
 
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
-    console.log(inputID) 
-    console.log(inputPWD)
-    console.log(hashPwd)
 
   },[inputID, inputPWD]);
-  useEffect(()=>{
-    console.log(hashPwd)
-  },[hashPwd])
 
   const checkUser = (id, pwd) => {
 		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd)
@@ -31,20 +25,13 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   const login = () => {
     
     getItem().then(data => {
-      console.log(data.length)
       const indexedUser = data.find(({userData})=>{
         return userData;
       });
-      console.log(indexedUser) 
       if(data.length > 0){
         const checkUserAll = data.find(({userData})=>{
           if(userData){
-            console.log(userData)
             const findIndexedUser = userData.userId === inputID && userData.userPwd === hashPwd;
-            console.log(userData.userPwd)
-            console.log(hashPwd)
-            // console.log(userData.userPwd === hashPwd)
-            console.log(findIndexedUser)
             const findUser = checkUser(inputID, inputPWD);
             return findIndexedUser || findUser;
           }else{
