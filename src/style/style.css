@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&display=swap');
+
+	ul {list-style-type: none;}
+
+	/* Month header */
+	.month {
+		color:black;
+		padding: 70px 25px;
+		width: auto;
+		background: #0ea5e9;
+		text-align: center;
+		margin-top: 100px;
+    font-family: 'Do Hyeon', sans-serif;
+	}
+
+	/* Month list */
+	.month ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	.month ul li {
+		color: white;
+		font-size: 20px;
+		text-transform: uppercase;
+		letter-spacing: 3px;
+	}
+
+	/* Previous button inside month header */
+	.month .prev {
+		float: left;
+		padding-top: 10px;
+		cursor: pointer;
+	}
+
+	/* Next button */
+	.month .next {
+		float: right;
+		padding-top: 10px;
+		cursor: pointer;
+	}
+
+	/* Weekdays (Mon-Sun) */
+	.weekdays {
+		font-family: 'Do Hyeon', sans-serif;
+		margin: 0;
+		padding: 10px 0;
+		background-color:#e0f2fe;
+	}
+
+	.weekdays li {
+		display: inline-block;
+		width: 13.6%;
+		color: #666;
+		text-align: center;
+	}
+
+	/* Days (1-31) */
+	.days {
+		font-family: 'Do Hyeon', sans-serif;
+		padding: 10px 0;
+		width: auto;
+		background: #cffafe;
+		margin: 0;
+	}
+	.days li {
+		list-style-type: none;
+		display: inline-block;
+		border: 1px solid black;
+		padding: 9px;
+		width: 13.7%;
+		height: 84px;
+		text-align: center;
+		margin-top: 6px;
+		margin-bottom: 0px;
+		margin-left: 6px;
+		font-size: 1.2rem;
+		color: #777;
+		cursor: pointer;
+	}
+
+	.dateList{
+		text-decoration: underline;
+	}
+
+	/* Highlight the "current" day */
+	.active {
+		padding: 5px;
+		background: #0ea5e9;
+		color: white !important
+	}
+
+  #suuu{
+    font-size: 16px;
+  }
