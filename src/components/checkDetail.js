@@ -15,11 +15,6 @@ function CheckDetail({targetID, setTargetID, setCheckDetailState, setTodoState, 
     return data;
   })
 
-  console.log(date)
-  console.log(todo)
-  console.log(time)
-  console.log(detail)
-
   const editMode = (id) =>{
     setCheckDetailState(false);
     setEditTodoState(true);

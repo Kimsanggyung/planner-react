@@ -5,7 +5,6 @@ import CheckDetail from "../components/checkDetail";
 
 function Todo({selectedTime,editTodoState, addDate, setSelectedTime, setEditTodoState, targetID, setTargetID, loginState, addTodoState, checkTodoState, loggedUser, setCheckTodoState, setTodoState, checkDetailState ,setCheckDetailState}){
   let selectedTodo = null;
-  console.log(checkDetailState)
   if(loginState && addTodoState){
     selectedTodo = <AddTodo selectedTime={selectedTime} setSelectedTime={setSelectedTime} loggedUser={loggedUser} setTodoState={setTodoState} addDate={addDate}/>
   }else if(loginState && checkTodoState){

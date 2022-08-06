@@ -24,12 +24,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
   let weekThu = new Date(year, month, date - (week-4));
   let weekFri = new Date(year, month, date - (week-5));
   let weekEnd = new Date(year, month, date + (week-6));
-  console.log(weekStart.getMonth())
-  console.log(weekMon)
-  console.log(weekTue)
-  console.log(weekWed)
-  console.log(weekThu)
-  console.log(weekFri)
+
 
   let sunDate = weekStart.getDate()
   let monDate = getAddDate(weekStart, 1);
@@ -38,10 +33,6 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
   let thuDate = getAddDate(weekStart, 4);
   let friDate = getAddDate(weekStart, 5);
   let setdayDate = weekEnd.getDate()
-  console.log(sunDate)
-  console.log(monDate)
-  console.log(setdayDate)
-
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
@@ -55,9 +46,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
     setSelectedTime(num);
     setTodoState(true);
     setAddTodoState(true)
-    console.log(date)
     const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate()
-    console.log(selectDate)
     setAddDate(selectDate)
   }
 
