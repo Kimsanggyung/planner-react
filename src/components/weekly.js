@@ -3,7 +3,7 @@ import { getItem } from "../context/indexed"
 import WeeklyItem from '../parts/weeklyItem';
 
 
-function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
+function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setEditTodoState}){
   const [getDate, setGetDate] = useState(new Date());
   const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
@@ -72,7 +72,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
         <span className='mr-2 text-red-500' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -87,7 +87,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekMon)}>{data.num}시:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "월")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.num, todoData, "월")} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -102,7 +102,7 @@ function Weekly({setTodoState, setCheckDetailState, loggedUser, targetID, setSel
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekTue)}>{data.num}시:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "화")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.num, todoData, "화")} targetID={targetID} setEditTodoState={setEditTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>

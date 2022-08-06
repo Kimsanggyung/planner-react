@@ -4,7 +4,7 @@ import '../style/style.css'
 
 
 
-function Monthly({ setAddTodoState, setSelectedTime, loggedUser, setTodoState, date, setDate, setTargetID, setCheckDetailState, setAddDate}){
+function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate}){
 
   const getDate = new Date();
 	const today = {
@@ -52,6 +52,7 @@ function Monthly({ setAddTodoState, setSelectedTime, loggedUser, setTodoState, d
     setAddDate(year+"."+(monthIndex+1)+"."+selectDate)
     setTodoState(true)
     setAddTodoState(true)
+    setSelectedTime("시간선택")
   }
 
   const items = []
@@ -70,7 +71,7 @@ function Monthly({ setAddTodoState, setSelectedTime, loggedUser, setTodoState, d
     :
       <li className={classActive} key={i}>
         <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-        <MonthlyItem month={month} loggedUser={loggedUser} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+        <MonthlyItem month={month} loggedUser={loggedUser} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
       </li>
 
     items.push(

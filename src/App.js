@@ -33,7 +33,7 @@ function App(){
   if(todoState === true){
     selected = <Todo selectedTime={selectedTime} setSelectedTime={setSelectedTime} checkDetailState={checkDetailState} setCheckDetailState={setCheckDetailState} editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState} addDate={addDate} setAddDate={setAddDate}/>
   }else if(todoState === false){
-    selected = <Calendar setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} setAddDate={setAddDate} setEditTodoState={setEditTodoState}/>
+    selected = <Calendar setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} setAddDate={setAddDate} setEditTodoState={setEditTodoState} setCheckTodoState={setCheckTodoState}/>
   };
 
   if(signUpState === true){

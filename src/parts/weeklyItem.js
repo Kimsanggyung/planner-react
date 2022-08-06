@@ -1,11 +1,13 @@
-function WeeklyItem({getList, setTargetID, setTodoState, setCheckDetailState, setAddTodoState}){
+function WeeklyItem({getList, setTargetID, setTodoState, setCheckDetailState, setEditTodoState, setCheckTodoState, setAddTodoState}){
 
   const viweDetails = (id) => {
     if(getList){
-      setTargetID(id)
-      setTodoState(true)
-      setCheckDetailState(true)
-      setAddTodoState(false)
+      setTargetID(id);
+      setTodoState(true);
+      setCheckDetailState(true);
+      setAddTodoState(false);
+      setCheckTodoState(false);
+      setEditTodoState(false);
     }
   }
 

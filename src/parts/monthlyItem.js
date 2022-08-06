@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getItem } from "../context/indexed"
 
 
-function MonthlyItem({getDate, setTargetID, setTodoState, setCheckDetailState, setAddTodoState, loggedUser}){
+function MonthlyItem({getDate, setTargetID, setCheckTodoState, setTodoState, setCheckDetailState, setAddTodoState, loggedUser}){
 
   const [todoData, setTodoData] =useState(null);
   
@@ -22,10 +22,11 @@ function MonthlyItem({getDate, setTargetID, setTodoState, setCheckDetailState, s
 
   const viweDetails = (id) => {
     if(todoData){
-      setTargetID(id)
-      setTodoState(true)
-      setCheckDetailState(true)
-      setAddTodoState(false)
+      setTargetID(id);
+      setTodoState(true);
+      setCheckDetailState(true);
+      setAddTodoState(false);
+      setCheckTodoState(false);
     }
   }
 

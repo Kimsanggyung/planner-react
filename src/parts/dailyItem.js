@@ -1,4 +1,4 @@
-function DaillyItem({getList, setTargetID, setTodoState, setCheckDetailState, setEditTodoState, setAddTodoState}){
+function DaillyItem({getList, setTargetID, setCheckTodoState, setTodoState, setCheckDetailState, setEditTodoState, setAddTodoState}){
 
   const viweDetails = (id) => {
     if(getList){
@@ -7,6 +7,7 @@ function DaillyItem({getList, setTargetID, setTodoState, setCheckDetailState, se
       setCheckDetailState(true)
       setAddTodoState(false)
       setEditTodoState(false)
+      setCheckTodoState(false)
     }
   }
 
