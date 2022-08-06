@@ -8,7 +8,6 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   const [details, setDetails] = useState('');
   const [error, setError] = useState('')
   const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/
-  console.log(addDate)
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
@@ -61,6 +60,10 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
     }
   }
 
+  const cancel = () => {
+    setTodoState(false);
+  }
+
   const timeOptions =  time.map((data, idx)=>{
     return <option value={data.num} key={idx}>{data.num}시</option>
   })
@@ -90,7 +93,8 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
           <AddTodoError error = {error}/>
         </div>
         <div>
-          <button onClick={submit}>등록</button>
+          <button onClick={submit} className="text-blue-500">등록</button>
+          <button onClick={cancel} className="ml-2 text-red-500">취소</button>
         </div>
       </div>
     </div>
