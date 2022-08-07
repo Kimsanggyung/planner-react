@@ -53,13 +53,14 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     const weekDataArr = [
       {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: setdayDate}
     ];
-    const findWeekDay = weekDataArr.find((data)=>{
-      return data.day === weekStr
+    const findWeekDay = weekDataArr.find((weekData)=>{
+      return weekData.day === weekStr
     });
+    console.log(findWeekDay)
     const result = data.find(({setTodoList})=>{
       if (!setTodoList) return false;
       const {setTime, setDate, setUser} = setTodoList;
-      const dateCheck = (setDate === year+"."+(month)+'.'+(findWeekDay.weekInt)) || (setDate === year+"."+(month-1)+'.'+(findWeekDay.weekInt)) || (time && setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt))
+      const dateCheck = setDate === year+"."+(month)+'.'+(findWeekDay.weekInt)
       return (parseInt(setTime) === time && dateCheck && setUser === loggedUser)
     });
     return result;
