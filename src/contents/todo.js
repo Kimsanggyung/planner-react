@@ -3,10 +3,10 @@ import CheckTodo from "../components/checkTodo";
 import EditTodo from "../components/editTodo";
 import CheckDetail from "../components/checkDetail";
 
-function Todo({selectedTime,editTodoState, addDate, setSelectedTime, setEditTodoState, targetID, setTargetID, loginState, addTodoState, checkTodoState, loggedUser, setCheckTodoState, setTodoState, checkDetailState ,setCheckDetailState}){
+function Todo({selectedTime, setAddDate, editTodoState, addDate, setSelectedTime, setEditTodoState, targetID, setTargetID, loginState, addTodoState, checkTodoState, loggedUser, setCheckTodoState, setTodoState, checkDetailState ,setCheckDetailState}){
   let selectedTodo = null;
   if(loginState && addTodoState){
-    selectedTodo = <AddTodo selectedTime={selectedTime} setSelectedTime={setSelectedTime} loggedUser={loggedUser} setTodoState={setTodoState} addDate={addDate}/>
+    selectedTodo = <AddTodo setAddDate={setAddDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} loggedUser={loggedUser} setTodoState={setTodoState} addDate={addDate}/>
   }else if(loginState && checkTodoState){
     selectedTodo =  <CheckTodo loggedUser={loggedUser} setEditTodoState={setEditTodoState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState}/>
   }else if(loginState && editTodoState){
