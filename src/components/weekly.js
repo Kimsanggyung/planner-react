@@ -56,7 +56,6 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     const findWeekDay = weekDataArr.find((weekData)=>{
       return weekData.day === weekStr
     });
-    console.log(findWeekDay)
     const result = data.find(({setTodoList})=>{
       if (!setTodoList) return false;
       const {setTime, setDate, setUser} = setTodoList;

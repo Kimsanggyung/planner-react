@@ -86,8 +86,6 @@ function EditTodo({targetID, loggedUser, setTodoState}){
     setTodoState(false)
   } 
 
-  console.log(selectTime)
-
   return(
     <div className="flex items-center flex justify-center mt-32 font-Do">
       <div className="bg-slate-50 w-full h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">

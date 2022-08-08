@@ -18,25 +18,18 @@ function SignUp({setSignUpState}){
 
   useEffect(()=>{
 
-    const test = 'qwerqwer12'
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
-    console.log(CryptoJS.MD5(test+saltKey).toString())
 
     setUserData({
       userId: inputID,
       userPwd: hashPwd
     })
-    console.log(inputID)
-    console.log(inputPWD)
-    console.log(hashPwd)
-    console.log(userData)
+    
   }, [inputID,hashPwd])
 
   useEffect(()=>{
     
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
-
-    console.log(hashPwd)
   
   }, [inputPWD])
 
