@@ -1,6 +1,7 @@
 import MonthlyItem from "../parts/monthlyItem";
 import { useState, useEffect } from "react";
-import '../style/style.css'
+import '../style/style.css';
+import { getItem } from "../context/indexed";
 
 
 
@@ -19,7 +20,8 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
   const [month, setMonth] = useState(monthNames[monthIndex])
   const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay())
   const [numberOfDays, setNumberOfDays] = useState(new Date(year, monthIndex+1, 0).getDate());
-  const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex)
+  const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
+  const [todoData, setTodoData] = useState(null);
 
   useEffect(() => {
     setMonth(monthNames[monthIndex]);
@@ -35,6 +37,10 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
     setCalendarCellsQty(numberOfDays + firstDayIndex);
 
   }, [firstDayIndex, numberOfDays])
+
+  useEffect(()=>{
+    getItem().then((data)=> setTodoData(data));
+  },[]);
 	
 	const goToNextMonth = () => {
 		if (monthIndex >= 11) {
@@ -60,25 +66,35 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
     setSelectedTime("시간선택")
   }
 
+  const findData = (data, i) => {
+    const result = data.find(({setTodoList})=>{
+      if (!setTodoList) return false;
+      const {setDate, setUser} = setTodoList;
+      return (setDate === year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1) && setUser === loggedUser)
+    })
+    return result;
+  }
+
   const items = []
 
   for(let i = 0; i <= calendarCellsQty; i++){
     const noting = i < firstDayIndex || i >= numberOfDays+firstDayIndex;
     let isActive = i === today.dayNumber+(firstDayIndex-1) && monthIndex === today.month && year === today.year;
     let classActive = isActive ? 'active' : '';
-    const test =
-      noting? 
-      <li key={i}>
-        <div>&nbsp;</div>
-        <div className="w-48 h-7 overflow-hidden"></div>
-        <div></div>
-      </li>
-    :
-      <li className={classActive} key={i}>
-        <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-        <MonthlyItem month={month} loggedUser={loggedUser} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
-      </li>
-
+    let test;
+    if(noting){
+      test =  <li key={i}>
+                <div>&nbsp;</div>
+                <div className="w-48 h-7 overflow-hidden"></div>
+                <div></div>
+              </li>
+    }else if(todoData){
+      test =  <li className={classActive} key={i}>
+                <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
+                <MonthlyItem month={month} getList={findData(todoData, i)} loggedUser={loggedUser} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+              </li>
+    } 
+ 
     items.push(
       test
     )
