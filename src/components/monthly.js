@@ -25,11 +25,16 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
     setMonth(monthNames[monthIndex]);
     setFirstDayIndex(new Date(year, monthIndex, 1).getDay());
     setNumberOfDays(new Date(year, monthIndex+1, 0).getDate());
-    setCalendarCellsQty(numberOfDays + firstDayIndex);
-
+    
     console.log(`${month}, ${today.dayNumber}, ${year}, FIRST DAY index is ${firstDayIndex}, MONTH index is ${monthIndex}, No. of days: ${numberOfDays}`)
 
   },[monthIndex]);
+  
+  useEffect(()=>{
+
+    setCalendarCellsQty(numberOfDays + firstDayIndex);
+
+  }, [firstDayIndex, numberOfDays])
 	
 	const goToNextMonth = () => {
 		if (monthIndex >= 11) {
@@ -57,7 +62,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
 
   const items = []
 
-  for(let i = 0; i < calendarCellsQty; i++){
+  for(let i = 0; i <= calendarCellsQty; i++){
     const noting = i < firstDayIndex || i >= numberOfDays+firstDayIndex;
     let isActive = i === today.dayNumber+(firstDayIndex-1) && monthIndex === today.month && year === today.year;
     let classActive = isActive ? 'active' : '';
