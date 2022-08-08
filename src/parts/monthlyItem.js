@@ -1,4 +1,4 @@
-function MonthlyItem({getList, setTargetID, setCheckTodoState, setTodoState, setCheckDetailState, setAddTodoState, loggedUser}){
+function MonthlyItem({getList, setTargetID, setCheckTodoState, setTodoState, setCheckDetailState, setAddTodoState}){
     
   const viweDetails = (id) => {
     if(getList){
