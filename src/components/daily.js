@@ -55,7 +55,7 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
               <span className='mr-4' onClick={()=>viweAddTodo(data.num)}>{data.num}시:</span>
               {todoData?
                 <>
-                <DaillyItem getList={findData(data.num, todoData, date.getDate())} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
+                <DaillyItem getList={findData(data.num, todoData)} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
                 </>
                 :
                 <span>데이터를 불러오는 중입니다.</span>
