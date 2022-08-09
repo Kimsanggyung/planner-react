@@ -52,8 +52,6 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     setSelectDate(date.getDate());
   }
 
-  console.log(month)
-
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
     const weekDataArr = [ // 일주일 날짜 배열
       {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: setdayDate}
