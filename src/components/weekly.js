@@ -7,14 +7,14 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   const [getDate, setGetDate] = useState(new Date());
   const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
-  let month = getDate.getMonth()+1;
+  let month = getDate.getMonth();
   let date = getDate.getDate();
   let day = getDate.getDay();
 
-  const getAddDate = (date, num) => {
-    const temp = new Date(date);
-    temp.setDate(temp.getDate() + num);
-    return temp.getDate();
+  const getAddDate = (date, num) => { // 이번주날짜를 계산하기 위한 함수
+    const temp = new Date(date); // parameter로 받아온 date를 계산할 날짜로
+    temp.setDate(temp.getDate() + num); // parameter로 받아온 숫자를 더해 날짜 계산
+    return temp.getDate(); // 계산한 날짜 반환
   }
 
   let weekStart = new Date(year, month, date - day); // 일요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스만큼을 벤다
@@ -31,7 +31,11 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   let wedDate = getAddDate(weekStart, 3); // 수요일 날짜는 이번주 시작하는 날짜에서 사흘 뒤
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
-  let setdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜           
+  let setdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
+
+  console.log(month,"month")
+  console.log(weekStart.getMonth(),"weekStart Month")
+  console.log(weekWed.getMonth(),"weekWed Month")
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
@@ -48,7 +52,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     setAddTodoState(true); // 일정추가 컴포넌트를 실행시키기 위해서 addTodoState를 참으로
     setAddDate(selectDate); // 선택 날짜를 클릭한 날짜로 세팅
     setSelectYear(date.getFullYear());
-    setSelectMonth(date.getMonth());
+    setSelectMonth(date.getMonth()+1);
     setSelectDate(date.getDate());
   }
 
@@ -199,7 +203,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
         <div className="font-Do flex item-center flex justify-center text-xl  float-none">{year}년</div>
         <div className="font-Do flex item-center flex justify-center text-xl mt-2 ">
           <button onClick={prevWeek} className="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
-          <span className="text-xl font-bolds ml-4 mr-4">{weekStart.getMonth()}.{weekStart.getDate()}~{weekEnd.getMonth()}.{weekEnd.getDate()}</span>
+          <span className="text-xl font-bolds ml-4 mr-4">{weekStart.getMonth()+1}.{weekStart.getDate()}~{weekEnd.getMonth()+1}.{weekEnd.getDate()}</span>
           <button onClick={nextWeek} className="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
         </div>
       </div>
