@@ -5,7 +5,7 @@ import { getItem } from "../context/indexed";
 
 
 
-function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate}){
+function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate}){
 
   const getDate = new Date();
 	const today = {
@@ -91,7 +91,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, loggedUs
     }else if(todoData){
       test =  <li className={classActive} key={i}>
                 <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-                <MonthlyItem month={month} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+                <MonthlyItem month={month} setEditTodoState={setEditTodoState} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
               </li>
     } 
  

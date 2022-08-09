@@ -13,117 +13,111 @@ function SignUp({setSignUpState}){
   const [userData, setUserData] = useState(OuserData)
   const [hashPwd, setHashPwd] = useState(null);
   const [checked, setChecked] = useState('');
-  const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+  const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
   let saltKey = "nuguseyo"
 
-  useEffect(()=>{
+  useEffect(()=>{ // inputPWD가 변경될 때 마다 실행
+     
+    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
+  
+  }, [inputPWD]);
 
-    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
+  useEffect(()=>{ // inputID hashPwd가 변경될 때 마다 실행
 
-    setUserData({
+    setUserData({ //userData 세팅
       userId: inputID,
       userPwd: hashPwd
     })
     
-  }, [inputID,hashPwd])
-
-  useEffect(()=>{
-    
-    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
-  
-  }, [inputPWD])
+  }, [inputID, hashPwd]);
 
   
 
-  const checkUser = (id) => {
-		const findUser = OuserData.find(user => user.id === id)
+  const checkUser = (id) => { //기존유저 아이디중 같은게 있는지 확인하는 함수
+		const findUser = OuserData.find(user => user.id === id); // parameter로 받아온 id로 같은게 있는지 확인
 		return findUser;
-	}
+	};
 
-  const inputIdChange = event => {
-    setInputID(event.target.value);
-
+  const inputIdChange = event => { 
+    setInputID(event.target.value); // 아이디 입력창에 입력을 하는 등 이벤트가 발생하면 setInputID
   };
   const inputPwdChange = event => {
-    setInputPWD(event.target.value);
+    setInputPWD(event.target.value); // 비밀번호 입력창에 입력을 하는 등 이벤트가 발생하면 setInputPWD
   };
-
   const checkPwdChange = event => {
-    setCheckPWD(event.target.value);
+    setCheckPWD(event.target.value); // 비밀번호확인 입력창에 입력을 하는 등 이벤트가 발생하면 setCheckPWD
   };
 
-  const submit = () => {
-    if(checkState === false){
-      setError("아이디 중복확인을 해주세요.");
-    }
-    if(inputID === null){
-      setError("아이디를 입력해 주세요.");
-    }
-    if(!password.test(inputPWD)){
-      setError("비밀변호는 최소 8 자, 최소 하나의 문자 및 하나의 숫자를 포함하고 있어야합니다");
-    }
-    if(checkPWD === null){
-      setError("비밀번호를 한번더 입력해주세요.");
-    }
-    if(inputPWD !== checkPWD){
-      setError("입력하신 비밀번호가 다릅니다.")
-      console.log("error")
-    }
-    if(inputID !== null && inputPWD !== null && inputPWD !== null && checkPWD === inputPWD && password.test(inputPWD) && checkState === true){
-      setItem({userData})
-      console.log('성공')
-      setSignUpState(false);
-    }
-  }
-
-  const cancel = () => {
-    setSignUpState(false)
-  }
-
-  const checkId = () => {
-    getItem().then(data => {
-      const indexedUser = data.find(({userData})=>{
+  const checkId = () => { //종복아이디 확인 버튼 함수
+    getItem().then(data => { //indexedDB에서 데이터 가져오기
+      const indexedUser = data.find(({userData})=>{ //indexedDB를 통해 회원 가입을 한 사용자가 있는지 확인
         return userData;
       });
-      if(data.length > 0){
+      if(data.length > 0){ // indexedDB에 저장된 데이터가 있으면
         // 이미 사용중인 아이디인지 체크
-        const checkSameId = data.find(({userData}) => {
-          if(userData){
-            const checkInputId = userData.userId === inputID
-            const findId = checkUser(inputID);
-            return checkInputId || findId
-          }else{
-            return false
+        const checkSameId = data.find(({userData}) => { // indexedDB를 통해 회원 가입을 한 사용자를 찾는다
+          if(userData){ //indexedDB를 통해 회원 가입을 한 사용자기 있다면
+            const checkInputId = userData.userId === inputID; // indexedDB에 기존사용자 아이디 중에 같은게 있는지 확인
+            const findId = checkUser(inputID); // 메모리에 저징된 사용지 아이디 중에 같은게 있는지 확인
+            return checkInputId || findId // 둘중하나라도 있으면 반환
+          }else{ // 둘다 없다면
+            return false // false반환
           }
         });
 
-        if(checkSameId){
-          setError("이미사용되고있는 아이디입니다.");
-          console.log("이미사용되고있는 아이디입니다.")
-          setChecked('')
-          setCheckState(false)      
-        } else {
-          setError("");
-          setChecked("사용가능한 아이디입니다.")
-          setCheckState(true);
+        if(checkSameId){ // 이미사용되고 있는 아이디라면
+          setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
+          console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
+          setChecked('') // 사용가능 여부 메시지를 빈칸으로
+          setCheckState(false) // 회원가입이 안되도록 checkState를 false로     
+        } else { //같은게 없다면
+          setError(""); // 에러메시지 없애기
+          setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
+          setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
         }
       }
-      if(data.length === 0 || indexedUser ===undefined){
-        const findId = checkUser(inputID);
-        if(findId){
-          setError("이미사용되고있는 아이디입니다.");
-          console.log("이미사용되고있는 아이디입니다.");
-          setChecked('')
-          setCheckState(false);
+      if(data.length === 0 || indexedUser === undefined){ // indexedDB에 저장된 데이터가 없거나 indexedDB를 통해 회원 가입한 사용자가 없으면
+        const findId = checkUser(inputID); // 메모리에 저장된 사용자 아이디 중에 같은게 있는지 체크
+        if(findId){ // 같은게 있다면
+          setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
+          console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
+          setChecked('') // 사용가능 여부 메시지를 빈칸으로
+          setCheckState(false); //회원가입이 안되도록 checkState를 false로     
         }else{
-          setError("");
-          setChecked("사용가능한 아이디입니다.")
-          setCheckState(true);
+          setError(""); // 에러메시지 없애기
+          setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
+          setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
         }
       }
     })
   }
 
+  const submit = () => { //등록 버튼 함수
+    if(checkState === false){ //중복확인을 하지않았다면
+      setError("아이디 중복확인을 해주세요."); // 에러메시지 세팅
+    }
+    if(inputID === null){ // 아이디를 입력하지 않았다면
+      setError("아이디를 입력해 주세요."); // 에러메시지 세팅
+    }
+    if(!password.test(inputPWD)){ // 비밀번호가 10자리이상에 슷자나 문자를 포함하지 않았다면
+      setError("비밀변호는 최소 8 자, 최소 하나의 문자 및 하나의 숫자를 포함하고 있어야합니다"); // 에러메시지 세팅
+    }
+    if(checkPWD === null){ // 비밀번호 확인 창에 입력을 하지 않았다면
+      setError("비밀번호를 한번더 입력해주세요."); //에러 메시지 세팅
+    }
+    if(inputPWD !== checkPWD){ // 입력한 비밀번호와 비밀번호확인이 서로 다르면
+      setError("입력하신 비밀번호가 다릅니다."); // 에러메시지 세팅
+    }
+    if(inputID !== null && inputPWD !== null && inputPWD !== null && checkPWD === inputPWD && password.test(inputPWD) && checkState === true){ // 입력창에 모두 비어있지 않고 중복확인을 하고 입력한 비밀번호와 비밀번호 확인이 같다면
+      setItem({userData}); // indexedDB에 userData 저장
+      console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
+      setSignUpState(false); // 로그인화면이 보이도록 singUpState를 false로
+    }
+  }
+
+  const cancel = () => { // 취소버튼 함수
+    setSignUpState(false); //회원 가입을 취소하고 로그인화면을 보여주기 위해 signUpState를 false로
+  }
 
   return(
     <div className="flex items-center flex justify-center mt-48 font-Do">

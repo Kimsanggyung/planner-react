@@ -11,67 +11,66 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   const [hashPwd, setHashPwd] =useState('');
   const saltKey = 'nuguseyo'
 
-  useEffect(()=>{
+  useEffect(()=>{// inputID inputPWD가 변경될 때 마다 실행
 
-    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString());
+    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); //inputPWD saltKey를 합쳐서 hash처리
 
   },[inputID, inputPWD]);
 
-  const checkUser = (id, pwd) => {
-		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd)
-		return findUser;
+  const checkUser = (id, pwd) => { // 원하는 유저 찾기
+		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); //OuserData에 아이디 비밀번호 입력한 아이디 비밀번호 비교
+		return findUser; // 비교한값 반환
 	}
  
-  const login = () => {
-    
-    getItem().then(data => {
-      const indexedUser = data.find(({userData})=>{
+  const login = () => {// 로그인 함수
+    getItem().then(data => { // indexedDB에서 데이터 가져옴
+      const indexedUser = data.find(({userData})=>{ // indexedDB을 사용해서 로그인하는 유저가 있는지 체크하기 위함
         return userData;
-      });
-      if(data.length > 0){
-        const checkUserAll = data.find(({userData})=>{
-          if(userData){
-            const findIndexedUser = userData.userId === inputID && userData.userPwd === hashPwd;
-            const findUser = checkUser(inputID, inputPWD);
-            return findIndexedUser || findUser;
-          }else{
-            return false;
+      }); 
+      if(data.length > 0){ // data 배열을 길이가 0보다 크면
+        const checkUserAll = data.find(({userData})=>{ //indexedDB에서 userData 찾기
+          if(userData){// userData가 있다면 
+            const findIndexedUser = userData.userId === inputID && userData.userPwd === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
+            const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
+            return findIndexedUser || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
+          }else{ // 조건에 맞지 않은면
+            return false; // 거짓이라고 반환
           }
         }); 
-        if(inputPWD === ""){
-          setError("비밀번호를 입력해주세요");
-          console.log("비밀번호를 입력해주세요")
+        if(inputPWD === ""){ //아이디 입력창이 비어있다면
+          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
+          console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
         }
-        if(inputID === ""){
-          setError("아이디를 입력해주세요")
-          console.log("아이디를 입력해주세요")
+        if(inputID === ""){ //비밀번호 입력창이 비어있다면
+          setError("아이디를 입력해주세요"); //에러메시지 세팅
+          console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
         }
-        if(inputID !== "" && inputPWD !== ""){
-          if(checkUserAll){
-            setLoggedUser(inputID)
-            setLoginState(!loginState)
-          }else{
-            setError("아이디 또는 비밀번호를 확인해주세요")
-            console.log("틀림")
+        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
+          if(checkUserAll){ //checkUserAll가 참이면
+            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
+            setLoginState(true); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+          }else{//조건이 맞지 않으면
+            setError("아이디 또는 비밀번호를 확인해주세요") //에러메시지 세팅
+            console.log("틀림") // 콘솔로그에 에러보여주기
           }
         }
-      }if(data.length === 0 || indexedUser === undefined){
-        const findUser = checkUser(inputID, inputPWD);
-        if(inputPWD === ""){
-          setError("비밀번호를 입력해주세요");
-          console.log("비밀번호를 입력해주세요")
+      }if(data.length === 0 || indexedUser === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
+        const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
+        if(inputPWD === ""){ //아이디 입력창이 비어있다면
+          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
+          console.log("비밀번호를 입력해주세요")  //콘솔로그에 에러보여주기
         }
-        if(inputID === ""){
-          setError("아이디를 입력해주세요")
-          console.log("아이디를 입력해주세요")
+        if(inputID === ""){ //비밀번호 입력창이 비어있다면
+          setError("아이디를 입력해주세요"); //에러메시지 세팅
+          console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
         }
-        if(inputID !== "" && inputPWD !== ""){
-          if(findUser){
-            setLoggedUser(inputID)
-            setLoginState(!loginState)
-          }else{
-            setError("아이디 또는 비밀번호를 확인해주세요")
-            console.log("틀림")
+        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
+          if(findUser){ //findUser가 참이면
+            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
+            setLoginState(true); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+          }else{//조건이 맞지 않으면
+            setError("아이디 또는 비밀번호를 확인해주세요") //에러메시지 세팅
+            console.log("틀림") // 콘솔로그에 에러보여주기
           }
         }
       }
@@ -80,16 +79,16 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
 
 
 
-  const inputIdChange = event => {
+  const inputIdChange = event => { // 아이디 입력창에 입력을 하는 등 이벤트가 발생하면 setInputID
     setInputID(event.target.value)
 
   }
-  const inputPwdChange = event => {
+  const inputPwdChange = event => { // 비밀번호 입력창에 입력을 하는 등 이벤트가 발생하면 setInputPWD
     setInputPWD(event.target.value)
   } 
 
-  const signUp = () => {
-    setSignUpState(true)
+  const signUp = () => { // 회원가입 버튼 함수
+    setSignUpState(true); // 회원 가입 화면을 보여주기 위해 signUpState를 ture로
   }
 
   if(!loginState){

@@ -7,22 +7,22 @@ function CheckDetail({targetID, setTargetID, setCheckDetailState, setTodoState, 
   const [time, setTime] = useState('');
   const [detail, setDetail] = useState('');
 
-  getItem(targetID).then(data => {
-    setDate(data.setTodoList.setDate);
-    setTodo(data.setTodoList.setTodo);
-    setDetail(data.setTodoList.setDetails);
-    setTime(data.setTodoList.setTime);
+  getItem(targetID).then(data => { //indexedDB에서 props로 받은 아이디로 데이터 가져오기
+    setDate(data.setTodoList.setDate); //data에 있는 setDate로 date 세팅
+    setTodo(data.setTodoList.setTodo); //data에 있는 setTodo로 todo 세팅
+    setDetail(data.setTodoList.setDetails); // data에 있는 setDetail로 detail 세팅
+    setTime(data.setTodoList.setTime); // data에 있는 setTime로 time 세팅
     return data;
   })
 
-  const editMode = (id) =>{
-    setCheckDetailState(false);
-    setEditTodoState(true);
-    setTargetID(id);
+  const editMode = (id) =>{ //수정버튼함수 parameter id 받음
+    setCheckDetailState(false); //상세내용 화면을 안보이도록 state값 false로
+    setEditTodoState(true); //수정화면을 보이도록 state값 true로
+    setTargetID(id); // parameter로 받아온 아이디로 targetID 설정
   }
 
-  const exit = () => {
-    setTodoState(false)
+  const exit = () => { //닫기 버튼 함수
+    setTodoState(false) // 달력이 보이도록 todoState 값을 false로
   }
 
   return(

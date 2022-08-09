@@ -6,21 +6,22 @@ function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, se
   let date = getDate.getDate();
   let today = year + '.' + month + '.' + date;
 
-  const viweAddTodo = () => {
-    if(checkTodoState === true){
-      setCheckTodoState(false)
-    }
-    setTodoState(true);
-    setAddTodoState(true);
-    setSelectedTime("시간선택")
-    setAddDate(today)
-  }
-  const viweCheckTodo = () => {
-    if(addTodoState === true){
-      setAddTodoState(false);
+  const viweAddTodo = () => { // 일정추가 화면이 보이게 하는 함수
+    if(checkTodoState === true){ // checkTodoState 참이면
+      setCheckTodoState(false); // 일정추가 화면이 보이게 하기위해 checkTodoState를 false로 
     };
-    setTodoState(true);
-    setCheckTodoState(true);
+    setTodoState(true); // 일정추가 화면이 보이게 하기위해 todoState를 true로
+    setAddTodoState(true); // 일정추가 화면이 보이게 하기위해 addTodoState를 true로
+    setSelectedTime("시간선택"); // 오늘일정추가 버튼을 누르면 select 값이 시간선택이 되도록
+    setAddDate(today); // 오늘일정추가 버튼을 누르면 일정날짜를 오늘이 되도록
+  };
+
+  const viweCheckTodo = () => { //전체일정 확인할 수 있도록 하는 함수
+    if(addTodoState === true){ // addTodoState가 참이면
+      setAddTodoState(false); //전체일정을 확인하기 위해 addTodoState를 false로
+    };
+    setTodoState(true); // 전체일정을 확인하기 위해 todoState를 true로
+    setCheckTodoState(true); // 전체일정을 확인하기 위해 checkTodoState true로
   }
 
   if(loginState){

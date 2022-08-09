@@ -30,24 +30,24 @@ function App(){
   const [addDate, setAddDate] = useState('')
 
 
-  if(todoState === true){
+  if(todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
     selected = <Todo selectedTime={selectedTime} setSelectedTime={setSelectedTime} checkDetailState={checkDetailState} setCheckDetailState={setCheckDetailState} editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState} addDate={addDate} setAddDate={setAddDate}/>
-  }else if(todoState === false){
+  }else if(todoState === false){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
     selected = <Calendar setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} setAddDate={setAddDate} setEditTodoState={setEditTodoState} setCheckTodoState={setCheckTodoState}/>
   };
 
-  if(signUpState === true){
+  if(signUpState === true){ //signUpState가 참이면 signUp컴포넌트 보여주기
     selectSign = <SignUp setSignUpState = {setSignUpState}/>
-  }else if(signUpState === false){
+  }else if(signUpState === false){  //signUpState가 거짓이면 login컴포넌트 보여주기
     selectSign = <Login setLoggedUser={setLoggedUser} loginState={loginState} setLoginState={setLoginState} signUpState={signUpState} setSignUpState={setSignUpState} />
   };
 
-  if(!loginState){
+  if(!loginState){ //loginState가 참이 아니면 
     now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4">
     <Today/>
     <Clock/>
   </div>
-  }else if(loginState){
+  }else if(loginState){ //loginState 참이면
     now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-2 pl-4 float-left">
     <Welcome loggedUser={loggedUser}/>
     <Today/>

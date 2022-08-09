@@ -17,59 +17,59 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     return temp.getDate();
   }
 
-  let weekStart = new Date(year, month, date - day);
-  let weekMon = new Date(year, month, date - (day-1));
-  let weekTue = new Date(year, month, date - (day-2));
-  let weekWed = new Date(year, month, date - (day-3));
-  let weekThu = new Date(year, month, date - (day-4));
-  let weekFri = new Date(year, month, date - (day-5));
-  let weekEnd = new Date(year, month, date - (day-6)); 
+  let weekStart = new Date(year, month, date - day); // 일요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스만큼을 벤다
+  let weekMon = new Date(year, month, date - (day-1)); // 월요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 1을 뺸 만큼을 벤다
+  let weekTue = new Date(year, month, date - (day-2)); // 화요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 2을 뺸 만큼을 벤다
+  let weekWed = new Date(year, month, date - (day-3)); // 수요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 3을 뺸 만큼을 벤다
+  let weekThu = new Date(year, month, date - (day-4)); // 목요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 4을 뺸 만큼을 벤다
+  let weekFri = new Date(year, month, date - (day-5)); // 금요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 5을 뺸 만큼을 벤다
+  let weekEnd = new Date(year, month, date - (day-6)); // 토요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 6을 뺸 만큼을 벤다
 
-  let sunDate = weekStart.getDate()
-  let monDate = getAddDate(weekStart, 1);
-  let tueDate = getAddDate(weekStart, 2);
-  let wedDate = getAddDate(weekStart, 3);
-  let thuDate = getAddDate(weekStart, 4);
-  let friDate = getAddDate(weekStart, 5);
-  let setdayDate = weekEnd.getDate()           
+  let sunDate = weekStart.getDate(); // 일요일 날짜는 이번주 시작하는 날짜 
+  let monDate = getAddDate(weekStart, 1); // 월요일 날짜는 이번주 시작하는 날짜에서 하루 뒤
+  let tueDate = getAddDate(weekStart, 2); // 화요일 날짜는 이번주 시작하는 날짜에서 이틀 뒤
+  let wedDate = getAddDate(weekStart, 3); // 수요일 날짜는 이번주 시작하는 날짜에서 사흘 뒤
+  let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
+  let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
+  let setdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜           
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ]
 
-  useEffect(()=>{
-    getItem().then((data)=> setTodoData(data));
+  useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
+    getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
   },[]);
 
-  const viweAddTodo = (num, date) => {
-    setSelectedTime(num);
-    setTodoState(true);
-    setAddTodoState(true)
-    const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate()
-    setAddDate(selectDate)
+  const viweAddTodo = (num, date) => { // 일정추가 할 수 있게 하는 버튼 함수
+    setSelectedTime(num); // 시간선택을 클릭한 시간으로 세팅
+    setTodoState(true); // 일정추가 컴포넌트를 실해시키기 위해서 todoState를 참으로
+    setAddTodoState(true); // 일정추가 컴포넌트를 실행시키기 위해서 addTodoState를 참으로
+    const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
+    setAddDate(selectDate); // 선택 날짜를 클릭한 날짜로 세팅
   }
 
-  const findWeekData = (time, data, weekStr) => {
-    const weekDataArr = [
+  const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
+    const weekDataArr = [ // 일주일 날짜 배열
       {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: setdayDate}
     ];
-    const findWeekDay = weekDataArr.find((weekData)=>{
-      return weekData.day === weekStr
+    const findWeekDay = weekDataArr.find((weekData)=>{ // 위에 선언한 배열에서 원하는 값을 찾는 함수
+      return weekData.day === weekStr; // parameter로 받아온 weekStr와 배열에 있는 day와 같은걸 반환
     });
-    const result = data.find(({setTodoList})=>{
-      if (!setTodoList) return false;
-      const {setTime, setDate, setUser} = setTodoList;
-      const dateCheck = setDate === year+"."+(month)+'.'+(findWeekDay.weekInt)
-      return (parseInt(setTime) === time && dateCheck && setUser === loggedUser)
+    const result = data.find(({setTodoList})=>{ // indexedDB에서 원하는 데이터를 찾는 함수
+      if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
+      const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
+      const dateCheck = setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
+      return (parseInt(setTime) === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
-    return result;
+    return result; // 찾은 데이터 반환
   };
 
-  const sunDay = time.map((data, idx)=>{
+  const sunDay = time.map((data, idx)=>{ // 배열로 반복하는 일요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2 text-red-500' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
-        {todoData?
+        {todoData? 
           <>
             <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
           </>
@@ -80,7 +80,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const monDay = time.map((data, idx)=>{
+  const monDay = time.map((data, idx)=>{ // 배열로 반복하는 월요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekMon)}>{data.num}시:</span>
@@ -95,7 +95,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const tueDay = time.map((data, idx)=>{
+  const tueDay = time.map((data, idx)=>{ // 배열로 반복하는 화요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekTue)}>{data.num}시:</span>
@@ -110,7 +110,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const wedDay = time.map((data, idx)=>{
+  const wedDay = time.map((data, idx)=>{ // 배열로 반복하는 수요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekWed)}>{data.num}시:</span>
@@ -125,7 +125,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const thuDay = time.map((data, idx)=>{
+  const thuDay = time.map((data, idx)=>{ // 배열로 반복하는 목요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekThu)}>{data.num}시:</span>
@@ -140,7 +140,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const friDay = time.map((data, idx)=>{
+  const friDay = time.map((data, idx)=>{ // 배열로 반복하는 금요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekFri)}>{data.num}시:</span>
@@ -155,7 +155,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const setDay = time.map((data, idx)=>{
+  const setDay = time.map((data, idx)=>{ // 배열로 반복하는 토요일 배열
     return(
       <div className="mt-4" key={idx}>  
         <span className='mr-2 text-blue-500' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>

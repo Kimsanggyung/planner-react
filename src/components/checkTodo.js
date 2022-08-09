@@ -4,43 +4,40 @@ import {getItem, deleteTodo, } from "../context/indexed"
 function CheckTodo({loggedUser, setTodoState, setCheckTodoState, setTargetID, setCheckDetailState}){
   const [getList, setGetList] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { // 컴포넌트가 실행됐을 때 1회 실행을 되도록
 
-    const cancel = (id) => {
-      deleteTodo(id);
-      setTodoState(false)
+    const cancel = (id) => { //일정취소 버튼 함수
+      deleteTodo(id); //parameter로 받은 id로 indexedDB 데이터 삭제
+      setTodoState(false); // 삭제를 했다면 달력화면을 보여주기 위해 todoState false로
     }
 
-    const checkDetail = (id) =>{
-      setCheckDetailState(true)
-      setCheckTodoState(false)
-      setTargetID(id)
+    const checkDetail = (id) =>{ // 상세내용 확인 버튼 함수
+      setCheckDetailState(true); // 상세내용화면을 보여주기 위해 state값 true로
+      setCheckTodoState(false); // 전체일정확인 화면을 안보이게 하기위해 state값 false로
+      setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
     }
 
-    const callItem = () => {
-      getItem().then(data => {
+    const callItem = () => { // indexedDB 데이터를 가져오는 함수
+      getItem().then(data => { //데이터 가져옴
 
         let getData = data;
         let checkedUser;
 
-        const result = data.find(({setTodoList})=>{
-          if (!setTodoList) return false;
-          const {setUser} = setTodoList;
-          return (setUser === loggedUser)
+        const result = data.find(({setTodoList})=>{ //데이터에서 setTodoList를 찾는다
+          if (!setTodoList) return false; // setTodoList가 없다면 fales 반환
+          const {setUser} = setTodoList; // setTodoList에 있는 setUser을 상수로 지정
+          return (setUser === loggedUser); // setUser과 loggedUesr이 같은 것을 반환
         });
 
-        if(result){
-          checkedUser = result.setTodoList.setUser;
+        if(result){ //setUser과 loggedUesr이 같은 데이터가 있다면
+          checkedUser = result.setTodoList.setUser; //checkedUser에 result에 있는setTodoList안에 있는 setUser를 할당
         }
 
-        console.log(checkedUser)
-        console.log(loggedUser)
-
-        if(getData!== null && getData.length > 0 && checkedUser !== undefined && result && loggedUser === checkedUser){
-          setGetList(
-            getData.map(({setTodoList, id}, index) => {
-              if(setTodoList){
-                if(setTodoList.setUser === loggedUser){
+        if(getData!== null && getData.length > 0 && checkedUser !== undefined && result && loggedUser === checkedUser){ //getData가 있고 getData가 1이상이고 result가 있고 loggedUser랑 checkedUser가 같다면
+          setGetList( //getList 세팅
+            getData.map(({setTodoList, id}, index) => { //getDate로 반복문 
+              if(setTodoList){ //setTodoList가 있으면
+                if(setTodoList.setUser === loggedUser){ //setTodoList에 setUser랑 loggedUser이 같다면
                   return(
                     <div className="mb-2 pl-4" key={id}>
                       <div onClick={()=>checkDetail(id)} className="float-left">
@@ -53,14 +50,14 @@ function CheckTodo({loggedUser, setTodoState, setCheckTodoState, setTargetID, se
               }return true;     
             })
           )
-        }else{
+        }else{ //모든조건이 아니면
           return(
             setGetList(<span className="pl-4">일정이 없습니다.</span>)
           )
         }
       })
     }
-    callItem()
+    callItem()// 함수호출
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 

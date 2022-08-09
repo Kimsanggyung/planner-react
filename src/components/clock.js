@@ -3,11 +3,11 @@ import {useState, useEffect } from 'react';
 function Clock() {
   const [time, setTime] = useState(new Date());
 
-  useEffect(() => {
-    const id = setInterval(() => {
+  useEffect(() => { //컴포넌트가 실행되면
+    const interval = setInterval(() => { //1초마다 실행
       setTime(new Date());
     }, 1000);
-    return (() => clearInterval(id))
+    return (() => clearInterval(interval)) //컴포넌트가 실행이 끝나면 interval실행끝내기
   }, []);
   
   return (

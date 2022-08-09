@@ -6,8 +6,8 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
  
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
-  const [error, setError] = useState('')
-  const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/
+  const [error, setError] = useState('');
+  const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/; //입력한 날짜가 0000.0.0 || 0000.0.00 || 0000.00.0 || 0000.00.00 여야힌다
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
@@ -21,51 +21,49 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
     setUser: loggedUser
   }
 
-  const inputTodoChange = event => {
+  const inputTodoChange = event => { // 제목 입력창에 입력을 하는 등 이벤트가 발생하면 setTodo
     setTodo(event.target.value)
   }
-  const inputDetailsChange = event => {
+  const inputDetailsChange = event => { //상세 입력창에 입력을 하는 등 이벤트가 발생하면 setDetail
     setDetails(event.target.value)
   }
 
-  const selectTimeChange = event => { 
+  const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
     setSelectedTime(event.target.value)
   }
-  const setTodoDate = event => {
+  const setTodoDate = event => { //일짜 입력창에 입력을 하는 등 이벤트가 발생하면 setAddDate
     setAddDate(event.target.value)
   }
 
-
-
-  const submit = () => {
-    if(selectedTime === "시간선택" || selectedTime === ""){ 
-      setError("일정시간을 선택해주세요")
-      console.log("일정시간을 선택해주세요")
+  const submit = () => { // 등록버튼 함수
+    if(selectedTime === "시간선택" || selectedTime === ""){  //시간을 선택했는지 확인
+      setError("일정시간을 선택해주세요") //선택을 안했다면 에러메시지 세팅
+      console.log("일정시간을 선택해주세요") // 콘솔로그에 에러메시지 보여주기
     }
-    if(details === ""){
-      setError("상세내용을 입력해주세요")
-      console.log("상세내용을 입력해주세요")
+    if(details === ""){ //상세내용 입력창이 비어있는것을 확인
+      setError("상세내용을 입력해주세요") // 비어있다면 에러메시지 세팅
+      console.log("상세내용을 입력해주세요")// 콘솔로그에 에러메시지 보여주기
     }
-    if(todo === ""){
-      setError("제목을 입력해주세요")
-      console.log("제목을 입력해주세요")
-    }if(!pattern.test(addDate)){
-      setError("정확한 날짜를 입력해주세요")
-      console.log("정확한 날짜를 입력해주세요")
+    if(todo === ""){ // 제목창이 비어있는 것을 확인
+      setError("제목을 입력해주세요") // 비어있다면 에러메시지 세팅
+      console.log("제목을 입력해주세요") // 콘솔로그에 에러메시지 보여주기
+    }if(!pattern.test(addDate)){ //날짜가 정확한지 정규표현식을 통해 확인
+      setError("정확한 날짜를 입력해주세요") // 날짜가 정확하지 않다면 에러메시지 세팅
+      console.log("정확한 날짜를 입력해주세요") // 콘솔로그에 에러메시지 보여주기
     }
-    if(selectedTime !== "시간선택" && selectedTime !== "" && details !== "" && todo !== "" && pattern.test(addDate)){
-      setError("");
-      setItem({setTodoList});
-      setTodoState(false);
+    if(selectedTime !== "시간선택" && selectedTime !== "" && details !== "" && todo !== "" && pattern.test(addDate)){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
+      setError("");// 에러메시지 없애기
+      setItem({setTodoList}); // indexedDB에 setTodoList 저장
+      setTodoState(false); // 할일 추가를 완료했다면 달력화면으로 가도록 state값 변경
     }
   }
 
-  const cancel = () => {
-    setTodoState(false);
+  const cancel = () => { // 취소버튼 함수
+    setTodoState(false);  // 취소를 누르면 할일 추가 화면을 안보이게 하고 달력하면을 보여주기 위해 state값 변경
   }
 
-  const timeOptions =  time.map((data, idx)=>{
-    return <option value={data.num} key={idx}>{data.num}시</option>
+  const timeOptions =  time.map((data, idx)=>{ //시간 선택 반복문
+    return <option value={data.num} key={idx}>{data.num}시</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
 
   return(

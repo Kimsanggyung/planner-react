@@ -49,41 +49,41 @@ function EditTodo({targetID, loggedUser, setTodoState}){
     setUser: loggedUser
   }
 
-  const editTodoDatas = () => {
-    if(selectTime === "시간선택"){
-      setError("일정시간을 선택해주세요");
-      console.log("일정시간을 선택해주세요");
+  const editTodoDatas = () => { //수정후 등록버튼
+    if(selectTime === "시간선택"){ //시간선택을 안했으면 
+      setError("일정시간을 선택해주세요"); //에러메시지 세팅
+      console.log("일정시간을 선택해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(details === ""){
-      setError("상세내용을 입력해주세요");
-      console.log("상세내용을 입력해주세요");
+    if(details === ""){ //상세내용을 입력하지 않았으면
+      setError("상세내용을 입력해주세요"); //에러메시지 세팅
+      console.log("상세내용을 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(todo === ""){
-      setError("제목을 입력해주세요");
-      console.log("제목을 입력해주세요");
+    if(todo === ""){ //제목을 입력하지 않았으면
+      setError("제목을 입력해주세요"); //에러메시지 세팅
+      console.log("제목을 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(!pattern.test(date)){
-      setError("정확한 날짜를 입력해주세요");
-      console.log("정확한 날짜를 입력해주세요");
+    if(!pattern.test(date)){ //정확한 날짜을 입력하지 않았으면
+      setError("정확한 날짜를 입력해주세요"); //에러메시지 세팅
+      console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(date)){
-      let store = db.transaction('datas', 'readwrite').objectStore('datas');
-      let putReq = store.put({
-        id:(targetID),
-        setTodoList: edidtDatas 
+    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(date)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+      let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
+      let putReq = store.put({ //indexedDB 수정
+        id:(targetID), //id는 props로 받아온 targetID
+        setTodoList: edidtDatas //setTodoList에 edidtDatast세팅
       });
-      putReq.onsuccess = () => {
-        console.log('success')
-        setTodoState(false)
+      putReq.onsuccess = () => { //성공했을떄 함수
+        console.log('success'); // 성공했다는 콘솔로그
+        setTodoState(false); //달력화면을 보여주기 위해 todoState false로 세팅
       }
-      putReq.addEventListener('error',function(event){
-        console.log(event)
+      putReq.addEventListener('error',function(event){ //실패했을 때
+        console.log(event) //콘솔로그에 보여주기
       })
     }
   }
 
-  const cancel = () =>{
-    setTodoState(false)
+  const cancel = () =>{ //취소버튼 함수
+    setTodoState(false); //달력화면을 보여주기 위해 todoState false로 세팅
   } 
 
   return(
