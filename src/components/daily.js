@@ -19,9 +19,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
     setSelectedTime(num); //parameter로 받아온 숫자로 selectedTime 세팅
     setTodoState(true); // 일정추가 화면을 보여주기 위해 일정추가 컴포넌트의 부모컴포넌트 state를 true로
     setAddTodoState(true); //일정추가 화면을 보여주기 위해서 일정추가 컴포넌트의 state를 true로
-    setSelectYear(date.getFullYear());
-    setSelectMonth(date.getMonth()+1);
-    setSelectDate(date.getDate());
+    setSelectYear(date.getFullYear()); // 일정추가 화면에서 년도 입력창 값을 현재 년도로 설정
+    setSelectMonth(date.getMonth()+1);  // 일정추가 화면에서 월 선택창 값을 현재 월로 설정
+    setSelectDate(date.getDate()); // 일정추가 화면에서 일 선택창 값을 현재 일로 설정
   }
 
   const nextDay = () => { //다음날 버튼 함수
@@ -31,9 +31,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       return result; // result값 반환
     }
     setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1)); // addDate를 다음날 날짜로 세팅
-    setSelectYear(date.getFullYear());
-    setSelectMonth(date.getMonth()+1)
-    setSelectDate(date.getDate()+1)
+    setSelectYear(date.getFullYear()); // selectYear를 다음날 년도로 세팅
+    setSelectMonth(date.getMonth()+1); // selectMonth를 다음날 월로 세팅
+    setSelectDate(date.getDate()+1); // selectDate를 다음날 날짜로 세팅
     return setDate(adddDate(date)); //data를 다음날 날짜로 세팅
   }
 
@@ -44,9 +44,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       return result; // result값 반환
     }
     setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1)); // addDate를 전날 날짜로 세팅
-    setSelectYear(date.getFullYear());
-    setSelectMonth(date.getMonth()+1)
-    setSelectDate(date.getDate()-1)
+    setSelectYear(date.getFullYear()); // // selectMonth를 전날 월로 세팅
+    setSelectMonth(date.getMonth()+1); // selectMonth를 전날 월로 세팅
+    setSelectDate(date.getDate()-1); // selectDate를 전날 날짜로 세팅
     return setDate(minusDate(date)); //data를 전날 날짜로 세팅
   } 
 

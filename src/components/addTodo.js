@@ -9,15 +9,14 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   const [error, setError] = useState('');
   const pattern = /^\d{4}$/;
 
-  useEffect(()=>{
-    setAddDate(selectYear+"."+selectMonth+"."+selectDate)
-  },[selectYear, selectMonth, selectDate])
+  useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
+    setAddDate(selectYear+"."+selectMonth+"."+selectDate);
+  },[selectYear, selectMonth, selectDate]);
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
-  ]
-  
+  ];
   const monthArray = [1,2,3,4,5,6,7,8,9,10,11,12];
   const dateArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 
@@ -41,13 +40,13 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
     setSelectedTime(event.target.value)
   }
-  const selectYearChange = event => { //일짜 입력창에 입력을 하는 등 이벤트가 발생하면 setAddDate
+  const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     setSelectYear(event.target.value)
   }
-  const selectMonthChange = event => {
+  const selectMonthChange = event => { // 월 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectMonth
     setSelectMonth(event.target.value)
   }
-  const selectDateChange = event => {
+  const selectDateChange = event => { // 일 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectDate
     setSelectDate(event.target.value)
   }
 
@@ -81,11 +80,11 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   const timeOptions =  time.map((data, idx)=>{ //시간 선택 반복문
     return <option value={data.num} key={idx}>{data.num}시</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
-  const monthOptions = monthArray.map((num , idx)=>{
-    return <option value={num} key={idx}>{num}월</option>
+  const monthOptions = monthArray.map((num , idx)=>{ // 월 선택 반복문
+    return <option value={num} key={idx}>{num}월</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
-  const dateOptions = dateArray.map((num, idx)=>{
-    return <option value={num} key={idx}>{num}일</option>
+  const dateOptions = dateArray.map((num, idx)=>{ // 일 선택 빈복문
+    return <option value={num} key={idx}>{num}일</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
 
   return(

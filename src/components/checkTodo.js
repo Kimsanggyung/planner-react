@@ -20,7 +20,7 @@ function CheckTodo({loggedUser, setTodoState, setCheckTodoState, setTargetID, se
     const callItem = () => { // indexedDB 데이터를 가져오는 함수
       getItem().then(data => { //데이터 가져옴
 
-        let getData = data;
+        let getData = data; // getData에 data할당
         let checkedUser;
 
         const result = data.find(({setTodoList})=>{ //데이터에서 setTodoList를 찾는다

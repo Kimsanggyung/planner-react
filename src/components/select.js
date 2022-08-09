@@ -18,10 +18,10 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     };
     setMonthlyState(true); // 달력을 보여주기 위해서 monthlyState를 true로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
-    setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
-    setSelectYear(year);
-    setSelectMonth(month);
-    setSelectDate(date);
+    setDate(getDate); // 오늘 날짜가 보이도록 setDate 오늘날짜
+    setSelectYear(year); // 현재 년도 세팅
+    setSelectMonth(month); // 현재 월 세팅
+    setSelectDate(date); // 현재 일 세팅
   }
 
   const viweWeek = () => { // 주간달력을 보이게 히는 함수
@@ -37,9 +37,9 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     setWeeklyState(true); // 주간달력을 보여주기 위해서 weeklyState를 false로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
     setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
-    setSelectYear(year);
-    setSelectMonth(month);
-    setSelectDate(date);
+    setSelectYear(year); // 현재 년도 세팅
+    setSelectMonth(month); // 현재 월 세팅
+    setSelectDate(date); // 현재 일 세팅
   }
 
   const viweDaily = () => { //일력을 보이게 하는 함수
@@ -55,12 +55,12 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     setDailyState(true); // 일력을 보여주기 위해서 weeklyState를 false로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
     setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
-    setSelectYear(year);
-    setSelectMonth(month);
-    setSelectDate(date);
+    setSelectYear(year); // 현재 년도 세팅
+    setSelectMonth(month); // 현재 월 세팅
+    setSelectDate(date); // 현재 일 세팅
   }
 
-  if(loginState){
+  if(loginState){ // 로그인상태일때
     return(
       <div>
         <span className="font-Do flex item-center text-white flex flex justify-center text-xl float-left float-right ml-96 mt-6">

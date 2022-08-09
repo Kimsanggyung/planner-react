@@ -13,7 +13,7 @@ function SignUp({setSignUpState}){
   const [userData, setUserData] = useState(OuserData)
   const [hashPwd, setHashPwd] = useState(null);
   const [checked, setChecked] = useState('');
-  const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
+  const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
   let saltKey = "nuguseyo"
 
   useEffect(()=>{ // inputPWD가 변경될 때 마다 실행
