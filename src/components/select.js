@@ -1,4 +1,4 @@
-function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState, setAddDate, setDate}){
+function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState, setAddDate, setDate, setSelectYear, setSelectMonth, setSelectDate}){
 
   let getDate = new Date();
   let year = getDate.getFullYear();
@@ -19,6 +19,9 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     setMonthlyState(true); // 달력을 보여주기 위해서 monthlyState를 true로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
     setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
+    setSelectYear(year);
+    setSelectMonth(month);
+    setSelectDate(date);
   }
 
   const viweWeek = () => { // 주간달력을 보이게 히는 함수
@@ -34,6 +37,9 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     setWeeklyState(true); // 주간달력을 보여주기 위해서 weeklyState를 false로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
     setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
+    setSelectYear(year);
+    setSelectMonth(month);
+    setSelectDate(date);
   }
 
   const viweDaily = () => { //일력을 보이게 하는 함수
@@ -49,6 +55,9 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
     setDailyState(true); // 일력을 보여주기 위해서 weeklyState를 false로
     setAddDate(today); // 일정추가 날짜가 오늘이 되도록
     setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
+    setSelectYear(year);
+    setSelectMonth(month);
+    setSelectDate(date);
   }
 
   if(loginState){

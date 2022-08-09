@@ -3,7 +3,7 @@ import { getItem } from "../context/indexed"
 import WeeklyItem from '../parts/weeklyItem';
 
 
-function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setEditTodoState}){
+function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setEditTodoState, setSelectYear, setSelectMonth, setSelectDate}){
   const [getDate, setGetDate] = useState(new Date());
   const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
@@ -42,11 +42,14 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   },[]);
 
   const viweAddTodo = (num, date) => { // 일정추가 할 수 있게 하는 버튼 함수
+    const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
     setSelectedTime(num); // 시간선택을 클릭한 시간으로 세팅
     setTodoState(true); // 일정추가 컴포넌트를 실해시키기 위해서 todoState를 참으로
     setAddTodoState(true); // 일정추가 컴포넌트를 실행시키기 위해서 addTodoState를 참으로
-    const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
     setAddDate(selectDate); // 선택 날짜를 클릭한 날짜로 세팅
+    setSelectYear(date.getFullYear());
+    setSelectMonth(date.getMonth());
+    setSelectDate(date.getDate());
   }
 
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수

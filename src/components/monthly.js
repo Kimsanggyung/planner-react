@@ -5,7 +5,7 @@ import { getItem } from "../context/indexed";
 
 
 
-function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate}){
+function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
   const getDate = new Date();
 	const today = {
@@ -61,6 +61,9 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
   const viweAddTodo = (i,firstDayIndex) =>{
     const selectDate = ((i-firstDayIndex)+1)
     setAddDate(year+"."+(monthIndex+1)+"."+selectDate)
+    setSelectYear(year) 
+    setSelectMonth(monthIndex+1)
+    setSelectDate(selectDate)
     setTodoState(true)
     setAddTodoState(true)
     setSelectedTime("시간선택")

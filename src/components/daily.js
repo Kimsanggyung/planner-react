@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getItem } from "../context/indexed"
 import DaillyItem from "../parts/dailyItem"
 
-function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoState, setEditTodoState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate}){
+function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoState, setEditTodoState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
   const [todoData, setTodoData] = useState(null);
 
@@ -19,6 +19,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
     setSelectedTime(num); //parameter로 받아온 숫자로 selectedTime 세팅
     setTodoState(true); // 일정추가 화면을 보여주기 위해 일정추가 컴포넌트의 부모컴포넌트 state를 true로
     setAddTodoState(true); //일정추가 화면을 보여주기 위해서 일정추가 컴포넌트의 state를 true로
+    setSelectYear(date.getFullYear());
+    setSelectMonth(date.getMonth()+1);
+    setSelectDate(date.getDate());
   }
 
   const nextDay = () => { //다음날 버튼 함수
@@ -28,6 +31,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       return result; // result값 반환
     }
     setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1)); // addDate를 다음날 날짜로 세팅
+    setSelectYear(date.getFullYear());
+    setSelectMonth(date.getMonth()+1)
+    setSelectDate(date.getDate()+1)
     return setDate(adddDate(date)); //data를 다음날 날짜로 세팅
   }
 
@@ -38,6 +44,9 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       return result; // result값 반환
     }
     setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1)); // addDate를 전날 날짜로 세팅
+    setSelectYear(date.getFullYear());
+    setSelectMonth(date.getMonth()+1)
+    setSelectDate(date.getDate()-1)
     return setDate(minusDate(date)); //data를 전날 날짜로 세팅
   } 
 

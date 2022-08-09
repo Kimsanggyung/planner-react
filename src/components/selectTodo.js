@@ -1,4 +1,4 @@
-function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState, setAddDate}){
+function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
   let getDate = new Date();
   let year = getDate.getFullYear();
@@ -14,6 +14,9 @@ function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, se
     setAddTodoState(true); // 일정추가 화면이 보이게 하기위해 addTodoState를 true로
     setSelectedTime("시간선택"); // 오늘일정추가 버튼을 누르면 select 값이 시간선택이 되도록
     setAddDate(today); // 오늘일정추가 버튼을 누르면 일정날짜를 오늘이 되도록
+    setSelectYear(year);
+    setSelectMonth(month);
+    setSelectDate(date);
   };
 
   const viweCheckTodo = () => { //전체일정 확인할 수 있도록 하는 함수
