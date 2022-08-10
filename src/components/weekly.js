@@ -63,7 +63,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     const result = data.find(({setTodoList})=>{ // indexedDB에서 원하는 데이터를 찾는 함수
       if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
       const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
-      const dateCheck = setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
+      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
       return (parseInt(setTime) === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
     return result; // 찾은 데이터 반환
