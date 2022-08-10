@@ -4,13 +4,17 @@ import { today } from "../context/today";
 import WeeklyItem from '../parts/weeklyItem';
 
 
-function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setEditTodoState, setSelectYear, setSelectMonth, setSelectDate}){
-  const [getDate, setGetDate] = useState(new Date());
+function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, setDate, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setEditTodoState, setSelectYear, setSelectMonth, setSelectDate}){
+  const [getDate, setGetDate] = useState(odate);
   const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
   let month = getDate.getMonth();
   let date = getDate.getDate();
   let day = getDate.getDay();
+
+  useEffect(()=>{
+    setGetDate(odate)
+  }, [odate])
 
   const getAddDate = (date, num) => { // 이번주날짜를 계산하기 위한 함수
     const temp = new Date(date); // parameter로 받아온 date를 계산할 날짜로
@@ -183,16 +187,18 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
       result.setDate(result.getDate() + 7);
       return result;
     }
+    setDate(nextDate(getDate));
     return setGetDate(nextDate(getDate));
   }
 
   const prevWeek = () => {
-    const nextDate = (getDate) => {
+    const pastDate = (getDate) => {
       var result = new Date(getDate);
       result.setDate(result.getDate() - 7);
       return result;
     }
-    return setGetDate(nextDate(getDate));
+    setDate(pastDate(getDate));
+    return setGetDate(pastDate(getDate));
   };
 
   let sunCheck = weekStart.getFullYear() === today.getFullYear() && weekStart.getMonth() === today.getMonth() && weekStart.getDate() === today.getDate(); // 일요일 날짜를 오늘과 비교

@@ -1,27 +1,29 @@
 import MonthlyItem from "../parts/monthlyItem";
 import { useState, useEffect } from "react";
-import '../style/style.css';
 import { getItem } from "../context/indexed";
+import { today } from "../context/today"
+import '../style/style.css';
 
 
 
-function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, date, setTargetID, setCheckDetailState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
+function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, odate, setDate, setTargetID, setCheckDetailState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
-  const getDate = new Date();
-	const today = {
-		dayNumber: getDate.getDate(),
-		month: getDate.getMonth(),
-		year: getDate.getFullYear(),
-	}
-
+  const [getDate, setGetDate] = useState(odate);
 	const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 	const [monthIndex, setMonthIndex] = useState(getDate.getMonth());
-  const [year, setYear] = useState(date.getFullYear());
+  const [year, setYear] = useState(odate.getFullYear());
   const [month, setMonth] = useState(monthNames[monthIndex])
   const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay())
   const [numberOfDays, setNumberOfDays] = useState(new Date(year, monthIndex+1, 0).getDate());
   const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
   const [todoData, setTodoData] = useState(null);
+
+  useEffect(()=>{
+    setGetDate(odate)
+    setMonthIndex(odate.getMonth())
+    console.log(odate)
+  }, [odate])
+
 
   useEffect(() => { // monthIndex가 변경될 때 마다 실행
     setMonth(monthNames[monthIndex]);
@@ -42,6 +44,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year+1); // 1년을 더해준다
       return setMonthIndex(0) // monthIndex를 0으로
     }
+    setDate(new Date(year,monthIndex+1,1))
 	  return setMonthIndex(monthIndex+1) //1달 더해주기
 	}
 	
@@ -50,6 +53,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year-1); //1년 빼주기
 		  return setMonthIndex(11); // monthIndex를 11로
 		}
+    setDate(new Date(year,monthIndex-1,1))
 		return setMonthIndex(monthIndex-1); // 1달 빼주기
 	}
 
@@ -76,25 +80,27 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
   const items = []
 
   for(let i = 0; i <= calendarCellsQty; i++){ // 반복문 calendarCellsQty보다 작을 때까지 반복
+    const ttest = today.getDate()+(firstDayIndex-1) === i && monthIndex === today.getMonth() && year === today.getFullYear()
+    console.log(ttest)
     const noting = i < firstDayIndex || i >= numberOfDays+firstDayIndex; // 이전달이나 다음 날 날짜 부분을 체크
-    let isActive = i === today.dayNumber+(firstDayIndex-1) && monthIndex === today.month && year === today.year; // 이번달 날짜 체크
+    let isActive = i === today.getDate()+(firstDayIndex-1) && monthIndex === today.getMonth() && year === today.getFullYear(); // 이번달 날짜 체크
     let classActive = isActive ? 'active' : ''; // 오늘날짜에 강조
-    let test; // 렌더를 위한 변수
+    let monthList; // 렌더를 위한 변수
     if(noting){ // 이전달이나 다음날 날짜 자리면
-      test =  <li key={i}>
+      monthList =  <li key={i}>
                     <div>&nbsp;</div>
                     <div className="w-48 h-7 overflow-hidden"></div>
                     <div></div>
                   </li>
     }else if(todoData){ // 이번달 날짜 자리면
-      test =  <li className={classActive} key={i}>
+      monthList =  <li className={classActive} key={i}>
                 <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
                 <MonthlyItem month={month} setEditTodoState={setEditTodoState} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
               </li>
     } 
  
     items.push( // 빈 배열에 넣어주기
-      test
+      monthList
     )
   }
 	 

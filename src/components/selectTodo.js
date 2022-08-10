@@ -1,4 +1,4 @@
-function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
+function SelectTodo({setSelectedTime, setTodoState, setDate, loginState, addTodoState, setAddTodoState, checkTodoState, setCheckTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
   let getDate = new Date();
   let year = getDate.getFullYear();
@@ -27,10 +27,15 @@ function SelectTodo({setSelectedTime, setTodoState, loginState, addTodoState, se
     setCheckTodoState(true); // 전체일정을 확인하기 위해 checkTodoState true로
   }
 
+  const viweToday = () => {
+    setDate(getDate);
+  }
+
   if(loginState){
     return(
       <span className="font-Do text-s mr-8 mt-10 flex justify-end">
         <button onClick={viweAddTodo} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-2">오늘일정추가</button>
+        <button onClick={viweToday} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 mr-2 rounded">오늘</button>
         <button onClick={viweCheckTodo} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">전체일정확인</button>
       </span>
     )
