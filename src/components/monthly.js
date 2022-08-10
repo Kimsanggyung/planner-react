@@ -8,20 +8,19 @@ import '../style/style.css';
 
 function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, odate, setDate, setTargetID, setCheckDetailState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
 
+  const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
   const [getDate, setGetDate] = useState(odate);
-	const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 	const [monthIndex, setMonthIndex] = useState(getDate.getMonth());
   const [year, setYear] = useState(odate.getFullYear());
   const [month, setMonth] = useState(monthNames[monthIndex])
-  const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay())
+  const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay());
   const [numberOfDays, setNumberOfDays] = useState(new Date(year, monthIndex+1, 0).getDate());
   const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
   const [todoData, setTodoData] = useState(null);
 
   useEffect(()=>{
-    setGetDate(odate)
-    setMonthIndex(odate.getMonth())
-    console.log(odate)
+    setGetDate(odate);
+    setMonthIndex(odate.getMonth());
   }, [odate])
 
 
@@ -44,8 +43,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year+1); // 1년을 더해준다
       return setMonthIndex(0) // monthIndex를 0으로
     }
-    setDate(new Date(year,monthIndex+1,1))
-	  return setMonthIndex(monthIndex+1) //1달 더해주기
+    return setDate(new Date(year,monthIndex+1,1)) // 1달 더해주기
 	}
 	
 	const goToPrevMonth = () => { // 이전달 버튼 함수
@@ -53,8 +51,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year-1); //1년 빼주기
 		  return setMonthIndex(11); // monthIndex를 11로
 		}
-    setDate(new Date(year,monthIndex-1,1))
-		return setMonthIndex(monthIndex-1); // 1달 빼주기
+		return setDate(new Date(year,monthIndex-1,1)); // 1달 빼주기
 	}
 
   const viweAddTodo = (i,firstDayIndex) =>{ // 일정추가할 수 있게 하는 함수
