@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getItem } from "../context/indexed"
+import { getItem } from "../context/indexed";
+import { today } from "../context/today";
 import WeeklyItem from '../parts/weeklyItem';
 
 
@@ -31,7 +32,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
   let wedDate = getAddDate(weekStart, 3); // 수요일 날짜는 이번주 시작하는 날짜에서 사흘 뒤
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
-  let setdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
+  let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
@@ -54,7 +55,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
     const weekDataArr = [ // 일주일 날짜 배열
-      {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: setdayDate}
+      {day: "일", weekInt: sunDate}, {day: "월", weekInt: monDate}, {day: "화", weekInt: tueDate}, {day: "수", weekInt: wedDate}, {day: "목", weekInt: thuDate}, {day: "금", weekInt: friDate}, {day: "토", weekInt: satdayDate}
     ];
     const findWeekDay = weekDataArr.find((weekData)=>{ // 위에 선언한 배열에서 원하는 값을 찾는 함수
       return weekData.day === weekStr; // parameter로 받아온 weekStr와 배열에 있는 day와 같은걸 반환
@@ -70,8 +71,8 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const sunDay = time.map((data, idx)=>{ // 배열로 반복하는 일요일 배열
     return(
-      <div className="mt-4" key={idx}>  
-        <span className='mr-2 text-red-500' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
+      <div className="mt-4 pl-8" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
         {todoData? 
           <>
             <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
@@ -85,7 +86,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const monDay = time.map((data, idx)=>{ // 배열로 반복하는 월요일 배열
     return(
-      <div className="mt-4" key={idx}>  
+      <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekMon)}>{data.num}시:</span>
         {todoData?
           <>
@@ -100,7 +101,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const tueDay = time.map((data, idx)=>{ // 배열로 반복하는 화요일 배열
     return(
-      <div className="mt-4" key={idx}>  
+      <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekTue)}>{data.num}시:</span>
         {todoData?
           <>
@@ -115,7 +116,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const wedDay = time.map((data, idx)=>{ // 배열로 반복하는 수요일 배열
     return(
-      <div className="mt-4" key={idx}>  
+      <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekWed)}>{data.num}시:</span>
         {todoData?
           <>
@@ -130,7 +131,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const thuDay = time.map((data, idx)=>{ // 배열로 반복하는 목요일 배열
     return(
-      <div className="mt-4" key={idx}>  
+      <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekThu)}>{data.num}시:</span>
         {todoData?
           <>
@@ -145,7 +146,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
 
   const friDay = time.map((data, idx)=>{ // 배열로 반복하는 금요일 배열
     return(
-      <div className="mt-4" key={idx}>  
+      <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekFri)}>{data.num}시:</span>
         {todoData?
           <>
@@ -158,10 +159,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
     )
   })
 
-  const setDay = time.map((data, idx)=>{ // 배열로 반복하는 토요일 배열
+  const satDay = time.map((data, idx)=>{ // 배열로 반복하는 토요일 배열
     return(
-      <div className="mt-4" key={idx}>  
-        <span className='mr-2 text-blue-500' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
+      <div className="mt-4 pl-2" key={idx}>  
+        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
         {todoData?
           <>
             <WeeklyItem getList={findWeekData(data.num, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
@@ -192,7 +193,24 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
       return result;
     }
     return setGetDate(nextDate(getDate));
-  }
+  };
+
+  let sunCheck = weekStart.getFullYear() === today.getFullYear() && weekStart.getMonth() === today.getMonth() && weekStart.getDate() === today.getDate(); // 일요일 날짜를 오늘과 비교
+  let monCheck = weekMon.getFullYear() === today.getFullYear() && weekMon.getMonth() === today.getMonth() && weekMon.getDate() === today.getDate(); // 월요일 날짜를 오늘과 비교
+  let tueCheck = weekTue.getFullYear() === today.getFullYear() && weekTue.getMonth() === today.getMonth() && weekTue.getDate() === today.getDate(); // 화요일 날짜를 오늘과 비교
+  let wedCheck = weekWed.getFullYear() === today.getFullYear() && weekWed.getMonth() === today.getMonth() && weekWed.getDate() === today.getDate(); // 수요일 날짜를 오늘과 비교
+  let thuCheck = weekThu.getFullYear() === today.getFullYear() && weekThu.getMonth() === today.getMonth() && weekThu.getDate() === today.getDate(); // 목요일 날짜를 오늘과 비교
+  let friCheck = weekFri.getFullYear() === today.getFullYear() && weekFri.getMonth() === today.getMonth() && weekFri.getDate() === today.getDate(); // 금요일 날짜를 오늘과 비교
+  let satChrck = weekEnd.getFullYear() === today.getFullYear() && weekEnd.getMonth() === today.getMonth() && weekEnd.getDate() === today.getDate(); // 토요일 날짜를 오늘과 비교
+
+  let sunClass = sunCheck? "text-2xl text-red-400 bg-cyan-500 pl-8" : "text-2xl text-red-400 bg-cyan-100 pl-8"; // 일요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let monClass = monCheck? "text-2xl bg-cyan-500 pl-2" : "text-2xl bg-cyan-100 pl-2"; // 월요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let tueClass = tueCheck? "text-2xl bg-cyan-500 pl-2" : "text-2xl bg-cyan-100 pl-2"; // 회요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let wedClass = wedCheck? "text-2xl bg-cyan-500 pl-2" : "text-2xl bg-cyan-100 pl-2"; // 수요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let thuCalss = thuCheck? "text-2xl bg-cyan-500 pl-2" : "text-2xl bg-cyan-100 pl-2"; // 목요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let friClass = friCheck? "text-2xl bg-cyan-500 pl-2" : "text-2xl bg-cyan-100 pl-2"; // 금요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+  let satClass = satChrck? "text-2xl text-blue-400 bg-cyan-500 pl-2" : "text-2xl text-blue-400 bg-cyan-100 pl-2"; // 토요일 날짜와 오늘 날짜가 같다면 배경색을 바꿔 오늘이라는 것을 표현
+
   return(
     <>
       <div className="w-full h-32 bg-blue-500 p-6 mt-24">
@@ -204,35 +222,35 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, loggedUse
         </div>
       </div>
 
-      <div className="text-xl w-full bg-sky-100 p-4 font-Do">
-        <div className="cursor-pointer flex ml-6">
+      <div className="text-xl w-full bg-sky-100 font-Do">
+        <div className="cursor-pointer flex">
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100 text-red-500">{weekStart.getDate()} 일</div>
+            <div className={sunClass}>{weekStart.getDate()} 일</div>
             {sunDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100">{monDate} 월</div>
+            <div className={monClass}>{monDate} 월</div>
             {monDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100">{tueDate} 화</div>
+            <div className={tueClass}>{tueDate} 화</div>
             {tueDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100">{wedDate} 수</div>
+            <div className={wedClass}>{wedDate} 수</div>
             {wedDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100">{thuDate} 목</div>
+            <div className={thuCalss}>{thuDate} 목</div>
             {thuDay}
           </div>
           <div className="w-1/4">
-            <span className="text-2xl bg-cyan-100">{friDate} 금</span>
+            <div className={friClass}>{friDate} 금</div>
             {friDay}
           </div>
           <div className="w-1/4">
-            <div className="text-2xl bg-cyan-100 text-blue-500">{setdayDate} 토</div>
-            {setDay}
+            <div className={satClass}>{satdayDate} 토</div>
+            {satDay}
           </div>
         </div>
       </div>

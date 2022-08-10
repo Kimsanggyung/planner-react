@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getItem } from "../context/indexed"
+import { today } from "../context/today"
 import DaillyItem from "../parts/dailyItem"
 
 function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoState, setEditTodoState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
@@ -74,13 +75,16 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
     )
   });
 
+  let dateCheck = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate(); // 현재 날짜를 오늘과 비교
+  let dateClass = dateCheck? "text-xl ml-4 mr-4 text-purple-700 font-bolds" : "text-xl ml-4 mr-4 font-bolds"; // 현재 날짜와 오늘 날짜가 같다면 글씨색을 바꿔 오늘날짜라는 것을 표현
+
   return(
     <div>
       <div className="w-full h-32 bg-blue-400 mt-24 p-6 font-Do">
         <div className="font-Do flex item-center flex justify-center text-xl float-none">{date.getFullYear()}년</div>
         <div className="font-Do flex item-center flex justify-center text-xl mt-2">
           <button onClick={prevDay} className="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">어제</button>
-          <span className="text-xl ml-4 mr-4 font-bolds">{date.getMonth()+1}월{date.getDate()}일</span>
+          <span className={dateClass}>{date.getMonth()+1}월 {date.getDate()}일</span>
           <button onClick={nextDay} className="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">내일</button>
         </div>
       </div>
