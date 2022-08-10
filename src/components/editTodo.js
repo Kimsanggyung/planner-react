@@ -10,7 +10,7 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
   const [details, setDetails] = useState('');
   const [selectTime, setTime] = useState('');
   const [error, setError] = useState('');
-  const pattern = /^\d{4}$/ // 년도는 4자라 숫자여야한다
+  const pattern = /^\d{4}$/; // 년도는 4자라 숫자여야한다
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:'8'},{num:9},{num:10},
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
@@ -84,11 +84,11 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
       setError("제목을 입력해주세요"); //에러메시지 세팅
       console.log("제목을 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(!pattern.test(date)){ //정확한 날짜을 입력하지 않았으면
+    if(!pattern.test(selectYear)){ //정확한 날짜을 입력하지 않았으면
       setError("정확한 날짜를 입력해주세요"); //에러메시지 세팅
       console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(date)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(selectYear)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
       let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
       let putReq = store.put({ //indexedDB 수정
         id:(targetID), //id는 props로 받아온 targetID
