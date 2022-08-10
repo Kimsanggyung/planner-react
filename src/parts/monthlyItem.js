@@ -13,7 +13,7 @@ function MonthlyItem({getList, setTargetID, setCheckTodoState, setTodoState, set
   
   let parts;
   if(getList){
-    parts = <div onClick={()=>viweDetails(getList.id)} className="w-48 h-7 pb-1 ml-4 border-2 border-indigo-300 overflow-hidden">
+    parts = <div onClick={()=>viweDetails(getList.id)} className="w-48 h-7 pb-1 ml-4 border-2 border-indigo-300 text-cyan-800 overflow-hidden">
               {getList? getList.setTodoList.setTodo : ''}
             </div>
   }else{

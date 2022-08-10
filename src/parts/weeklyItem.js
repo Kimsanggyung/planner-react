@@ -12,7 +12,7 @@ function WeeklyItem({getList, setTargetID, setTodoState, setCheckDetailState, se
   }
 
   return(
-   <span onClick={()=>viweDetails(getList.id)}>
+   <span className="text-cyan-800" onClick={()=>viweDetails(getList.id)}>
     {getList? getList.setTodoList.setTodo : ''}
    </span>
   )

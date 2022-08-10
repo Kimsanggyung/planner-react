@@ -14,7 +14,7 @@ function DaillyItem({getList, setTargetID, setCheckTodoState, setTodoState, setC
 
 
   return(
-   <span onClick={()=>viweDetails(getList.id)}>
+   <span className="text-cyan-800" onClick={()=>viweDetails(getList.id)}>
    {getList? getList.setTodoList.setTodo : ''}
    </span>
   )
