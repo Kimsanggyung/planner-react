@@ -18,10 +18,10 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
   const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
   const [todoData, setTodoData] = useState(null);
 
-  useEffect(()=>{
-    setGetDate(odate);
-    setMonthIndex(odate.getMonth());
-  }, [odate])
+  useEffect(()=>{ // odate가 변경될 때 마다
+    setGetDate(odate); // getDate에 odate 세팅
+    setMonthIndex(odate.getMonth()); // monthIndex에 odate monthIndex값 세팅
+  }, [odate]);
 
 
   useEffect(() => { // monthIndex가 변경될 때 마다 실행
@@ -43,7 +43,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year+1); // 1년을 더해준다
       return setMonthIndex(0) // monthIndex를 0으로
     }
-    return setDate(new Date(year,monthIndex+1,1)) // 1달 더해주기
+    return setDate(new Date(year,monthIndex+1,1)) // 1달 더해주기(odate에 다음달 세팅해주기)
 	}
 	
 	const goToPrevMonth = () => { // 이전달 버튼 함수
@@ -51,7 +51,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
       setYear(year-1); //1년 빼주기
 		  return setMonthIndex(11); // monthIndex를 11로
 		}
-		return setDate(new Date(year,monthIndex-1,1)); // 1달 빼주기
+		return setDate(new Date(year,monthIndex-1,1)); // 1달 빼주기(odate에 저번달 세팅해주기)
 	}
 
   const viweAddTodo = (i,firstDayIndex) =>{ // 일정추가할 수 있게 하는 함수

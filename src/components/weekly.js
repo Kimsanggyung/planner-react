@@ -12,8 +12,8 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   let date = getDate.getDate();
   let day = getDate.getDay();
 
-  useEffect(()=>{
-    setGetDate(odate)
+  useEffect(()=>{ // odate 변경될 때 마다 실행
+    setGetDate(odate); // getDate에 odate세팅
   }, [odate])
 
   const getAddDate = (date, num) => { // 이번주날짜를 계산하기 위한 함수
@@ -52,9 +52,9 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
     setTodoState(true); // 일정추가 컴포넌트를 실해시키기 위해서 todoState를 참으로
     setAddTodoState(true); // 일정추가 컴포넌트를 실행시키기 위해서 addTodoState를 참으로
     setAddDate(selectDate); // 선택 날짜를 클릭한 날짜로 세팅
-    setSelectYear(date.getFullYear());
-    setSelectMonth(date.getMonth()+1);
-    setSelectDate(date.getDate());
+    setSelectYear(date.getFullYear()); // 선택년도를 클릭한 날짜의  년도로
+    setSelectMonth(date.getMonth()+1); // 선택월을 클릭한 날짜의  월로
+    setSelectDate(date.getDate()); // 선택일을 클릭한 날짜의  일로
   }
 
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
@@ -181,24 +181,24 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
 
 
 
-  const nextWeek = () => {
-    const nextDate = (getDate) => {
-      var result = new Date(getDate);
-      result.setDate(result.getDate() + 7);
-      return result;
+  const nextWeek = () => { // 다음주 버튼 함수
+    const nextDate = (getDate) => { // 다음주 날짜를 계산하느 함수
+      let result = new Date(getDate); // 현재보고 있는 날짜 세팅
+      result.setDate(result.getDate() + 7); // 현재에서 7일 뒤를 계산
+      return result; // 계산한 값 반환
     }
-    setDate(nextDate(getDate));
-    return setGetDate(nextDate(getDate));
+    setDate(nextDate(getDate)); // odate에 다음주 날짜 세팅
+    return setGetDate(nextDate(getDate)); //getDate에 다음주 날짜 세팅
   }
 
-  const prevWeek = () => {
-    const pastDate = (getDate) => {
-      var result = new Date(getDate);
-      result.setDate(result.getDate() - 7);
-      return result;
+  const prevWeek = () => { // 전주 버튼 함수
+    const pastDate = (getDate) => { // 전주 날짜를 계산하느 함수
+      let result = new Date(getDate); // 현재보고 있는 날짜 세팅
+      result.setDate(result.getDate() - 7); // 현재에서 7일 전를 계산
+      return result; // 계산한 값 반환
     }
-    setDate(pastDate(getDate));
-    return setGetDate(pastDate(getDate));
+    setDate(pastDate(getDate)); // odate에 다음주 날짜 세팅
+    return setGetDate(pastDate(getDate)); //getDate에 다음주 날짜 세팅
   };
 
   let sunCheck = weekStart.getFullYear() === today.getFullYear() && weekStart.getMonth() === today.getMonth() && weekStart.getDate() === today.getDate(); // 일요일 날짜를 오늘과 비교
