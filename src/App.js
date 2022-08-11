@@ -7,12 +7,13 @@ import SignUp from "./components/signUp";
 import Todo from "./contents/todo";
 import SelectTodo from "./components/selectTodo";
 import Welcome from "./components/welcome";
+import Logout from "./components/logout";
 import { useState } from "react";
 
 function App(){
-  let selectSign = null;
-  let selected = null;
-  let now = null;
+  let selectSign;
+  let selected;
+  let now;
   const [date, setDate] = useState(new Date());
   const [loginState, setLoginState] = useState(false);
   const [dailyState, setDailyState] = useState(false);
@@ -30,7 +31,8 @@ function App(){
   const [addDate, setAddDate] = useState('')
   const [selectYear, setSelectYear] = useState(null);
   const [selectMonth, setSelectMonth] = useState(null);
-  const [selectDate, setSelectDate] = useState(null);
+  const [selectDate, setSelectDate] = useState(null); 
+  let saveID = localStorage.getItem('saveLogin');
 
 
   if(todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
@@ -51,8 +53,8 @@ function App(){
     <Clock/>
   </div>
   }else if(loginState){ //loginState 참이면
-    now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-2 pl-4 float-left">
-    <Welcome loggedUser={loggedUser}/>
+    now = <div className="border border-yellow-700 rounded w-96 ml-8 pl-4 float-left">
+    <Welcome loggedUser={loggedUser}/> <Logout setLoginState={setLoginState}/>
     <Today/>
     <Clock/>
   </div>

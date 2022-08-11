@@ -77,8 +77,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
   const items = []
 
   for(let i = 0; i <= calendarCellsQty; i++){ // 반복문 calendarCellsQty보다 작을 때까지 반복
-    const ttest = today.getDate()+(firstDayIndex-1) === i && monthIndex === today.getMonth() && year === today.getFullYear()
-    console.log(ttest)
+    
     const noting = i < firstDayIndex || i >= numberOfDays+firstDayIndex; // 이전달이나 다음 날 날짜 부분을 체크
     let isActive = i === today.getDate()+(firstDayIndex-1) && monthIndex === today.getMonth() && year === today.getFullYear(); // 이번달 날짜 체크
     let classActive = isActive ? 'active' : ''; // 오늘날짜에 강조
