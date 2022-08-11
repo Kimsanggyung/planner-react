@@ -13,9 +13,9 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
     setAddDate(selectYear+"."+selectMonth+"."+selectDate);
   },[selectYear, selectMonth, selectDate]);
 
-  const time = [
-    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
-    {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
+  const time = [ {time:"하루종일"},
+    {time:"1시"},{time:"2시"},{time:"3시"},{time:"4시"},{time:"5시"},{time:"6시"},{time:"7시"},{time:"8시"},{time:"9시"},{time:"10시"},{time:"11시"},{time:"12시"},
+    {time:"13시"},{time:"14시"},{time:"15시"},{time:"16시"},{time:"17시"},{time:"18시"},{time:"19시"},{time:"20시"},{time:"21시"},{time:"22시"},{time:"23시"},{time:"24시"}
   ];
   const monthArray = [1,2,3,4,5,6,7,8,9,10,11,12];
   const dateArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
@@ -78,13 +78,13 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   }
 
   const timeOptions =  time.map((data, idx)=>{ //시간 선택 반복문
-    return <option value={data.num} key={idx}>{data.num}시</option> // 값을 배열에 있는 숫자로 키값을 index로
+    return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
-  const monthOptions = monthArray.map((num , idx)=>{ // 월 선택 반복문
-    return <option value={num} key={idx}>{num}월</option> // 값을 배열에 있는 숫자로 키값을 index로
+  const monthOptions = monthArray.map((time , idx)=>{ // 월 선택 반복문
+    return <option value={time} key={idx}>{time}월</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
-  const dateOptions = dateArray.map((num, idx)=>{ // 일 선택 빈복문
-    return <option value={num} key={idx}>{num}일</option> // 값을 배열에 있는 숫자로 키값을 index로
+  const dateOptions = dateArray.map((time, idx)=>{ // 일 선택 빈복문
+    return <option value={time} key={idx}>{time}일</option> // 값을 배열에 있는 숫자로 키값을 index로
   })
 
   return(

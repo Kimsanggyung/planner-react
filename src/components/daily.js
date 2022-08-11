@@ -7,17 +7,17 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
 
   const [todoData, setTodoData] = useState(null);
 
-  const time = [
-    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},
-    {num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
+  const time = [ {time:"하루종일"},
+    {time:"1시"},{time:"2시"},{time:"3시"},{time:"4시"},{time:"5시"},{time:"6시"},{time:"7시"},{time:"8시"},{time:"9시"},{time:"10시"},{time:"11시"},{time:"12시"},
+    {time:"13시"},{time:"14시"},{time:"15시"},{time:"16시"},{time:"17시"},{time:"18시"},{time:"19시"},{time:"20시"},{time:"21시"},{time:"22시"},{time:"23시"},{time:"24시"}
   ];
 
   useEffect(()=>{ //컴포넌트가 실행됐을 때
     getItem().then((data)=> setTodoData(data)); //indexedDB에서 가져온 데이터를 todoData에 세팅
   },[]);
 
-  const viweAddTodo = (num) => { //일정추가 함수
-    setSelectedTime(num); //parameter로 받아온 숫자로 selectedTime 세팅
+  const viweAddTodo = (time) => { //일정추가 함수
+    setSelectedTime(time); //parameter로 받아온 숫자로 selectedTime 세팅
     setTodoState(true); // 일정추가 화면을 보여주기 위해 일정추가 컴포넌트의 부모컴포넌트 state를 true로
     setAddTodoState(true); //일정추가 화면을 보여주기 위해서 일정추가 컴포넌트의 state를 true로
     setSelectYear(date.getFullYear()); // 일정추가 화면에서 년도 입력창 값을 현재 년도로 설정
@@ -55,18 +55,19 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
     const result = data.find(({setTodoList})=>{ //setTodoList 찾음
       if (!setTodoList) return false; // setTodoList가 없다면 false반환
       const {setTime, setDate, setUser} = setTodoList; //setTodoList에 있는 setTime setDate setUser 상수로
-      return (parseInt(setTime) === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
+      return (setTime === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
     })
+    console.log(time )
     return result; //원하는 값 반환
   }
 
   const parts = time.map((data, idx)=>{ // time으로 반복
     return( 
             <div className="text-xl font-Do mb-4 underline cursor-pointer" key={idx}> 
-              <span className='mr-4' onClick={()=>viweAddTodo(data.num)}>{data.num}시:</span>
+              <span className='mr-4' onClick={()=>viweAddTodo(data.time)}>{data.time}:</span>
               {todoData? 
                 <>
-                <DaillyItem getList={findData(data.num, todoData)} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
+                <DaillyItem getList={findData(data.time, todoData)} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
                 </>
                 :
                 <span>데이터를 불러오는 중입니다.</span>

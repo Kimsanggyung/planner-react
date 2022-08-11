@@ -16,9 +16,9 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
     setGetDate(odate); // getDate에 odate세팅
   }, [odate])
 
-  const getAddDate = (date, num) => { // 이번주날짜를 계산하기 위한 함수
+  const getAddDate = (date, time) => { // 이번주날짜를 계산하기 위한 함수
     const temp = new Date(date); // parameter로 받아온 date를 계산할 날짜로
-    temp.setDate(temp.getDate() + num); // parameter로 받아온 숫자를 더해 날짜 계산
+    temp.setDate(temp.getDate() + time); // parameter로 받아온 숫자를 더해 날짜 계산
     return temp.getDate(); // 계산한 날짜 반환
   }
 
@@ -38,17 +38,18 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
   let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
 
-  const time = [
-    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},{num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
-  ]
+  const time = [ {time:"하루종일"},
+    {time:"1시"},{time:"2시"},{time:"3시"},{time:"4시"},{time:"5시"},{time:"6시"},{time:"7시"},{time:"8시"},{time:"9시"},{time:"10시"},{time:"11시"},{time:"12시"},
+    {time:"13시"},{time:"14시"},{time:"15시"},{time:"16시"},{time:"17시"},{time:"18시"},{time:"19시"},{time:"20시"},{time:"21시"},{time:"22시"},{time:"23시"},{time:"24시"}
+  ];
 
   useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
     getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
   },[]);
 
-  const viweAddTodo = (num, date) => { // 일정추가 할 수 있게 하는 버튼 함수
+  const viweAddTodo = (time, date) => { // 일정추가 할 수 있게 하는 버튼 함수
     const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
-    setSelectedTime(num); // 시간선택을 클릭한 시간으로 세팅
+    setSelectedTime(time); // 시간선택을 클릭한 시간으로 세팅
     setTodoState(true); // 일정추가 컴포넌트를 실해시키기 위해서 todoState를 참으로
     setAddTodoState(true); // 일정추가 컴포넌트를 실행시키기 위해서 addTodoState를 참으로
     setAddDate(selectDate); // 선택 날짜를 클릭한 날짜로 세팅
@@ -68,7 +69,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
       if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
       const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
       const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
-      return (parseInt(setTime) === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
+      return (setTime === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
     return result; // 찾은 데이터 반환
   };
@@ -76,10 +77,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const sunDay = time.map((data, idx)=>{ // 배열로 반복하는 일요일 배열
     return(
       <div className="mt-4 pl-8" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekStart)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekStart)}>{data.time}:</span>
         {todoData? 
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -91,10 +92,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const monDay = time.map((data, idx)=>{ // 배열로 반복하는 월요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekMon)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekMon)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "월")} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "월")} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -106,10 +107,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const tueDay = time.map((data, idx)=>{ // 배열로 반복하는 화요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekTue)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekTue)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "화")} targetID={targetID} setEditTodoState={setEditTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "화")} targetID={targetID} setEditTodoState={setEditTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -121,10 +122,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const wedDay = time.map((data, idx)=>{ // 배열로 반복하는 수요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekWed)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekWed)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "수")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "수")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -136,10 +137,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const thuDay = time.map((data, idx)=>{ // 배열로 반복하는 목요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekThu)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekThu)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "목")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "목")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -151,10 +152,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const friDay = time.map((data, idx)=>{ // 배열로 반복하는 금요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekFri)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekFri)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "금")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "금")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
@@ -166,10 +167,10 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   const satDay = time.map((data, idx)=>{ // 배열로 반복하는 토요일 배열
     return(
       <div className="mt-4 pl-2" key={idx}>  
-        <span className='mr-2' onClick={()=>viweAddTodo(data.num, weekEnd)}>{data.num}시:</span>
+        <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekEnd)}>{data.time}:</span>
         {todoData?
           <>
-            <WeeklyItem getList={findWeekData(data.num, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
+            <WeeklyItem getList={findWeekData(data.time, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
           <span>데이터를 불러오는 중입니다.</span>
