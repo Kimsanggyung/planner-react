@@ -94,10 +94,9 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
           <span>제목: </span>
           <input type="text" onChange={inputTodoChange} className="border border-gray-500"></input>
         </div>
-
+        <span>세부내용: </span>
         <div className="mb-6">
-          <span>세부내용: </span>
-          <input type="text" onChange={inputDetailsChange} className="border border-gray-500"></input>
+          <textarea type="text" onChange={inputDetailsChange} className="w-60 h-20 border border-gray-500"></textarea>
         </div>
 
         <div className="mb-8">

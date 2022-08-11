@@ -131,10 +131,9 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
             <span>제목: </span>
             <input type="text" value={todo} onChange={inputTodoChange} className="border border-gray-500"></input>
           </div>
-
+          <span>세부내용: </span>
           <div className="mb-4">
-            <span>세부내용: </span>
-            <input type="text" value={details} onChange={inputDetailsChange} className="border border-gray-500 w-80"></input>
+            <textarea type="text" value={details} onChange={inputDetailsChange} className="border border-gray-500 w-80"></textarea>
           </div>
           <div className="mb-4">
             <label>시간:</label>
