@@ -83,16 +83,16 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
     let classActive = isActive ? 'active' : ''; // 오늘날짜에 강조
     let monthList; // 렌더를 위한 변수
     if(noting){ // 이전달이나 다음날 날짜 자리면
-      monthList =  <li key={i}>
-                    <div>&nbsp;</div>
-                    <div className="w-48 h-7 overflow-hidden"></div>
-                    <div></div>
-                  </li>
-    }else if(todoData){ // 이번달 날짜 자리면
-      monthList =  <li className={classActive} key={i}>
-                <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-                <MonthlyItem month={month} setEditTodoState={setEditTodoState} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
-              </li>
+      monthList  =  <li key={i}>
+                      <div>&nbsp;</div>
+                      <div className="w-48 h-7 overflow-hidden"></div>
+                      <div></div>
+                    </li>
+    }else if(todoData && !noting){ // 이번달 날짜 자리면
+      monthList  =  <li className={classActive} key={i}>
+                      <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
+                      <MonthlyItem month={month} setEditTodoState={setEditTodoState} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+                    </li>
     } 
  
     items.push( // 빈 배열에 넣어주기
