@@ -70,7 +70,7 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
                 <DaillyItem getList={findData(data.time, todoData)} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
                 </>
                 :
-                <span>데이터를 불러오는 중입니다.</span>
+                <span></span>
               }              
             </div>
     )

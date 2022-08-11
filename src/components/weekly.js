@@ -83,7 +83,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "일")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -98,7 +98,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "월")} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -113,7 +113,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "화")} targetID={targetID} setEditTodoState={setEditTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -128,7 +128,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "수")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -143,7 +143,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "목")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -158,7 +158,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "금")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
@@ -173,7 +173,7 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
             <WeeklyItem getList={findWeekData(data.time, todoData, "토")} targetID={targetID} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState} />
           </>
           :
-          <span>데이터를 불러오는 중입니다.</span>
+          <span></span>
         }          
       </div>
     )
