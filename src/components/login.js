@@ -9,6 +9,7 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
   const [hashPwd, setHashPwd] =useState('');
+  const [check, setCheck] = useState(null);
   const saltKey = 'nuguseyo'
 
   useEffect(()=>{// inputID inputPWD가 변경될 때 마다 실행
@@ -75,9 +76,10 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
         }
       }
     })
+    if(check === "checked"){
+      localStorage.setItem('saveLogin', inputID)
+    }
   }
-
-
 
   const inputIdChange = event => { // 아이디 입력창에 입력을 하는 등 이벤트가 발생하면 setInputID
     setInputID(event.target.value)
@@ -89,6 +91,10 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
 
   const signUp = () => { // 회원가입 버튼 함수
     setSignUpState(true); // 회원 가입 화면을 보여주기 위해 signUpState를 ture로
+  }
+
+  const clickCheck = () => {
+    setCheck("checked")
   }
 
   if(!loginState){
@@ -121,6 +127,7 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
           <div className="flex items-center justify-between">
             <button type="submit" onClick={login} className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">로그인</button>
           </div>
+          <label><input onClick={clickCheck} type="checkbox" id="id"></input>아이디 저장</label>
           <div className="flex items-center justify-between">
             <button onClick={signUp} className="text-blue-600 mt-4 underline underline-offset-2">회원가입</button>
           </div>
