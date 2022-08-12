@@ -1,13 +1,39 @@
 import AddTodoError from "../parts/addTodoError";
 import { setItem } from '../context/indexed'
 import { useEffect, useState } from "react";
+import { getItem } from "../context/indexed"
+
 
 function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDate, setAddDate, selectYear, setSelectYear, selectMonth, setSelectMonth, selectDate, setSelectDate}){
 
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
+  const [checkSame, setCheckSame] = useState(undefined);
   const pattern = /^\d{4}$/;
+
+  
+  useEffect(()=>{
+    const checkSameDate = () =>{
+      getItem().then(data=>{
+        if(data.length > 0){
+          const checkUserTodo = data.find(({setTodoList}) => {
+            if(setTodoList){
+              const sameDate = setTodoList.setTime === selectedTime && setTodoList.setDate === addDate && loggedUser === setTodoList.setUser;
+              return sameDate
+            }else{
+              return false;
+            }
+          })
+          setCheckSame(checkUserTodo);
+        }
+      })
+    }
+    checkSameDate()
+
+  }, [selectYear, selectMonth, selectDate ,selectedTime, addDate, loggedUser]);
+  
+  console.log("test--------"+checkSame)
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
     setAddDate(selectYear+"."+selectMonth+"."+selectDate);
@@ -51,6 +77,10 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
   }
 
   const submit = () => { // 등록버튼 함수
+    if(checkSame!==undefined){
+      setError("해당 일자에 일정이 있습니다") // 날짜가 정확하지 않다면 에러메시지 세팅
+      console.log("해당 일자에 일정이 있습니다")
+    }
     if(selectedTime === "시간선택" || selectedTime === ""){  //시간을 선택했는지 확인
       setError("일정시간을 선택해주세요") //선택을 안했다면 에러메시지 세팅
       console.log("일정시간을 선택해주세요") // 콘솔로그에 에러메시지 보여주기
@@ -62,11 +92,12 @@ function AddTodo({loggedUser, setTodoState, selectedTime, setSelectedTime, addDa
     if(todo === ""){ // 제목창이 비어있는 것을 확인
       setError("제목을 입력해주세요") // 비어있다면 에러메시지 세팅
       console.log("제목을 입력해주세요") // 콘솔로그에 에러메시지 보여주기
-    }if(!pattern.test(selectYear)){ //날짜가 정확한지 정규표현식을 통해 확인
+    }
+    if(!pattern.test(selectYear)){ //날짜가 정확한지 정규표현식을 통해 확인
       setError("정확한 년도를 입력해주세요") // 날짜가 정확하지 않다면 에러메시지 세팅
       console.log("정확한 년도를 입력해주세요") // 콘솔로그에 에러메시지 보여주기
     }
-    if(selectedTime !== "시간선택" && selectedTime !== "" && details !== "" && todo !== "" && pattern.test(selectYear)){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
+    if(selectedTime !== "시간선택" && selectedTime !== "" && details !== "" && todo !== "" && pattern.test(selectYear) && checkSame === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
       setItem({setTodoList}); // indexedDB에 setTodoList 저장
       setTodoState(false); // 할일 추가를 완료했다면 달력화면으로 가도록 state값 변경
