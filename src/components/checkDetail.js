@@ -39,12 +39,12 @@ function CheckDetail({targetID, setTargetID, setCheckDetailState, setTodoState, 
         </div>
     
         <div className="text-2xl">
-          <span>예정일:</span>
+          <span>예정일: </span>
           <span>{date}</span>
         </div>
         <div className="mb-10 text-2xl">
-          <span>예정시간:</span>
-          <span>{time}시</span>
+          <span>예정시간: </span>
+          <span>{time}</span>
         </div>
         <div className="float-left">
           <button onClick={() => editMode(targetID)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">수정</button>
