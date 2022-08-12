@@ -23,7 +23,7 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
       setLoginState(true);
       setLoggedUser(saveID);
     }
-  },[])
+  },[saveID, setLoggedUser, setLoginState])
 
   const checkUser = (id, pwd) => { // 원하는 유저 찾기
 		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); //OuserData에 아이디 비밀번호 입력한 아이디 비밀번호 비교

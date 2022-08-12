@@ -32,19 +32,34 @@ function App(){
   const [selectYear, setSelectYear] = useState(null);
   const [selectMonth, setSelectMonth] = useState(null);
   const [selectDate, setSelectDate] = useState(null); 
-  let saveID = localStorage.getItem('saveLogin');
-
 
   if(todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
-  selected = <Todo selectYear={selectYear} setSelectYear={setSelectYear} selectMonth={selectMonth} setSelectMonth={setSelectMonth} selectDate={selectDate} setSelectDate={setSelectDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} checkDetailState={checkDetailState} setCheckDetailState={setCheckDetailState} editTodoState={editTodoState} setEditTodoState={setEditTodoState} targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} setTodoState={setTodoState} addDate={addDate} setAddDate={setAddDate}/>
+    selected =  <Todo 
+                  selectYear={selectYear} setSelectYear={setSelectYear} selectMonth={selectMonth} 
+                  setSelectMonth={setSelectMonth} selectDate={selectDate} setSelectDate={setSelectDate} 
+                  selectedTime={selectedTime} setSelectedTime={setSelectedTime} checkDetailState={checkDetailState} 
+                  setCheckDetailState={setCheckDetailState} editTodoState={editTodoState} setEditTodoState={setEditTodoState} 
+                  targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} loginState={loginState} addTodoState={addTodoState} 
+                  setAddTodoState={setAddTodoState} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} todoState={todoState} 
+                  setTodoState={setTodoState} addDate={addDate} setAddDate={setAddDate}
+                />
   }else if(todoState === false){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
-    selected = <Calendar selectYear={selectYear} setSelectYear={setSelectYear} selectMonth={selectMonth} setSelectMonth={setSelectMonth} selectDate={selectDate} setSelectDate={setSelectDate} setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} setAddDate={setAddDate} setEditTodoState={setEditTodoState} setCheckTodoState={setCheckTodoState}/>
+    selected =  <Calendar selectYear={selectYear} setSelectYear={setSelectYear} selectMonth={selectMonth} 
+                  setSelectMonth={setSelectMonth} selectDate={selectDate} setSelectDate={setSelectDate} 
+                  setAddTodoState={setAddTodoState} setSelectedTime={setSelectedTime} loggedUser={loggedUser} date={date} 
+                  setDate={setDate} loginState={loginState} dailyState = {dailyState} weeklyState = {weeklyState} 
+                  monthlyState = {monthlyState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} 
+                  setTargetID={setTargetID} setAddDate={setAddDate} setEditTodoState={setEditTodoState} 
+                  setCheckTodoState={setCheckTodoState}
+                />
   };
 
   if(signUpState === true){ //signUpState가 참이면 signUp컴포넌트 보여주기
     selectSign = <SignUp setSignUpState = {setSignUpState}/>
   }else if(signUpState === false){  //signUpState가 거짓이면 login컴포넌트 보여주기
-    selectSign = <Login setLoggedUser={setLoggedUser} loginState={loginState} setLoginState={setLoginState} signUpState={signUpState} setSignUpState={setSignUpState} />
+    selectSign =  <Login setLoggedUser={setLoggedUser} loginState={loginState} setLoginState={setLoginState} 
+                    signUpState={signUpState} setSignUpState={setSignUpState} 
+                  />
   };
 
   if(!loginState){ //loginState가 참이 아니면 
@@ -67,8 +82,16 @@ function App(){
         <div>
           {selectSign}
         </div>
-        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState} setAddDate={setAddDate} setDate={setDate} setSelectYear={setSelectYear} setSelectMonth={setSelectMonth} setSelectDate={setSelectDate}/>
-        <SelectTodo loginState={loginState} addTodoState={addTodoState} setTodoState={setTodoState} setAddTodoState={setAddTodoState} setDate={setDate} checkTodoState={checkTodoState} setCheckTodoState={setCheckTodoState} setSelectedTime={setSelectedTime} setAddDate={setAddDate} setSelectYear={setSelectYear} setSelectMonth={setSelectMonth} setSelectDate={setSelectDate}/>
+        <Select loginState={loginState} dailyState = {dailyState} setDailyState = {setDailyState} 
+          weeklyState = {weeklyState} setWeeklyState = {setWeeklyState} monthlyState = {monthlyState} 
+          setMonthlyState = {setMonthlyState} todoState={todoState} setTodoState={setTodoState} setAddDate={setAddDate} 
+          setDate={setDate} setSelectYear={setSelectYear} setSelectMonth={setSelectMonth} setSelectDate={setSelectDate}
+        />
+        <SelectTodo loginState={loginState} addTodoState={addTodoState} setTodoState={setTodoState} 
+          setAddTodoState={setAddTodoState} setDate={setDate} checkTodoState={checkTodoState} 
+          setCheckTodoState={setCheckTodoState} setSelectedTime={setSelectedTime} setAddDate={setAddDate} 
+          setSelectYear={setSelectYear} setSelectMonth={setSelectMonth} setSelectDate={setSelectDate}
+        />
         {selected}
       </>
   )
