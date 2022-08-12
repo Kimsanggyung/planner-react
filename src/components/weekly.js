@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getItem } from "../context/indexed";
 import { today } from "../context/today";
+import { time } from "../baseData"
 import WeeklyItem from '../parts/weeklyItem';
 
 
@@ -37,11 +38,6 @@ function Weekly({setTodoState, setCheckTodoState, setCheckDetailState, odate, se
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
   let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
-
-  const time = [ {time:"하루종일"},
-    {time:"1시"},{time:"2시"},{time:"3시"},{time:"4시"},{time:"5시"},{time:"6시"},{time:"7시"},{time:"8시"},{time:"9시"},{time:"10시"},{time:"11시"},{time:"12시"},
-    {time:"13시"},{time:"14시"},{time:"15시"},{time:"16시"},{time:"17시"},{time:"18시"},{time:"19시"},{time:"20시"},{time:"21시"},{time:"22시"},{time:"23시"},{time:"24시"}
-  ];
 
   useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
     getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
