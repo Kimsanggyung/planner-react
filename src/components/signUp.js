@@ -20,7 +20,7 @@ function SignUp({setSignUpState}){
      
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
   
-  }, [inputPWD]);
+  }, [inputPWD, saltKey]);
 
   useEffect(()=>{ // inputID hashPwd가 변경될 때 마다 실행
 
