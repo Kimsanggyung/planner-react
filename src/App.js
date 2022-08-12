@@ -9,29 +9,58 @@ import SelectTodo from "./components/selectTodo";
 import Welcome from "./components/welcome";
 import Logout from "./components/logout";
 import { useState } from "react";
+import Test from "./components/test";
 
 function App(){
   let selectSign;
   let selected;
   let now;
+  let test;
+
   const [date, setDate] = useState(new Date());
-  const [loginState, setLoginState] = useState(false);
-  const [dailyState, setDailyState] = useState(false);
-  const [weeklyState, setWeeklyState] = useState(false);
-  const [monthlyState, setMonthlyState] = useState(true);
-  const [signUpState, setSignUpState] = useState(false);
-  const [todoState, setTodoState] = useState(false);
-  const [addTodoState, setAddTodoState] = useState(false);
-  const [checkTodoState, setCheckTodoState] = useState(false);
-  const [loggedUser, setLoggedUser] = useState('')
-  const [targetID, setTargetID] =useState('')
-  const [editTodoState, setEditTodoState] = useState(false);
-  const [checkDetailState, setCheckDetailState] = useState(false);
-  const [selectedTime, setSelectedTime] = useState("시간선택");
-  const [addDate, setAddDate] = useState('')
-  const [selectYear, setSelectYear] = useState(null);
-  const [selectMonth, setSelectMonth] = useState(null);
-  const [selectDate, setSelectDate] = useState(null); 
+  const [loginState, setLoginState] = useState(false); //
+  const [dailyState, setDailyState] = useState(false); //
+  const [weeklyState, setWeeklyState] = useState(false); // 
+  const [monthlyState, setMonthlyState] = useState(true); //
+  const [signUpState, setSignUpState] = useState(false); //
+  const [todoState, setTodoState] = useState(false); //
+  const [addTodoState, setAddTodoState] = useState(false); //
+  const [checkTodoState, setCheckTodoState] = useState(false); //
+  const [editTodoState, setEditTodoState] = useState(false); //
+  const [checkDetailState, setCheckDetailState] = useState(false); //
+  const [loggedUser, setLoggedUser] = useState(null);
+  const [targetID, setTargetID] =useState(null);
+  const [addDate, setAddDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState("시간선택"); //
+  const [selectYear, setSelectYear] = useState(null); //
+  const [selectMonth, setSelectMonth] = useState(null); //
+  const [selectDate, setSelectDate] = useState(null); //
+
+  const [state, setState] = useState([
+    {loginState: false},
+    {monthlyState: true},
+    {weeklyState: false},
+    {dailyState: false},
+    {signUpState: false},
+    {todoState: false},
+    {addTodoState: false},
+    {editTodoState: false},
+    {checkTodoState: false},
+    {checkDetailState: false},
+    {testState: true} 
+  ]);
+  
+  const [select, setSelect] = useState([
+    {selectYear: null},
+    {selectMonth: null},
+    {selectDate: null},
+    {selectedTime: null}
+  ])
+
+  const test1 = state[10]
+  if(test1.testState){
+    test = <Test state={state} setState={setState}/>
+  }
 
   if(todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
     selected =  <Todo 
@@ -79,6 +108,8 @@ function App(){
   return (
       <>
         {now}
+
+        {test}
         <div>
           {selectSign}
         </div>
