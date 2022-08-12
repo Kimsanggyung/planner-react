@@ -50,14 +50,13 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
     setSelectDate(date.getDate()-1); // selectDate를 전날 날짜로 세팅
     return setDate(minusDate(date)); //data를 전날 날짜로 세팅
   } 
-
+ 
   const findData = (time, data) => { //inedxedDB에서 원하는 값찾기
     const result = data.find(({setTodoList})=>{ //setTodoList 찾음
       if (!setTodoList) return false; // setTodoList가 없다면 false반환
       const {setTime, setDate, setUser} = setTodoList; //setTodoList에 있는 setTime setDate setUser 상수로
       return (setTime === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
     })
-    console.log(time )
     return result; //원하는 값 반환
   }
 
