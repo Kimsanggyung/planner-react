@@ -36,29 +36,28 @@ function App(){
   const [selectMonth, setSelectMonth] = useState(null); //
   const [selectDate, setSelectDate] = useState(null); //
 
-  const [state, setState] = useState([
-    {loginState: false},
-    {monthlyState: true},
-    {weeklyState: false},
-    {dailyState: false},
-    {signUpState: false},
-    {todoState: false},
-    {addTodoState: false},
-    {editTodoState: false},
-    {checkTodoState: false},
-    {checkDetailState: false},
-    {testState: true} 
-  ]);
+  const [state, setState] = useState({
+    loginState: false,
+    monthlyState: true,
+    weeklyState: false,
+    dailyState: false,
+    signUpState: false,
+    todoState: false,
+    addTodoState: false,
+    editTodoState: false,
+    checkTodoState: false,
+    checkDetailState: false,
+    testState: true
+  });
   
-  const [select, setSelect] = useState([
-    {selectYear: null},
-    {selectMonth: null},
-    {selectDate: null},
-    {selectedTime: null}
-  ])
+  const [select, setSelect] = useState({
+    selectYear: null,
+    selectMonth: null,
+    selectDate: null,
+    selectedTime: null
+  });
 
-  const test1 = state[10]
-  if(test1.testState){
+  if(state.testState){
     test = <Test state={state} setState={setState}/>
   }
 
