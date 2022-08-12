@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
-import EditError from "../parts/editError"
-import { getItem, db } from "../context/indexed"
+import EditError from "../parts/editError";
+import { getItem, db } from "../context/indexed";
+import { time, monthArray, dateArray } from "../baseData";
 
 function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear, selectMonth, setSelectMonth, selectDate, setSelectDate}){
 
-  // const [todayDate, setDate] = useState(year + '.' + month + '.' + date)
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
   const [selectTime, setTime] = useState('');
   const [error, setError] = useState('');
   const pattern = /^\d{4}$/; // 년도는 4자라 숫자여야한다
-  const time = [ {time:"하루종일"},
-    {time:"1시"},{time:"2시"},{time:"3시"},{time:"4시"},{time:"5시"},{time:"6시"},{time:"7시"},{time:"8시"},{time:"9시"},{time:"10시"},{time:"11시"},{time:"12시"},
-    {time:"13시"},{time:"14시"},{time:"15시"},{time:"16시"},{time:"17시"},{time:"18시"},{time:"19시"},{time:"20시"},{time:"21시"},{time:"22시"},{time:"23시"},{time:"24시"}
-  ];
-  const monthArray = [1,2,3,4,5,6,7,8,9,10,11,12];
-  const dateArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 
   const timeOptions =  time.map((data, idx)=>{ // 시간 선택 반복문
     return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
@@ -57,7 +51,7 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
       setSelectMonth(value.setTodoList.selectMonth); // 가져온 데이터에 있는 selectMonth를 selectMonth에 세팅
       setSelectDate(value.setTodoList.selectDate); // 가져온 데이터에 있는 selectDate를 selectDate에 세팅
     });
-  },[]);
+  },[setSelectDate, setSelectMonth, setSelectYear, targetID]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
     setDate(selectYear+"."+selectMonth+"."+selectDate)
