@@ -1,4 +1,4 @@
-function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState, setAddDate, setDate, setSelectYear, setSelectMonth, setSelectDate}){
+function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklyState, monthlyState, setMonthlyState, todoState, setTodoState}){
 
   const viweMonth = () => { // 달력보이게 하는 함수
     if(weeklyState === true){ // weeklyStat가 참이면
@@ -37,11 +37,6 @@ function Select({loginState, dailyState, setDailyState, weeklyState, setWeeklySt
       setTodoState(false); // 일력을 보여주기 위해서 todoState를 false로
     };
     setDailyState(true); // 일력을 보여주기 위해서 weeklyState를 false로
-    // setAddDate(today); // 일정추가 날짜가 오늘이 되도록
-    // setDate(getDate); //오늘 날짜가 보이도록 setDate 오늘날짜
-    // setSelectYear(year); // 현재 년도 세팅
-    // setSelectMonth(month); // 현재 월 세팅
-    // setSelectDate(date); // 현재 일 세팅
   }
 
   if(loginState){ // 로그인상태일때
