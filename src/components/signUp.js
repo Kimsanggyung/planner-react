@@ -4,7 +4,7 @@ import { getItem, setItem } from "../context/indexed"
 import CryptoJS from "crypto-js";
 import { OuserData } from "../context/userData"
 
-function SignUp({setSignUpState}){
+function SignUp({stateData, setStateData}){
   const [inputID, setInputID] = useState("");
   const [inputPWD, setInputPWD] = useState("");
   const [checkPWD, setCheckPWD] = useState("");
@@ -15,6 +15,8 @@ function SignUp({setSignUpState}){
   const [checked, setChecked] = useState('');
   const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
   let saltKey = "nuguseyo"
+  let newObject = {...stateData};
+  newObject.signUpState = false;
 
   useEffect(()=>{ // inputPWD가 변경될 때 마다 실행
      
@@ -64,12 +66,11 @@ function SignUp({setSignUpState}){
             return false // false반환
           }
         });
-
         if(checkSameId){ // 이미사용되고 있는 아이디라면
           setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
           console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
           setChecked('') // 사용가능 여부 메시지를 빈칸으로
-          setCheckState(false) // 회원가입이 안되도록 checkState를 false로     
+          setCheckState(false) // 회원가입이 안되도록 checkState를 false로 
         } else { //같은게 없다면
           setError(""); // 에러메시지 없애기
           setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
@@ -90,14 +91,12 @@ function SignUp({setSignUpState}){
         }
       }
     })
+    console.log(inputID)
   }
 
   const submit = () => { //등록 버튼 함수
     if(checkState === false){ //중복확인을 하지않았다면
       setError("아이디 중복확인을 해주세요."); // 에러메시지 세팅
-    }
-    if(inputID === null){ // 아이디를 입력하지 않았다면
-      setError("아이디를 입력해 주세요."); // 에러메시지 세팅
     }
     if(!password.test(inputPWD)){ // 비밀번호가 10자리이상에 슷자나 문자를 포함하지 않았다면
       setError("비밀변호는 최소 8 자, 최소 하나의 문자 및 하나의 숫자를 포함하고 있어야합니다"); // 에러메시지 세팅
@@ -108,15 +107,19 @@ function SignUp({setSignUpState}){
     if(inputPWD !== checkPWD){ // 입력한 비밀번호와 비밀번호확인이 서로 다르면
       setError("입력하신 비밀번호가 다릅니다."); // 에러메시지 세팅
     }
+    if(inputID === ""){ //아이디 입력창이 비어있다면
+      setError("아이디를 입력해주세요"); //에러메시지 세팅
+      console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
+    };
     if(inputID !== null && inputPWD !== null && inputPWD !== null && checkPWD === inputPWD && password.test(inputPWD) && checkState === true){ // 입력창에 모두 비어있지 않고 중복확인을 하고 입력한 비밀번호와 비밀번호 확인이 같다면
       setItem({userData}); // indexedDB에 userData 저장
       console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
-      setSignUpState(false); // 로그인화면이 보이도록 singUpState를 false로
+      setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
     }
   }
 
   const cancel = () => { // 취소버튼 함수
-    setSignUpState(false); //회원 가입을 취소하고 로그인화면을 보여주기 위해 signUpState를 false로
+    setStateData(newObject); //회원 가입을 취소하고 로그인화면을 보여주기 위해 signUpState를 false로
   }
 
   return(

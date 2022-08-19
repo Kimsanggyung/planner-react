@@ -4,7 +4,7 @@ import { today } from "../context/today"
 import { time } from "../baseData"
 import DaillyItem from "../parts/dailyItem"
 
-function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoState, setEditTodoState, loggedUser, targetID, setSelectedTime, setTargetID, setAddTodoState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
+function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, targetID, setTargetID}){
 
   const [todoData, setTodoData] = useState(null);
 
@@ -13,12 +13,10 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
   },[]);
 
   const viweAddTodo = (time) => { //일정추가 함수
-    setSelectedTime(time); //parameter로 받아온 숫자로 selectedTime 세팅
-    setTodoState(true); // 일정추가 화면을 보여주기 위해 일정추가 컴포넌트의 부모컴포넌트 state를 true로
-    setAddTodoState(true); //일정추가 화면을 보여주기 위해서 일정추가 컴포넌트의 state를 true로
-    setSelectYear(date.getFullYear()); // 일정추가 화면에서 년도 입력창 값을 현재 년도로 설정
-    setSelectMonth(date.getMonth()+1);  // 일정추가 화면에서 월 선택창 값을 현재 월로 설정
-    setSelectDate(date.getDate()); // 일정추가 화면에서 일 선택창 값을 현재 일로 설정
+    const setDate = {...dateDate, selectedTime: time, selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()};
+    setDateData(setDate);
+    const setState = {...stateData, todoState: true, selectedTodo: "addTodo"};
+    setStateData(setState)
   }
 
   const nextDay = () => { //다음날 버튼 함수
@@ -27,10 +25,8 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       result.setDate(result.getDate() + 1);// data에 1을 더하기
       return result; // result값 반환
     }
-    setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1)); // addDate를 다음날 날짜로 세팅
-    setSelectYear(date.getFullYear()); // selectYear를 다음날 년도로 세팅
-    setSelectMonth(date.getMonth()+1); // selectMonth를 다음날 월로 세팅
-    setSelectDate(date.getDate()+1); // selectDate를 다음날 날짜로 세팅
+    const setAddDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()+1};
+    setDateData(setAddDate)
     return setDate(adddDate(date)); //data를 다음날 날짜로 세팅
   }
 
@@ -40,10 +36,8 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
       result.setDate(result.getDate() - 1); // data에 1을 더하기
       return result; // result값 반환
     }
-    setAddDate(date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1)); // addDate를 전날 날짜로 세팅
-    setSelectYear(date.getFullYear()); // // selectMonth를 전날 월로 세팅
-    setSelectMonth(date.getMonth()+1); // selectMonth를 전날 월로 세팅
-    setSelectDate(date.getDate()-1); // selectDate를 전날 날짜로 세팅
+    const setMinusDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()-1};
+    setDateData(setMinusDate)
     return setDate(minusDate(date)); //data를 전날 날짜로 세팅
   } 
  
@@ -62,7 +56,7 @@ function Daily({date, setDate, setTodoState, setCheckDetailState, setCheckTodoSt
               <span className='mr-4' onClick={()=>viweAddTodo(data.time)}>{data.time}:</span>
               {todoData? 
                 <>
-                <DaillyItem getList={findData(data.time, todoData)} targetID={targetID} setCheckTodoState={setCheckTodoState} setCheckDetailState={setCheckDetailState} setTodoState={setTodoState} setEditTodoState={setEditTodoState} setTargetID={setTargetID} setAddTodoState={setAddTodoState}/>
+                <DaillyItem getList={findData(data.time, todoData)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID}/>
                 </>
                 :
                 <span></span>

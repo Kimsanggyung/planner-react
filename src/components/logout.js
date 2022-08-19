@@ -1,6 +1,8 @@
-function Logout({setLoginState}){
+function Logout({stateData, setStateData}){
   const logout = () => {
-    setLoginState(false);
+    let newObject = {...stateData};
+    newObject.loginState = false;
+    setStateData(newObject);
     localStorage.removeItem('saveID');
   }
 

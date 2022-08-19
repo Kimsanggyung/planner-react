@@ -4,13 +4,17 @@ import LoginError from '../parts/loginError'
 import { OuserData } from "../context/userData"
 import { getItem } from "../context/indexed"
 
-function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
+function Login({stateData, setStateData, setLoggedUser}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
   const [hashPwd, setHashPwd] =useState('');
   const [check, setCheck] = useState(null);
   const saltKey = 'nuguseyo'
+
+  const setLogin = {...stateData, loginState: true};
+  const setSignUp = {...stateData, signUpState: true};
+
 
   useEffect(()=>{// inputID inputPWD가 변경될 때 마다 실행
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); //inputPWD saltKey를 합쳐서 hash처리
@@ -20,10 +24,10 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
   
   useEffect(()=>{ // 컴포넌트가 실행될 때
     if(saveID){
-      setLoginState(true);
+      setStateData(setLogin);
       setLoggedUser(saveID);
     }
-  },[saveID, setLoggedUser, setLoginState])
+  },[])
 
   const checkUser = (id, pwd) => { // 원하는 유저 찾기
 		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); //OuserData에 아이디 비밀번호 입력한 아이디 비밀번호 비교
@@ -56,7 +60,7 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
         if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
           if(checkUserAll){ //checkUserAll가 참이면
             setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setLoginState(true); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
           }else{//조건이 맞지 않으면
             setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
             console.log("틀림"); // 콘솔로그에 에러보여주기
@@ -75,7 +79,7 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
         if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
           if(findUser){ //findUser가 참이면
             setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setLoginState(true); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
           }else{//조건이 맞지 않으면
             setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
             console.log("틀림"); // 콘솔로그에 에러보여주기
@@ -95,13 +99,13 @@ function Login({setSignUpState, loginState, setLoginState, setLoggedUser}){
     setInputPWD(event.target.value);
   };
   const signUp = () => { // 회원가입 버튼 함수
-    setSignUpState(true); // 회원 가입 화면을 보여주기 위해 signUpState를 ture로
+    setStateData(setSignUp); // 회원 가입 화면을 보여주기 위해 signUpState를 ture로
   };
   const clickCheck = () => {
     setCheck("checked");
   };
 
-  if(!loginState){
+  if(!stateData.loginState){
     return( 
       <div className="flex items-center flex justify-center mt-48 font-Do">
         <div className="bg-slate-50 w-96 h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">

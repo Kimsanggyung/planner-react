@@ -3,14 +3,14 @@ import EditError from "../parts/editError";
 import { getItem, db } from "../context/indexed";
 import { time, monthArray, dateArray } from "../baseData";
 
-function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear, selectMonth, setSelectMonth, selectDate, setSelectDate}){
+function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setDateData}){
 
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
   const [selectTime, setTime] = useState('');
   const [error, setError] = useState('');
-  const pattern = /^\d{4}$/; // 년도는 4자라 숫자여야한다
+  const pattern = /^\d{4}$/; // 년도는 4자리 숫자여야한다
 
   const timeOptions =  time.map((data, idx)=>{ // 시간 선택 반복문
     return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
@@ -32,13 +32,15 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
     setTime(event.target.value);
   };
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
-    setSelectYear(event.target.value)
+    const selectYear = {...dateData, selectYear: event.target.value};
+    setDateData(selectYear);
   }
   const selectMonthChange = event => { // 월 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectMonth
-    setSelectMonth(event.target.value)
-  }
+    const selectMonth = {...dateData, selectMonth: event.target.value};
+    setDateData(selectMonth);  }
   const selectDateChange = event => { // 일 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectDate
-    setSelectDate(event.target.value)
+    const selectDate = {...dateData, selectDate: event.target.value};
+    setDateData(selectDate);
   }
 
   useEffect(() => { // 컴포넌트가 실행될 떄 1회 실행
@@ -47,15 +49,18 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
       setTodo(value.setTodoList.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
       setDetails(value.setTodoList.setDetails); // 가져온 데이터에 있는 setDeatils를 details에 세팅
       setTime(value.setTodoList.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
-      setSelectYear(value.setTodoList.selectYear); // 가져온 데이터에 있는 selectYear를 selectYear에 세팅
-      setSelectMonth(value.setTodoList.selectMonth); // 가져온 데이터에 있는 selectMonth를 selectMonth에 세팅
-      setSelectDate(value.setTodoList.selectDate); // 가져온 데이터에 있는 selectDate를 selectDate에 세팅
+      const setSelect = {
+        ...dateData, selectYear: value.setTodoList.selectYear,
+        selectMonth: value.setTodoList.selectMonth,
+        selectDate: value.setTodoList.selectDate
+      }
+      setDateData(setSelect)
     });
-  },[setSelectDate, setSelectMonth, setSelectYear, targetID]);
+  },[]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
-    setDate(selectYear+"."+selectMonth+"."+selectDate)
-  }, [selectYear, selectMonth, selectDate])
+    setDate(dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate)
+  }, [dateData.selectDate, dateData.selectMonth, dateData.selectYear])
 
   let edidtDatas = {
     setDate: date,
@@ -78,11 +83,11 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
       setError("제목을 입력해주세요"); //에러메시지 세팅
       console.log("제목을 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(!pattern.test(selectYear)){ //정확한 날짜을 입력하지 않았으면
+    if(!pattern.test(dateData.selectYear)){ //정확한 날짜을 입력하지 않았으면
       setError("정확한 날짜를 입력해주세요"); //에러메시지 세팅
       console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(selectYear)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(dateData.selectYear)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
       let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
       let putReq = store.put({ //indexedDB 수정
         id:(targetID), //id는 props로 받아온 targetID
@@ -90,7 +95,8 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
       });
       putReq.onsuccess = () => { //성공했을떄 함수
         console.log('success'); // 성공했다는 콘솔로그
-        setTodoState(false); //달력화면을 보여주기 위해 todoState false로 세팅
+        const setTodoState = {...stateData, todoState: false};
+        setStateData(setTodoState);
       }
       putReq.addEventListener('error',function(event){ //실패했을 때
         console.log(event) //콘솔로그에 보여주기
@@ -99,10 +105,11 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
   }
 
   const cancel = () =>{ //취소버튼 함수
-    setTodoState(false); //달력화면을 보여주기 위해 todoState false로 세팅
+    const setTodoState = {...stateData, todoState: false};
+    setStateData(setTodoState);
   } 
 
-  const nullCheck = selectYear && selectMonth && selectDate && todo && details && selectTime; //입력창과 선택창에 연결되어있는 값들이 빈값이 아닌지 확인
+  const nullCheck = dateData.selectYear && dateData.selectMonth && dateData.selectDate && todo && details && selectTime; //입력창과 선택창에 연결되어있는 값들이 빈값이 아닌지 확인
 
   if(nullCheck){
     return(
@@ -110,12 +117,12 @@ function EditTodo({targetID, loggedUser, setTodoState, selectYear, setSelectYear
         <div className="bg-slate-50 w-full h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">
           <div className="mb-4">
             <div>일자: {date} </div>
-            <input type="text" value={selectYear} onChange={selectYearChange} className="border border-gray-500 w-10"></input>
+            <input type="text" value={dateData.selectYear} onChange={selectYearChange} className="border border-gray-500 w-10"></input>
             <span>년</span>
-            <select id="month" value={selectMonth} onChange={selectMonthChange}>
+            <select id="month" value={dateData.selectMonth} onChange={selectMonthChange}>
               {monthOptions}
             </select>
-            <select id="month" value={selectDate} onChange={selectDateChange}>
+            <select id="month" value={dateData.selectDate} onChange={selectDateChange}>
               {dateOptions}
             </select>
           </div>

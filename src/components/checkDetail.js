@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getItem } from "../context/indexed"
 
-function CheckDetail({targetID, setTargetID, setCheckDetailState, setTodoState, setEditTodoState}){
+function CheckDetail({stateData, setStateData, targetID, setTargetID}){
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
   const [time, setTime] = useState('');
@@ -16,13 +16,14 @@ function CheckDetail({targetID, setTargetID, setCheckDetailState, setTodoState, 
   })
 
   const editMode = (id) =>{ //수정버튼함수 parameter id 받음
-    setCheckDetailState(false); //상세내용 화면을 안보이도록 state값 false로
-    setEditTodoState(true); //수정화면을 보이도록 state값 true로
+    const setState = {...stateData, selectedTodo: "editTodo"}
+    setStateData(setState)
     setTargetID(id); // parameter로 받아온 아이디로 targetID 설정
   }
 
   const exit = () => { //닫기 버튼 함수
-    setTodoState(false) // 달력이 보이도록 todoState 값을 false로
+    const setTodoState = {...stateData, todoState: false}
+    setStateData(setTodoState) // 달력이 보이도록 todoState 값을 false로
   }
 
   return(

@@ -6,7 +6,7 @@ import '../style/style.css';
 
 
 
-function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditTodoState,loggedUser, setTodoState, odate, setDate, setTargetID, setCheckDetailState, setAddDate, setSelectYear, setSelectMonth, setSelectDate}){
+function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID}){
 
   const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
   const [getDate, setGetDate] = useState(odate);
@@ -56,13 +56,13 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
 
   const viweAddTodo = (i,firstDayIndex) =>{ // 일정추가할 수 있게 하는 함수
     const selectDate = ((i-firstDayIndex)+1)  // 선택날짜는 parameter로 받아온 숫자와firstDayIndex를 뺀값에 1를 더한 날짜다
-    setAddDate(year+"."+(monthIndex+1)+"."+selectDate) // 알정추가 할때 날짜 값 세팅
-    setSelectYear(year); // 년도 값 세팅
-    setSelectMonth(monthIndex+1); // 월 값 세팅 
-    setSelectDate(selectDate); // 일 값 세팅
-    setSelectedTime("시간선택") // 선택 시간 값 세팅
-    setTodoState(true); // 일정추가 화면을 보여주기 위해서 todoState를 true로
-    setAddTodoState(true); // 일정추가 화면을 보여주기 위해서 addTodoState를 true로
+    const setDate = {
+      ...dateDate, addDate: year+"."+(monthIndex+1)+"."+selectDate, 
+      selectYear: year, selectMonth: monthIndex+1, selectDate: selectDate, selectedTime: "시간선택"
+    }
+    setDateData(setDate);
+    const setState = {...stateData, todoState: true, selectedTodo: "addTodo"}
+    setStateData(setState)
   }
 
   const findData = (data, i) => { // indexedDB에서 원하는 데이터 찾는 세팅
@@ -91,7 +91,7 @@ function Monthly({ setAddTodoState, setCheckTodoState, setSelectedTime, setEditT
     }else if(todoData && !noting){ // 이번달 날짜 자리면
       monthList  =  <li className={classActive} key={i}>
                       <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-                      <MonthlyItem month={month} setEditTodoState={setEditTodoState} getList={findData(todoData, i)} setCheckTodoState={setCheckTodoState} setAddTodoState={setAddTodoState} setTodoState={setTodoState} setCheckDetailState={setCheckDetailState} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+                      <MonthlyItem month={month} getList={findData(todoData, i)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
                     </li>
     } 
  

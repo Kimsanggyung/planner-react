@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import {getItem, deleteTodo, } from "../context/indexed"
 
-function CheckTodo({loggedUser, setTodoState, setCheckTodoState, setTargetID, setCheckDetailState}){
+function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
   const [getList, setGetList] = useState(null);
 
   useEffect(() => { // 컴포넌트가 실행됐을 때 1회 실행을 되도록
 
     const cancel = (id) => { //일정취소 버튼 함수
+      const setTodoState = {...stateData, todoState: false}
       deleteTodo(id); //parameter로 받은 id로 indexedDB 데이터 삭제
-      setTodoState(false); // 삭제를 했다면 달력화면을 보여주기 위해 todoState false로
+      setStateData(setTodoState); // 삭제를 했다면 달력화면을 보여주기 위해 todoState false로
     }
 
     const checkDetail = (id) =>{ // 상세내용 확인 버튼 함수
-      setCheckDetailState(true); // 상세내용화면을 보여주기 위해 state값 true로
-      setCheckTodoState(false); // 전체일정확인 화면을 안보이게 하기위해 state값 false로
+      const setTodoState = {...stateData, selectedTodo: "checkDetail"};
+      setStateData(setTodoState);
       setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
     }
 
