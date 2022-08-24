@@ -7,20 +7,20 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
   useEffect(() => { // 컴포넌트가 실행됐을 때 1회 실행을 되도록
 
     const cancel = (id) => { //일정취소 버튼 함수
-      const setTodoState = {...stateData, todoState: false}
+      const setTodoState = {...stateData, todoState: false};
       deleteTodo(id); //parameter로 받은 id로 indexedDB 데이터 삭제
       setStateData(setTodoState); // 삭제를 했다면 달력화면을 보여주기 위해 todoState false로
-    }
+    };
 
     const checkDetail = (id) =>{ // 상세내용 확인 버튼 함수
       const setTodoState = {...stateData, selectedTodo: "checkDetail"};
       setStateData(setTodoState);
       setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
-    }
+    };
 
     const callItem = () => { // indexedDB 데이터를 가져오는 함수
       getItem().then(data => { //데이터 가져옴
-
+        
         let getData = data; // getData에 data할당
         let checkedUser;
 
@@ -32,7 +32,7 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
 
         if(result){ //setUser과 loggedUesr이 같은 데이터가 있다면
           checkedUser = result.setTodoList.setUser; //checkedUser에 result에 있는setTodoList안에 있는 setUser를 할당
-        }
+        };
 
         if(getData!== null && getData.length > 0 && checkedUser !== undefined && result && loggedUser === checkedUser){ //getData가 있고 getData가 1이상이고 result가 있고 loggedUser랑 checkedUser가 같다면
           setGetList( //getList 세팅
@@ -47,18 +47,18 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
                       <button className="text-red-500" onClick={()=> {cancel(id)}}>X</button>
                     </div>
                   )
-                } 
+                };
               }return true;     
             })
-          )
+          );
         }else{ //모든조건이 아니면
           return(
             setGetList(<span className="pl-4">일정이 없습니다.</span>)
-          )
-        }
-      })
-    }
-    callItem()// 함수호출
+          );
+        };
+      });
+    };
+    callItem();// 함수호출
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
@@ -66,7 +66,7 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
     <div className="font-Do underline bg-sky-100 mt-32 h-full text-2xl">
       {getList}
     </div>
-  )
-}
+  );
+};
 
 export default CheckTodo;

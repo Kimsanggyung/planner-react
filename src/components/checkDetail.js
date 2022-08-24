@@ -16,15 +16,15 @@ function CheckDetail({stateData, setStateData, targetID, setTargetID}){
   })
 
   const editMode = (id) =>{ //수정버튼함수 parameter id 받음
-    const setState = {...stateData, selectedTodo: "editTodo"}
-    setStateData(setState)
+    const setState = {...stateData, selectedTodo: "editTodo"};
+    setStateData(setState);
     setTargetID(id); // parameter로 받아온 아이디로 targetID 설정
-  }
+  };
 
   const exit = () => { //닫기 버튼 함수
-    const setTodoState = {...stateData, todoState: false}
-    setStateData(setTodoState) // 달력이 보이도록 todoState 값을 false로
-  }
+    const setTodoState = {...stateData, todoState: false};
+    setStateData(setTodoState); // 달력이 보이도록 todoState 값을 false로
+  };
 
   return(
     <div className="flex items-center flex justify-center mt-32 font-Do">

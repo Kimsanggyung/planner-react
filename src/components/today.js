@@ -4,12 +4,12 @@ function today(){
     year: date.getFullYear(),
     month: date.getMonth() + 1,
     date: date.getDate()
-  }
+  };
   return (
     <div className="text-3xl font-Do">
       <span id="clock">오늘날짜: {getDate.year}년 {getDate.month}월 {getDate.date}일</span>
     </div>
-  )
-}
+  );
+};
 
-export default today
+export default today;

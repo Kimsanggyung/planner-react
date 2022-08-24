@@ -20,13 +20,13 @@ function Login({stateData, setStateData, setLoggedUser}){
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); //inputPWD saltKey를 합쳐서 hash처리
   },[inputID, inputPWD]);
 
-  let saveID =localStorage.getItem('saveID')
+  let saveID =localStorage.getItem('saveID');
   
   useEffect(()=>{ // 컴포넌트가 실행될 때
     if(saveID){
       setStateData(setLogin);
       setLoggedUser(saveID);
-    }
+    };
   },[])
 
   const checkUser = (id, pwd) => { // 원하는 유저 찾기
@@ -47,16 +47,16 @@ function Login({stateData, setStateData, setLoggedUser}){
             return findIndexedUser || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
           }else{ // 조건에 맞지 않은면
             return false; // 거짓이라고 반환
-          }
+          };
         }); 
         if(inputPWD === ""){ //아이디 입력창이 비어있다면
           setError("비밀번호를 입력해주세요"); //에러메시지 세팅
           console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
-        }
+        };
         if(inputID === ""){ //비밀번호 입력창이 비어있다면
           setError("아이디를 입력해주세요"); //에러메시지 세팅
           console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
-        }
+        };
         if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
           if(checkUserAll){ //checkUserAll가 참이면
             setLoggedUser(inputID); // loggedUser를 inputID로 세팅
@@ -64,8 +64,8 @@ function Login({stateData, setStateData, setLoggedUser}){
           }else{//조건이 맞지 않으면
             setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
             console.log("틀림"); // 콘솔로그에 에러보여주기
-          }
-        }
+          };
+        };
       }if(data.length === 0 || indexedUser === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
         const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
         if(inputPWD === ""){ //아이디 입력창이 비어있다면
@@ -83,9 +83,9 @@ function Login({stateData, setStateData, setLoggedUser}){
           }else{//조건이 맞지 않으면
             setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
             console.log("틀림"); // 콘솔로그에 에러보여주기
-          }
-        }
-      }
+          };
+        };
+      };
     });
     if(check === "checked"){
       localStorage.setItem('saveID', inputID);
@@ -142,8 +142,8 @@ function Login({stateData, setStateData, setLoggedUser}){
           
         </div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default Login;

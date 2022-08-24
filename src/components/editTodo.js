@@ -14,13 +14,13 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
 
   const timeOptions =  time.map((data, idx)=>{ // 시간 선택 반복문
     return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
-  })
+  });
   const monthOptions = monthArray.map((num , idx)=>{ // 월 선택 반복문
     return <option value={num} key={idx}>{num}월</option>
-  })
+  });
   const dateOptions = dateArray.map((num, idx)=>{ // 일 선택 빈복문
     return <option value={num} key={idx}>{num}일</option> // 값을 배열에 있는 숫자로 키값을 index로
-  })
+  });
 
   const inputTodoChange = event => { // 제목 입력창에 입력을 하는 등 이벤트가 발생하면 setTodo
     setTodo(event.target.value);
@@ -34,14 +34,15 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     const selectYear = {...dateData, selectYear: event.target.value};
     setDateData(selectYear);
-  }
+  };
   const selectMonthChange = event => { // 월 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectMonth
     const selectMonth = {...dateData, selectMonth: event.target.value};
-    setDateData(selectMonth);  }
+    setDateData(selectMonth);  
+  };
   const selectDateChange = event => { // 일 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectDate
     const selectDate = {...dateData, selectDate: event.target.value};
     setDateData(selectDate);
-  }
+  };
 
   useEffect(() => { // 컴포넌트가 실행될 떄 1회 실행
     getItem(targetID).then(value => { // indexedDB에서 id로 데이터 가져옴
@@ -53,14 +54,14 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
         ...dateData, selectYear: value.setTodoList.selectYear,
         selectMonth: value.setTodoList.selectMonth,
         selectDate: value.setTodoList.selectDate
-      }
-      setDateData(setSelect)
+      };
+      setDateData(setSelect);
     });
   },[]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
-    setDate(dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate)
-  }, [dateData.selectDate, dateData.selectMonth, dateData.selectYear])
+    setDate(dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate);
+  }, [dateData.selectDate, dateData.selectMonth, dateData.selectYear]);
 
   let edidtDatas = {
     setDate: date,
@@ -68,7 +69,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
     setDetails: details,
     setTime: selectTime,
     setUser: loggedUser
-  }
+  };
 
   const editTodoDatas = () => { //수정후 등록버튼
     if(selectTime === "시간선택"){ //시간선택을 안했으면 
@@ -97,17 +98,17 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
         console.log('success'); // 성공했다는 콘솔로그
         const setTodoState = {...stateData, todoState: false};
         setStateData(setTodoState);
-      }
+      };
       putReq.addEventListener('error',function(event){ //실패했을 때
         console.log(event) //콘솔로그에 보여주기
-      })
-    }
-  }
+      });
+    };
+  };
 
   const cancel = () =>{ //취소버튼 함수
     const setTodoState = {...stateData, todoState: false};
     setStateData(setTodoState);
-  } 
+  };
 
   const nullCheck = dateData.selectYear && dateData.selectMonth && dateData.selectDate && todo && details && selectTime; //입력창과 선택창에 연결되어있는 값들이 빈값이 아닌지 확인
 
