@@ -14,7 +14,7 @@ function Clock() {
     <div className="text-3xl font-Do">
       <span id="clock">{time.toLocaleTimeString()}</span>
     </div>
-  )
-}
+  );
+};
 
 export default Clock;

@@ -23,7 +23,7 @@ function Calendar({stateData, setStateData, dateDate, setDateData ,loggedUser, d
 
   return (
     <>{selectedCalendar}</>
-  )
-}
+  );
+};
 
 export default Calendar

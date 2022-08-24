@@ -2,11 +2,11 @@ function MonthlyItem({getList, setTargetID, stateData, setStateData}){
     
   const viweDetails = (id) => { // 상세내용 보기 함수
     if(getList){ // getList가 있으면
-      const setState = {...stateData, todoState: true, selectedTodo: "checkDetail"}
+      const setState = {...stateData, todoState: true, selectedTodo: "checkDetail"};
       setTargetID(id); // parameter로 받아온 id로 setTargetID
-      setStateData(setState)
-    }
-  }
+      setStateData(setState);
+    };
+  };
   
   let parts;
   if(getList){
@@ -15,15 +15,14 @@ function MonthlyItem({getList, setTargetID, stateData, setStateData}){
             </div>
   }else{
     parts = <div className="w-48 h-7 overflow-hidden"></div>
-  }
-
+  };
 
   return(
     <>
       {parts}
     </>
-  )
-}
+  );
+};
 
 export default MonthlyItem;
 

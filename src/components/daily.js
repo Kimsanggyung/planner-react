@@ -16,39 +16,39 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
     const setDate = {...dateDate, selectedTime: time, selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()};
     setDateData(setDate);
     const setState = {...stateData, todoState: true, selectedTodo: "addTodo"};
-    setStateData(setState)
-  }
+    setStateData(setState);
+  };
 
   const nextDay = () => { //다음날 버튼 함수
     const adddDate = (date) => { //날짜 추가 함수
       let result = new Date(date); //result date날짜로
       result.setDate(result.getDate() + 1);// data에 1을 더하기
       return result; // result값 반환
-    }
+    };
     const setAddDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()+1};
-    setDateData(setAddDate)
+    setDateData(setAddDate);
     return setDate(adddDate(date)); //data를 다음날 날짜로 세팅
-  }
+  };
 
   const prevDay = () => { //전날 버튼 함수
     const minusDate = (date) => { //날짜 뻬기 함수
       var result = new Date(date); //result date날짜로
       result.setDate(result.getDate() - 1); // data에 1을 더하기
       return result; // result값 반환
-    }
+    };
     const setMinusDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()-1};
-    setDateData(setMinusDate)
+    setDateData(setMinusDate);
     return setDate(minusDate(date)); //data를 전날 날짜로 세팅
-  } 
+  };
  
   const findData = (time, data) => { //inedxedDB에서 원하는 값찾기
     const result = data.find(({setTodoList})=>{ //setTodoList 찾음
       if (!setTodoList) return false; // setTodoList가 없다면 false반환
       const {setTime, setDate, setUser} = setTodoList; //setTodoList에 있는 setTime setDate setUser 상수로
       return (setTime === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
-    })
+    });
     return result; //원하는 값 반환
-  }
+  };
 
   const parts = time.map((data, idx)=>{ // time으로 반복
     return( 
@@ -62,7 +62,7 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
                 <span></span>
               }              
             </div>
-    )
+    );
   });
 
   let dateCheck = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate(); // 현재 날짜를 오늘과 비교
@@ -86,7 +86,7 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
       </div>
 
     </div>
-  )
-}
+  );
+};
 
 export default Daily;

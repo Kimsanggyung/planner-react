@@ -15,13 +15,13 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
 
   useEffect(()=>{ // odate 변경될 때 마다 실행
     setGetDate(odate); // getDate에 odate세팅
-  }, [odate])
+  }, [odate]);
 
   const getAddDate = (date, time) => { // 이번주날짜를 계산하기 위한 함수
     const temp = new Date(date); // parameter로 받아온 date를 계산할 날짜로
     temp.setDate(temp.getDate() + time); // parameter로 받아온 숫자를 더해 날짜 계산
     return temp.getDate(); // 계산한 날짜 반환
-  }
+  };
 
   let weekStart = new Date(year, month, date - day); // 일요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스만큼을 벤다
   let weekMon = new Date(year, month, date - (day-1)); // 월요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 1을 뺸 만큼을 벤다
@@ -50,8 +50,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     };
     setDateData(setAddDate);
     const setState = {...stateData, todoState: true , selectedTodo: "addTodo"};
-    setStateData(setState)
-  }
+    setStateData(setState);
+  };
 
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
     const weekDataArr = [ // 일주일 날짜 배열
@@ -63,8 +63,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     const result = data.find(({setTodoList})=>{ // indexedDB에서 원하는 데이터를 찾는 함수
       if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
       const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
-      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
-      return (setTime === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
+      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt); // 데이터와 날짜 비교
+      return (setTime === time && dateCheck && setUser === loggedUser); // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
     return result; // 찾은 데이터 반환
   };
@@ -83,8 +83,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
           <span></span>
         }          
       </div>
-    )
-  })
+    );
+  });
 
   const monDay = time.map((data, idx)=>{ // 배열로 반복하는 월요일 배열
     return(
@@ -100,8 +100,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
           <span></span>
         }          
       </div>
-    )
-  })
+    );
+  });
 
   const tueDay = time.map((data, idx)=>{ // 배열로 반복하는 화요일 배열
     return(
@@ -117,8 +117,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
           <span></span>
         }          
       </div>
-    )
-  })
+    );
+  });
 
   const wedDay = time.map((data, idx)=>{ // 배열로 반복하는 수요일 배열
     return(
@@ -199,14 +199,14 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     }
     setDate(nextDate(getDate)); // odate에 다음주 날짜 세팅
     return setGetDate(nextDate(getDate)); //getDate에 다음주 날짜 세팅
-  }
+  };
 
   const prevWeek = () => { // 전주 버튼 함수
     const pastDate = (getDate) => { // 전주 날짜를 계산하느 함수
       let result = new Date(getDate); // 현재보고 있는 날짜 세팅
       result.setDate(result.getDate() - 7); // 현재에서 7일 전를 계산
       return result; // 계산한 값 반환
-    }
+    };
     setDate(pastDate(getDate)); // odate에 다음주 날짜 세팅
     return setGetDate(pastDate(getDate)); //getDate에 다음주 날짜 세팅
   };
@@ -271,7 +271,7 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default Weekly;

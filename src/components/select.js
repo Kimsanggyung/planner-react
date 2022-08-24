@@ -6,15 +6,15 @@ function Select({ stateData, setStateData }){
 
   const viweMonth = () => { // 달력보이게 하는 함수
     setStateData(openMonthly); // 달력을 보여주기 위해서 monthlyState를 true로
-  }
+  };
 
   const viweWeek = () => { // 주간달력을 보이게 히는 함수
-    setStateData(onenWeekly)
-  }
+    setStateData(onenWeekly);
+  };
 
   const viweDaily = () => { //일력을 보이게 하는 함수
     setStateData(openDaily); // 일력을 보여주기 위해서 weeklyState를 false로
-  }
+  };
 
   if(stateData.loginState){ // 로그인상태일때
     return(
@@ -31,8 +31,8 @@ function Select({ stateData, setStateData }){
           </span>
         </span>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default Select;
