@@ -19,11 +19,11 @@ function Calendar({stateData, setStateData, dateDate, setDateData ,loggedUser, d
                           dateDate={dateDate} setDateData={setDateData} stateData={stateData} setStateData={setStateData} 
                           loggedUser={loggedUser} odate={date} setDate={setDate} setTargetID={setTargetID} 
                         />
-  }
+  };
 
   return (
     <>{selectedCalendar}</>
-  )
-}
+  );
+};
 
 export default Calendar

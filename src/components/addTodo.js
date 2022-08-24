@@ -21,23 +21,23 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
           const checkUserTodo = data.find(({setTodoList}) => {
             if(setTodoList){
               const sameDate = setTodoList.setTime === dateData.selectedTime && setTodoList.setDate === dateData.addDate && loggedUser === setTodoList.setUser;
-              return sameDate
+              return sameDate;
             }else{
               return false;
-            }
-          })
+            };
+          });
           setCheckSame(checkUserTodo);
-        }
-      })
-    }
+        };
+      });
+    };
     checkSameDate()
 
   }, [dateData, loggedUser]);
   
   
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
-    const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate }
-    setDateData(setAddDate)
+    const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate};
+    setDateData(setAddDate);
   },[dateData, setDateData]);
 
   let setTodoList = {
@@ -49,75 +49,75 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
     selectYear: dateData.selectYear,
     selectMonth: dateData.selectMonth,
     selectDate: dateData.selectDate
-  }
+  };
 
   const inputTodoChange = event => { // 제목 입력창에 입력을 하는 등 이벤트가 발생하면 setTodo
     setTodo(event.target.value)
-  }
+  };
   const inputDetailsChange = event => { //상세 입력창에 입력을 하는 등 이벤트가 발생하면 setDetail
     setDetails(event.target.value)
-  }
+  };
   const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
     const setSelectedTime ={...dateData, selectedTime: event.target.value}
     console.log(dateData.selectedTime)
     setDateData(setSelectedTime)
-  }
+  };
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     const setSelectYear = {...dateData, selectYear: event.target.value}
     setDateData(setSelectYear)
-  }
+  };
   const selectMonthChange = event => { // 월 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectMonth
     const setSelectMonth = {...dateData, selectMonth: event.target.value}
     setDateData(setSelectMonth)
-  }
+  };
   const selectDateChange = event => { // 일 산텍창에서 선택을을 하는 등 이벤트가 발생하면 setSelectDate
     const setSelectDate = {...dateData, selectDate: event.target.value}
     setDateData(setSelectDate)
-  }
+  };
 
   const setTodoState = {...stateData, todoState: false};
   
   const submit = () => { // 등록버튼 함수
     if(checkSame!==undefined){
-      setError("해당 일자에 일정이 있습니다") // 날짜가 정확하지 않다면 에러메시지 세팅
-      console.log("해당 일자에 일정이 있습니다")
-    }
+      setError("해당 일자에 일정이 있습니다"); // 날짜가 정확하지 않다면 에러메시지 세팅
+      console.log("해당 일자에 일정이 있습니다");
+    };
     if(dateData.selectedTime === "시간선택" || dateData.selectedTime === ""){  //시간을 선택했는지 확인
-      setError("일정시간을 선택해주세요") //선택을 안했다면 에러메시지 세팅
-      console.log("일정시간을 선택해주세요") // 콘솔로그에 에러메시지 보여주기
-    }
+      setError("일정시간을 선택해주세요"); //선택을 안했다면 에러메시지 세팅
+      console.log("일정시간을 선택해주세요"); // 콘솔로그에 에러메시지 보여주기
+    };
     if(details === ""){ //상세내용 입력창이 비어있는것을 확인
-      setError("상세내용을 입력해주세요") // 비어있다면 에러메시지 세팅
-      console.log("상세내용을 입력해주세요")// 콘솔로그에 에러메시지 보여주기
-    }
+      setError("상세내용을 입력해주세요"); // 비어있다면 에러메시지 세팅
+      console.log("상세내용을 입력해주세요"); // 콘솔로그에 에러메시지 보여주기
+    };
     if(todo === ""){ // 제목창이 비어있는 것을 확인
-      setError("제목을 입력해주세요") // 비어있다면 에러메시지 세팅
-      console.log("제목을 입력해주세요") // 콘솔로그에 에러메시지 보여주기
+      setError("제목을 입력해주세요"); // 비어있다면 에러메시지 세팅
+      console.log("제목을 입력해주세요"); // 콘솔로그에 에러메시지 보여주기
     }
     if(!pattern.test(dateData.selectYear)){ //날짜가 정확한지 정규표현식을 통해 확인
-      setError("정확한 년도를 입력해주세요") // 날짜가 정확하지 않다면 에러메시지 세팅
-      console.log("정확한 년도를 입력해주세요") // 콘솔로그에 에러메시지 보여주기
-    }
+      setError("정확한 년도를 입력해주세요"); // 날짜가 정확하지 않다면 에러메시지 세팅
+      console.log("정확한 년도를 입력해주세요"); // 콘솔로그에 에러메시지 보여주기
+    };
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && checkSame === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
       setItem({setTodoList}); // indexedDB에 setTodoList 저장
       setStateData(setTodoState); // 할일 추가를 완료했다면 달력화면으로 가도록 state값 변경
-    }
-  }
+    };
+  };
 
   const cancel = () => { // 취소버튼 함수
     setStateData(setTodoState);  // 취소를 누르면 할일 추가 화면을 안보이게 하고 달력하면을 보여주기 위해 state값 변경
-  }
+  };
 
   const timeOptions =  time.map((data, idx)=>{ //시간 선택 반복문
     return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
-  })
+  });
   const monthOptions = monthArray.map((time , idx)=>{ // 월 선택 반복문
     return <option value={time} key={idx}>{time}월</option> // 값을 배열에 있는 숫자로 키값을 index로
-  })
+  });
   const dateOptions = dateArray.map((time, idx)=>{ // 일 선택 빈복문
     return <option value={time} key={idx}>{time}일</option> // 값을 배열에 있는 숫자로 키값을 index로
-  })
+  });
 
   return(
     <div className="flex items-center flex justify-center mt-32 font-Do">
@@ -156,7 +156,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AddTodo;

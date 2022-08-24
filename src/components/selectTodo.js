@@ -30,8 +30,8 @@ function SelectTodo({stateData, setStateData, dateData, setDateData, setDate}){
         <button onClick={viweToday} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 mr-2 rounded">오늘</button>
         <button onClick={viweCheckTodo} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">전체일정확인</button>
       </span>
-    )
-  }
-}
+    );
+  };
+};
 
 export default SelectTodo;

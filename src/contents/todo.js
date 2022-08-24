@@ -18,7 +18,7 @@ function Todo({stateData, setStateData, dateData, setDateData, targetID, setTarg
 
   return (
     <>{selectedTodo}</>
-  )
-}
+  );
+};
 
 export default Todo;

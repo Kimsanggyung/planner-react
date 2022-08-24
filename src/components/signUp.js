@@ -8,13 +8,13 @@ function SignUp({stateData, setStateData}){
   const [inputID, setInputID] = useState("");
   const [inputPWD, setInputPWD] = useState("");
   const [checkPWD, setCheckPWD] = useState("");
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const [checkState, setCheckState] = useState(false);
-  const [userData, setUserData] = useState(OuserData)
+  const [userData, setUserData] = useState(OuserData);
   const [hashPwd, setHashPwd] = useState(null);
   const [checked, setChecked] = useState('');
   const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
-  let saltKey = "nuguseyo"
+  let saltKey = "nuguseyo";
   let newObject = {...stateData};
   newObject.signUpState = false;
 
@@ -29,7 +29,7 @@ function SignUp({stateData, setStateData}){
     setUserData({ //userData 세팅
       userId: inputID,
       userPwd: hashPwd
-    })
+    });
     
   }, [inputID, hashPwd]);
 
@@ -61,16 +61,16 @@ function SignUp({stateData, setStateData}){
           if(userData){ //indexedDB를 통해 회원 가입을 한 사용자기 있다면
             const checkInputId = userData.userId === inputID; // indexedDB에 기존사용자 아이디 중에 같은게 있는지 확인
             const findId = checkUser(inputID); // 메모리에 저징된 사용지 아이디 중에 같은게 있는지 확인
-            return checkInputId || findId // 둘중하나라도 있으면 반환
+            return checkInputId || findId; // 둘중하나라도 있으면 반환
           }else{ // 둘다 없다면
-            return false // false반환
-          }
+            return false; // false반환
+          };
         });
         if(checkSameId){ // 이미사용되고 있는 아이디라면
           setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
           console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
-          setChecked('') // 사용가능 여부 메시지를 빈칸으로
-          setCheckState(false) // 회원가입이 안되도록 checkState를 false로 
+          setChecked(''); // 사용가능 여부 메시지를 빈칸으로
+          setCheckState(false); // 회원가입이 안되도록 checkState를 false로 
         } else { //같은게 없다면
           setError(""); // 에러메시지 없애기
           setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
@@ -82,31 +82,30 @@ function SignUp({stateData, setStateData}){
         if(findId){ // 같은게 있다면
           setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
           console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
-          setChecked('') // 사용가능 여부 메시지를 빈칸으로
+          setChecked(''); // 사용가능 여부 메시지를 빈칸으로
           setCheckState(false); //회원가입이 안되도록 checkState를 false로     
         }else{
           setError(""); // 에러메시지 없애기
           setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
           setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
-        }
-      }
-    })
-    console.log(inputID)
-  }
+        };
+      };
+    });
+  };
 
   const submit = () => { //등록 버튼 함수
     if(checkState === false){ //중복확인을 하지않았다면
       setError("아이디 중복확인을 해주세요."); // 에러메시지 세팅
-    }
+    };
     if(!password.test(inputPWD)){ // 비밀번호가 10자리이상에 슷자나 문자를 포함하지 않았다면
       setError("비밀변호는 최소 8 자, 최소 하나의 문자 및 하나의 숫자를 포함하고 있어야합니다"); // 에러메시지 세팅
-    }
+    };
     if(checkPWD === null){ // 비밀번호 확인 창에 입력을 하지 않았다면
       setError("비밀번호를 한번더 입력해주세요."); //에러 메시지 세팅
-    }
+    };
     if(inputPWD !== checkPWD){ // 입력한 비밀번호와 비밀번호확인이 서로 다르면
       setError("입력하신 비밀번호가 다릅니다."); // 에러메시지 세팅
-    }
+    };
     if(inputID === ""){ //아이디 입력창이 비어있다면
       setError("아이디를 입력해주세요"); //에러메시지 세팅
       console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
@@ -115,12 +114,12 @@ function SignUp({stateData, setStateData}){
       setItem({userData}); // indexedDB에 userData 저장
       console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
       setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
-    }
-  }
+    };
+  };
 
   const cancel = () => { // 취소버튼 함수
     setStateData(newObject); //회원 가입을 취소하고 로그인화면을 보여주기 위해 signUpState를 false로
-  }
+  };
 
   return(
     <div className="flex items-center flex justify-center mt-48 font-Do">

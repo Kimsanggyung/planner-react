@@ -15,13 +15,13 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
 
   useEffect(()=>{ // odate 변경될 때 마다 실행
     setGetDate(odate); // getDate에 odate세팅
-  }, [odate])
+  }, [odate]);
 
   const getAddDate = (date, time) => { // 이번주날짜를 계산하기 위한 함수
     const temp = new Date(date); // parameter로 받아온 date를 계산할 날짜로
     temp.setDate(temp.getDate() + time); // parameter로 받아온 숫자를 더해 날짜 계산
     return temp.getDate(); // 계산한 날짜 반환
-  }
+  };
 
   let weekStart = new Date(year, month, date - day); // 일요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스만큼을 벤다
   let weekMon = new Date(year, month, date - (day-1)); // 월요일 날짜계산을 위해서 오늘날짜에서 오늘 요일의 인덱스 1을 뺸 만큼을 벤다
@@ -37,7 +37,7 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
   let wedDate = getAddDate(weekStart, 3); // 수요일 날짜는 이번주 시작하는 날짜에서 사흘 뒤
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
-  let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
+  let satdayDate = weekEnd.getDate(); // 토요일 날짜는 이번주가 끝나는 날짜  
 
   useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
     getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
@@ -50,8 +50,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     };
     setDateData(setAddDate);
     const setState = {...stateData, todoState: true , selectedTodo: "addTodo"};
-    setStateData(setState)
-  }
+    setStateData(setState);
+  };
 
   const findWeekData = (time, data, weekStr) => { // 원하는 데이터를 찾는 함수
     const weekDataArr = [ // 일주일 날짜 배열
@@ -63,8 +63,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     const result = data.find(({setTodoList})=>{ // indexedDB에서 원하는 데이터를 찾는 함수
       if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
       const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
-      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt) // 데이터와 날짜 비교
-      return (setTime === time && dateCheck && setUser === loggedUser) // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
+      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt); // 데이터와 날짜 비교
+      return (setTime === time && dateCheck && setUser === loggedUser); // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
     return result; // 찾은 데이터 반환
   };

@@ -37,16 +37,13 @@ function App(){
 
   if(stateData.todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
     selected =  <Todo 
-                  stateData={stateData} setStateData={setStateData}
-                  dateData={dateData} setDateData={setDateData}
+                  stateData={stateData} setStateData={setStateData} dateData={dateData} setDateData={setDateData}
                   targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser}
                 />
   }else if(stateData.todoState === false){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
     selected =  <Calendar
-                  stateData={stateData} setStateData={setStateData}
-                  dateDate={dateData} setDateData={setDateData}
-                  loggedUser={loggedUser} date={date} setDate={setDate}
-                  targetID={targetID} setTargetID={setTargetID}
+                  stateData={stateData} setStateData={setStateData} dateDate={dateData} setDateData={setDateData}
+                  loggedUser={loggedUser} date={date} setDate={setDate} targetID={targetID} setTargetID={setTargetID}
                 />
   };
 
@@ -58,15 +55,15 @@ function App(){
 
   if(!stateData.loginState){ //loginState가 참이 아니면 
     now = <div className="border border-yellow-700 rounded w-96 ml-8 mt-8 pl-4">
-    <Today/>
-    <Clock/>
-  </div>
+            <Today/>
+            <Clock/>
+          </div>
   }else if(stateData.loginState){ //loginState 참이면
     now = <div className="border border-yellow-700 rounded w-96 ml-8 pl-4 float-left">
-    <Welcome loggedUser={loggedUser}/> <Logout stateData={stateData} setStateData={setStateData}/>
-    <Today/>
-    <Clock/>
-  </div>
+            <Welcome loggedUser={loggedUser}/> <Logout stateData={stateData} setStateData={setStateData}/>
+            <Today/>
+            <Clock/>
+          </div>
   }
 
 
@@ -77,18 +74,14 @@ function App(){
           {selectSign}
         </div>
         <Select 
-          stateData={stateData} setStateData={setStateData}
-          dateData={dateData} setDateData={setDateData}
-          setDate={setDate}
+          stateData={stateData} setStateData={setStateData} dateData={dateData} setDateData={setDateData} setDate={setDate}
         />
         <SelectTodo
-          stateData={stateData} setStateData={setStateData}
-          dateData={dateData} setDateData={setDateData}
-          setDate={setDate}
+          stateData={stateData} setStateData={setStateData} dateData={dateData} setDateData={setDateData} setDate={setDate}
         />
         {selected}
       </>
   )
 }
 
-export default App
+export default App;
