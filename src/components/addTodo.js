@@ -30,8 +30,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
         };
       });
     };
-    checkSameDate()
-
+    checkSameDate();
   }, [dateData, loggedUser]);
   
   
