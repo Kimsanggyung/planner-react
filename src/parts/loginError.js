@@ -3,7 +3,7 @@ function LoginError({ error }){
     <div>
       {error}
     </div>
-  );
-};
+  )
+}
 
 export default LoginError;

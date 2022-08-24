@@ -3,7 +3,7 @@ function EditError({error}){
     <div className="text-red-500">
       {error}
     </div>
-  );
-};
+  )
+}
 
 export default EditError;

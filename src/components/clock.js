@@ -7,7 +7,7 @@ function Clock() {
     const interval = setInterval(() => { //1초마다 실행
       setTime(new Date());
     }, 1000);
-    return (() => clearInterval(interval)); //컴포넌트가 실행이 끝나면 interval실행끝내기
+    return (() => clearInterval(interval)) //컴포넌트가 실행이 끝나면 interval실행끝내기
   }, []);
   
   return (

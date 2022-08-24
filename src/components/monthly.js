@@ -12,7 +12,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
   const [getDate, setGetDate] = useState(odate);
 	const [monthIndex, setMonthIndex] = useState(getDate.getMonth());
   const [year, setYear] = useState(odate.getFullYear());
-  const [month, setMonth] = useState(monthNames[monthIndex]);
+  const [month, setMonth] = useState(monthNames[monthIndex])
   const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay());
   const [numberOfDays, setNumberOfDays] = useState(new Date(year, monthIndex+1, 0).getDate());
   const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
@@ -32,7 +32,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
   
   useEffect(()=>{ // firstDayIndex, numberOfDays가 변경될 때 마다 실행
     setCalendarCellsQty(numberOfDays + firstDayIndex);
-  }, [firstDayIndex, numberOfDays]);
+  }, [firstDayIndex, numberOfDays])
 
   useEffect(()=>{ // 컴포넌트가 실행될 때 1회 실행
     getItem().then((data)=> setTodoData(data));
@@ -41,40 +41,40 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
 	const goToNextMonth = () => { // 다음달 버튼 함수
 		if (monthIndex >= 11) { // monthIndex보다 크거나 같으면
       setYear(year+1); // 1년을 더해준다
-      return setMonthIndex(0); // monthIndex를 0으로
-    };
-    return setDate(new Date(year,monthIndex+1,1)); // 1달 더해주기(odate에 다음달 세팅해주기)
-	};
+      return setMonthIndex(0) // monthIndex를 0으로
+    }
+    return setDate(new Date(year,monthIndex+1,1)) // 1달 더해주기(odate에 다음달 세팅해주기)
+	}
 	
 	const goToPrevMonth = () => { // 이전달 버튼 함수
 		if (monthIndex <= 0) { // monthIndex가 0보다 작거나 같다면
       setYear(year-1); //1년 빼주기
 		  return setMonthIndex(11); // monthIndex를 11로
-		};
+		}
 		return setDate(new Date(year,monthIndex-1,1)); // 1달 빼주기(odate에 저번달 세팅해주기)
-	};
+	}
 
   const viweAddTodo = (i,firstDayIndex) =>{ // 일정추가할 수 있게 하는 함수
-    const selectDate = ((i-firstDayIndex)+1);  // 선택날짜는 parameter로 받아온 숫자와firstDayIndex를 뺀값에 1를 더한 날짜다
+    const selectDate = ((i-firstDayIndex)+1)  // 선택날짜는 parameter로 받아온 숫자와firstDayIndex를 뺀값에 1를 더한 날짜다
     const setDate = {
       ...dateDate, addDate: year+"."+(monthIndex+1)+"."+selectDate, 
       selectYear: year, selectMonth: monthIndex+1, selectDate: selectDate, selectedTime: "시간선택"
-    };
+    }
     setDateData(setDate);
-    const setState = {...stateData, todoState: true, selectedTodo: "addTodo"};
-    setStateData(setState);
-  };
+    const setState = {...stateData, todoState: true, selectedTodo: "addTodo"}
+    setStateData(setState)
+  }
 
   const findData = (data, i) => { // indexedDB에서 원하는 데이터 찾는 세팅
     const result = data.find(({setTodoList})=>{ // indexedDB에서 setTodoList 찾기
       if (!setTodoList) return false; // indexedDB에서 setTodoList를 못찾으면 false반환
       const {setDate, setUser} = setTodoList; // setTodoList에 있는 setDate, setUser를 상수로
       return (setDate === year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1) && setUser === loggedUser); // parameter로 받아온 날짜값과 setDate가 같고 setUser과 loggedUser이랑 같은 것을 반환
-    });
+    })
     return result; // 찾은 데이터를 반환
-  };
+  }
 
-  const items = [];
+  const items = []
 
   for(let i = 0; i <= calendarCellsQty; i++){ // 반복문 calendarCellsQty보다 작을 때까지 반복
     
@@ -97,8 +97,8 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
  
     items.push( // 빈 배열에 넣어주기
       monthList
-    );
-  };
+    )
+  }
 	 
   return (
     <>

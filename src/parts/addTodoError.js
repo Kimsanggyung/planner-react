@@ -3,7 +3,7 @@ function AddTodoError({ error }){
     <div>
       {error}
     </div>
-  );
-};
+  )
+}
 
 export default AddTodoError;
