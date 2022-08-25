@@ -38,7 +38,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
     const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate };
     setDateData(setAddDate);
-  },[dateData, setDateData]);
+  },[dateData.selectYear, dateData.selectMonth, dateData.selectDate]);
 
   let setTodoList = {
 	  setTodo: todo,
@@ -58,7 +58,8 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
     setDetails(event.target.value);
   };
   const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
-    setTime(event.target.value);
+    const selectedTime = {...dateData, selectedTime: event.target.value};
+    setDateData(selectedTime);
   };
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     const selectYear = {...dateData, selectYear: event.target.value};
