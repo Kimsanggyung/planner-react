@@ -1,4 +1,5 @@
 import AddTodoError from "../parts/addTodoError";
+import axios from "axios";
 import { setItem } from '../context/indexed'
 import { useEffect, useState } from "react";
 import { getItem } from "../context/indexed"
@@ -10,9 +11,26 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
+  const [list, setList] = useState([]);
   const [checkSame, setCheckSame] = useState(undefined);
   const pattern = /^\d{4}$/;
 
+
+  useEffect(()=>{
+    axios
+      .get("http://127.0.0.1:8000/todo/")
+      .then((response)=>{
+        if(response.data.length > 0){
+          const list = response.data;
+          const checkUserTodo = list.find(data => data.setTime === dateData.selectedTime && data.setDate === dateData.addDate && data.setUser === loggedUser)
+          setList(checkUserTodo)
+        }
+        console.log(response.data)
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  },[dateData.addDate, dateData.selectedTime, loggedUser])
   
   useEffect(()=>{
     const checkSameDate = () =>{
@@ -31,9 +49,8 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
       });
     };
     checkSameDate();
-  }, [loggedUser]);
-  
-  
+  }, [dateData.addDate, dateData.selectedTime, loggedUser]);
+    
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
     const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate };
     setDateData(setAddDate);
@@ -77,7 +94,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   const setTodoState = {...stateData, todoState: false};
   
   const submit = () => { // 등록버튼 함수
-    if(checkSame!==undefined){
+    if(checkSame!==undefined && list!==undefined){
       setError("해당 일자에 일정이 있습니다"); // 날짜가 정확하지 않다면 에러메시지 세팅
       console.log("해당 일자에 일정이 있습니다");
     };
@@ -100,6 +117,23 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && checkSame === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
       setItem({setTodoList}); // indexedDB에 setTodoList 저장
+      axios
+      .post("http://127.0.0.1:8000/todo/", {
+        setTodo: todo,
+        setDetails: details,
+        setDate: dateData.addDate,
+        setTime: dateData.selectedTime,
+        setUser: loggedUser,
+        selectYear: dateData.selectYear,
+        selectMonth: dateData.selectMonth,
+        selectDate: dateData.selectDate
+      })
+      .then(function (response){
+        console.log(response);
+      })
+      .catch(function (error){
+        console.log(error)
+      });
       setStateData(setTodoState); // 할일 추가를 완료했다면 달력화면으로 가도록 state값 변경
     };
   };
