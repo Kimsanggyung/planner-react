@@ -11,7 +11,6 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
   const [checkSame, setCheckSame] = useState(undefined);
-  const [selectTime, setTime] = useState('');
   const pattern = /^\d{4}$/;
 
   
@@ -44,7 +43,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
 	  setTodo: todo,
 	  setDetails: details,
     setDate: dateData.addDate,
-    setTime: selectTime,
+    setTime: dateData.selectedTime,
     setUser: loggedUser,
     selectYear: dateData.selectYear,
     selectMonth: dateData.selectMonth,
