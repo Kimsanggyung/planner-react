@@ -15,7 +15,7 @@ function CheckDetail({stateData, setStateData, targetID}){
         setTodo(response.data.setTodo); //data에 있는 setTodo로 todo 세팅
         setDetail(response.data.setDetails); // data에 있는 setDetail로 detail 세팅
         setTime(response.data.setTime); 
-        console.log(response.data)
+        console.log("success")
       })
       .catch(function(error){
         console.log(error);

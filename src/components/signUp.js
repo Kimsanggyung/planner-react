@@ -65,7 +65,6 @@ function SignUp({stateData, setStateData}){
             const findId = checkUser(inputID); // 메모리에 저징된 사용지 아이디 중에 같은게 있는지 확인
             return checkInputId || findId // 둘중하나라도 있으면 반환
           }else{ // 둘다 없다면
-            console.log(response.data.userID)
             return false // false반환
           };
         });
@@ -94,7 +93,7 @@ function SignUp({stateData, setStateData}){
           setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
         };
       };
-      console.log(response.data)
+      console.log("success")
     })
     .catch(function(error){
       console.log(error);
@@ -125,7 +124,7 @@ function SignUp({stateData, setStateData}){
         userPWD: hashPwd
       })
       .then(function (response){
-        console.log(response);
+        console.log(response.status);
       })
       .catch(function (error){
         console.log(error)

@@ -23,7 +23,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
           const checkUserTodo = list.find(data => data.setTime === dateData.selectedTime && data.setDate === dateData.addDate && data.setUser === loggedUser)
           setList(checkUserTodo)
         }
-        console.log(response.data)
+        console.log("success")
       })
       .catch(function(error){
         console.log(error);
@@ -108,7 +108,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
         selectDate: dateData.selectDate
       })
       .then(function (response){
-        console.log(response);
+        console.log(response.status);
       })
       .catch(function (error){
         console.log(error)

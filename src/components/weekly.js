@@ -44,7 +44,7 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     .get("http://127.0.0.1:8000/todo/")
     .then((response)=>{
       setTodoData(response.data);
-      console.log(response.data)
+      console.log("success")
     })
     .catch(function(error){
       console.log(error);

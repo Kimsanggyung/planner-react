@@ -47,7 +47,7 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
         console.log("일정없음")
         // setGetList(<span className="pl-4">일정이 없습니다.</span>)
       }
-      console.log(response.data);
+      console.log("success");
     })
     .catch(function(error){
       console.log(error);

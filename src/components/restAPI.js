@@ -21,7 +21,7 @@ function RestAPI({dateData, setDateData, loggedUser}){
         selectDate: dateData.selectDate
       })
       .then(function (response){
-        console.log(response);
+        console.log(response.status);
       })
       .catch(function (error){
         console.log(error)
@@ -33,7 +33,7 @@ function RestAPI({dateData, setDateData, loggedUser}){
       .get("http://127.0.0.1:8000/review/")
       .then((response)=>{
         setText([...response.data]);
-        console.log(response.data)
+        console.log("success")
       })
       .catch(function(error){
         console.log(error);
@@ -130,7 +130,7 @@ function RestAPI({dateData, setDateData, loggedUser}){
                     selectDate: dateData.selectDate
                   })
                   .then(function (response){
-                    console.log(response);
+                    console.log(response.status);
                   })
                   .catch(function (error){
                     console.log(error)

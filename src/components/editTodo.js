@@ -62,7 +62,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
           selectedTime: response.data.setTime
         };
         setDateData(setSelect);
-        console.log(response.data)
+        console.log("success")
       })
       .catch(function(error){
         console.log(error);
@@ -107,7 +107,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       .then(function (response){
         const setTodoState = {...stateData, todoState: false};
         setStateData(setTodoState);
-        console.log(response);
+        console.log(response.status);
       })
       .catch(function (error){
         console.log(error)
