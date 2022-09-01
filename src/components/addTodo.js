@@ -1,9 +1,7 @@
 import AddTodoError from "../parts/addTodoError";
 import axios from "axios";
-import { setItem } from '../context/indexed'
 import { useEffect, useState } from "react";
 import { time, monthArray, dateArray } from "../baseData";
-
 
 function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
 
@@ -12,7 +10,6 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   const [error, setError] = useState('');
   const [list, setList] = useState(undefined);
   const pattern = /^\d{4}$/;
-
 
   useEffect(()=>{
     axios
@@ -95,7 +92,6 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
     };
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && list === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
-      setItem({setTodoList}); // indexedDB에 setTodoList 저장
       axios
       .post("http://127.0.0.1:8000/todo/", {
         setTodo: todo,

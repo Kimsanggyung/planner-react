@@ -23,18 +23,7 @@ function SignUp({stateData, setStateData}){
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
   
   }, [inputPWD, saltKey]);
-
-  useEffect(()=>{ // inputID hashPwd가 변경될 때 마다 실행
-
-    setUserData({ //userData 세팅
-      userId: inputID,
-      userPwd: hashPwd
-    });
-
-  }, [inputID, hashPwd]);
-
   
-
   const checkUser = (id) => { //기존유저 아이디중 같은게 있는지 확인하는 함수
 		const findUser = OuserData.find(user => user.id === id); // parameter로 받아온 id로 같은게 있는지 확인
 		return findUser;
@@ -54,7 +43,7 @@ function SignUp({stateData, setStateData}){
     axios
     .get("http://127.0.0.1:8000/user/")
     .then((response)=>{
-      const indexedUser = response.data.find((data)=>{ //indexedDB를 통해 회원 가입을 한 사용자가 있는지 확인
+      const userFromServer = response.data.find((data)=>{ //indexedDB를 통해 회원 가입을 한 사용자가 있는지 확인
         return data;
       });
       if(response.data.length > 0){ // indexedDB에 저장된 데이터가 있으면
@@ -80,7 +69,7 @@ function SignUp({stateData, setStateData}){
           setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
         }
       }
-      if(response.data.length === 0 || indexedUser === undefined){ // indexedDB에 저장된 데이터가 없거나 indexedDB를 통해 회원 가입한 사용자가 없으면
+      if(response.data.length === 0 || userFromServer === undefined){ // indexedDB에 저장된 데이터가 없거나 indexedDB를 통해 회원 가입한 사용자가 없으면
         const findId = checkUser(inputID); // 메모리에 저장된 사용자 아이디 중에 같은게 있는지 체크
         if(findId){ // 같은게 있다면
           setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅

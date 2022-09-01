@@ -38,15 +38,15 @@ function Login({stateData, setStateData, setLoggedUser}){
     axios
     .get("http://127.0.0.1:8000/user/")
     .then((response)=>{
-      const userToSever = response.data.find((data)=>{ // indexedDB을 사용해서 로그인하는 유저가 있는지 체크하기 위함
+      const userFromSever = response.data.find((data)=>{ // indexedDB을 사용해서 로그인하는 유저가 있는지 체크하기 위함
         return data;
       }); 
       if(response.data.length > 0){ // data 배열을 길이가 0보다 크면
         const checkUserAll = response.data.find((data)=>{ //indexedDB에서 userData 찾기
           if(data){// userData가 있다면 
-            const findIndexedUser = data.userID === inputID && data.userPWD === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
+            const findUserInServer = data.userID === inputID && data.userPWD === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
             const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
-            return findIndexedUser || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
+            return findUserInServer || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
           }else{ // 조건에 맞지 않은면
             return false; // 거짓이라고 반환
           };
@@ -68,7 +68,7 @@ function Login({stateData, setStateData, setLoggedUser}){
             console.log("틀림"); // 콘솔로그에 에러보여주기
           };
         };
-      }if(response.data.length === 0 || userToSever === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
+      }if(response.data.length === 0 || userFromSever === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
         const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
         if(inputPWD === ""){ //아이디 입력창이 비어있다면
           setError("비밀번호를 입력해주세요"); //에러메시지 세팅
