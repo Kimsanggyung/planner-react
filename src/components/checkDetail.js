@@ -1,24 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getItem } from "../context/indexed"
+import axios from "axios"
 
-function CheckDetail({stateData, setStateData, targetID, setTargetID}){
+function CheckDetail({stateData, setStateData, targetID}){
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
   const [time, setTime] = useState('');
   const [detail, setDetail] = useState('');
+  const targetIDd = 2;
 
-  getItem(targetID).then(data => { //indexedDB에서 props로 받은 아이디로 데이터 가져오기
-    setDate(data.setTodoList.setDate); //data에 있는 setDate로 date 세팅
-    setTodo(data.setTodoList.setTodo); //data에 있는 setTodo로 todo 세팅
-    setDetail(data.setTodoList.setDetails); // data에 있는 setDetail로 detail 세팅
-    setTime(data.setTodoList.setTime); // data에 있는 setTime로 time 세팅
-    return data;
-  });
+  useEffect(()=>{
+    axios
+      .get(`http://127.0.0.1:8000/todo/${targetID}`)
+      .then((response)=>{
+        setDate(response.data.setDate); //data에 있는 setDate로 date 세팅
+        setTodo(response.data.setTodo); //data에 있는 setTodo로 todo 세팅
+        setDetail(response.data.setDetails); // data에 있는 setDetail로 detail 세팅
+        setTime(response.data.setTime); 
+        console.log(response.data)
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  },[])
+  
 
-  const editMode = (id) =>{ //수정버튼함수 parameter id 받음
+  // getItem(targetID).then(data => { //indexedDB에서 props로 받은 아이디로 데이터 가져오기
+  //   setDate(data.setTodoList.setDate); //data에 있는 setDate로 date 세팅
+  //   setTodo(data.setTodoList.setTodo); //data에 있는 setTodo로 todo 세팅
+  //   setDetail(data.setTodoList.setDetails); // data에 있는 setDetail로 detail 세팅
+  //   setTime(data.setTodoList.setTime); // data에 있는 setTime로 time 세팅
+  //   return data;
+  // });
+
+  const editMode = () =>{ //수정버튼함수 parameter id 받음
     const setState = {...stateData, selectedTodo: "editTodo"};
     setStateData(setState);
-    setTargetID(id); // parameter로 받아온 아이디로 targetID 설정
   };
 
   const exit = () => { //닫기 버튼 함수

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import EditError from "../parts/editError";
+import axios from "axios";
 import { getItem, db } from "../context/indexed";
 import { time, monthArray, dateArray } from "../baseData";
 
@@ -29,7 +30,8 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
     setDetails(event.target.value);
   };
   const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
-    setTime(event.target.value);
+    const selectYear = {...dateData, selectedTime: event.target.value};
+    setDateData(selectYear);
   };
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     const selectYear = {...dateData, selectYear: event.target.value};
@@ -45,18 +47,40 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   };
 
   useEffect(() => { // 컴포넌트가 실행될 떄 1회 실행
-    getItem(targetID).then(value => { // indexedDB에서 id로 데이터 가져옴
-      setDate(value.setTodoList.setDate); // 가져온 데이터에 있는 setDate를 date에 세팅
-      setTodo(value.setTodoList.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
-      setDetails(value.setTodoList.setDetails); // 가져온 데이터에 있는 setDeatils를 details에 세팅
-      setTime(value.setTodoList.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
-      const setSelect = {
-        ...dateData, selectYear: value.setTodoList.selectYear,
-        selectMonth: value.setTodoList.selectMonth,
-        selectDate: value.setTodoList.selectDate
-      };
-      setDateData(setSelect);
-    });
+
+    axios
+      .get(`http://127.0.0.1:8000/todo/${targetID}`)
+      .then((response)=>{
+        setDate(response.data.setDate); // 가져온 데이터에 있는 setDate를 date에 세팅
+        setTodo(response.data.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
+        setDetails(response.data.setDetails); // 가져온 데이터에 있는 setDeatils를 details에 세팅
+        setTime(response.data.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
+        const setSelect = {
+          ...dateData, 
+          selectYear: response.data.selectYear,
+          selectMonth: response.data.selectMonth,
+          selectDate: response.data.selectDate,
+          selectedTime: response.data.setTime
+        };
+        setDateData(setSelect);
+        console.log(response.data)
+      })
+      .catch(function(error){
+        console.log(error);
+      })
+    // getItem(targetID).then(value => { // indexedDB에서 id로 데이터 가져옴
+    //   setDate(value.setDate); // 가져온 데이터에 있는 setDate를 date에 세팅
+    //   setTodo(value.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
+    //   setDetails(value.setDetails); // 가져온 데이터에 있는 setDeatils를 details에 세팅
+    //   setTime(value.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
+    //   const setSelect = {
+    //     ...dateData, selectYear: value.selectYear,
+    //     selectMonth: value.selectMonth,
+    //     selectDate: value.selectDate
+    //   };
+    //   setDateData(setSelect);
+    // });
+    
   },[]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
@@ -72,7 +96,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   };
 
   const editTodoDatas = () => { //수정후 등록버튼
-    if(selectTime === "시간선택"){ //시간선택을 안했으면 
+    if(dateData.selectedTime === "시간선택"){ //시간선택을 안했으면 
       setError("일정시간을 선택해주세요"); //에러메시지 세팅
       console.log("일정시간을 선택해주세요"); //콘솔로그에 에러 보여주기
     };
@@ -88,21 +112,41 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       setError("정확한 날짜를 입력해주세요"); //에러메시지 세팅
       console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
-    if(todo !== "" && details !== "" && selectTime !== "시간선택" && pattern.test(dateData.selectYear)){ //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
-      let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
-      let putReq = store.put({ //indexedDB 수정
-        id:(targetID), //id는 props로 받아온 targetID
-        setTodoList: edidtDatas //setTodoList에 edidtDatast세팅
-      });
-      putReq.onsuccess = () => { //성공했을떄 함수
-        console.log('success'); // 성공했다는 콘솔로그
+    if(todo !== "" && details !== "" && dateData.selectedTime !== "시간선택" && pattern.test(dateData.selectYear)){
+      //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+      axios
+      .put(`http://127.0.0.1:8000/todo/${targetID}/`,{
+        setTodo: todo,
+        setDetails: details,
+        setDate: dateData.addDate,
+        setTime: dateData.selectedTime,
+        setUser: loggedUser,
+        selectYear: dateData.selectYear,
+        selectMonth: dateData.selectMonth,
+        selectDate: dateData.selectDate,
+      })
+      .then(function (response){
         const setTodoState = {...stateData, todoState: false};
         setStateData(setTodoState);
-      };
-      putReq.addEventListener('error',function(event){ //실패했을 때
-        console.log(event); //콘솔로그에 보여주기
+        console.log(response);
+      })
+      .catch(function (error){
+        console.log(error)
       });
-    };
+    }
+      // let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
+      // let putReq = store.put({ //indexedDB 수정
+      //   id:(targetID), //id는 props로 받아온 targetID
+      //   setTodoList: edidtDatas //setTodoList에 edidtDatast세팅
+      // });
+      // putReq.onsuccess = () => { //성공했을떄 함수
+      //   console.log('success'); // 성공했다는 콘솔로그
+      //   const setTodoState = {...stateData, todoState: false};
+      //   setStateData(setTodoState);
+      // };
+      // putReq.addEventListener('error',function(event){ //실패했을 때
+      //   console.log(event); //콘솔로그에 보여주기
+      // });
   };
 
   const cancel = () =>{ //취소버튼 함수
@@ -139,7 +183,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
           </div>
           <div className="mb-4">
             <label>시간:</label>
-            <select value={selectTime} onChange={selectTimeChange}>
+            <select value={dateData.selectedTime} onChange={selectTimeChange}>
               <option>시간선택</option>
               {timeOptions}
             </select>

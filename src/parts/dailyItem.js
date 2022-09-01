@@ -10,7 +10,7 @@ function DaillyItem({getList, stateData, setStateData, setTargetID}){
 
   return(
    <span className="text-cyan-800" onClick={()=>viweDetails(getList.id)}>
-   {getList? getList.setTodoList.setTodo : ''}
+   {getList? getList.setTodo : ''}
    </span>
   );
 };

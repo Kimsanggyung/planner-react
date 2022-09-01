@@ -3,13 +3,24 @@ import { getItem } from "../context/indexed"
 import { today } from "../context/today"
 import { time } from "../baseData"
 import DaillyItem from "../parts/dailyItem"
+import axios from 'axios';
 
 function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, targetID, setTargetID}){
 
   const [todoData, setTodoData] = useState(null);
+  const [todoList, setTodoList] = useState();
 
   useEffect(()=>{ //컴포넌트가 실행됐을 때
-    getItem().then((data)=> setTodoData(data)); //indexedDB에서 가져온 데이터를 todoData에 세팅
+    axios
+      .get("http://127.0.0.1:8000/todo/")
+      .then((response)=>{
+        setTodoData([...response.data]);
+        console.log(response.data)
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+      // getItem().then((data)=> setTodoData(data)); //indexedDB에서 가져온 데이터를 todoData에 세팅
   },[]);
 
   const viweAddTodo = (time) => { //일정추가 함수
@@ -42,13 +53,21 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
   };
  
   const findData = (time, data) => { //inedxedDB에서 원하는 값찾기
-    const result = data.find(({setTodoList})=>{ //setTodoList 찾음
-      if (!setTodoList) return false; // setTodoList가 없다면 false반환
-      const {setTime, setDate, setUser} = setTodoList; //setTodoList에 있는 setTime setDate setUser 상수로
-      return (setTime === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
+    const result = data.find((data)=>{ //setTodoList 찾음
+      if (!data) return false; // setTodoList가 없다면 false반환
+      return (data.setTime === time && data.setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && data.setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
     });
     return result; //원하는 값 반환
   };
+
+  // const findList = (time, data) => { //inedxedDB에서 원하는 값찾기
+  //   const result = data.find((setTodoList)=>{ //setTodoList 찾음
+  //     if (!setTodoList) return false; // setTodoList가 없다면 false반환
+  //     const {setTime, setDate, setUser} = setTodoList; //setTodoList에 있는 setTime setDate setUser 상수로
+  //     return (setTime === time && setDate === date.getFullYear()+"."+(date.getMonth()+1)+'.'+ date.getDate() && setUser === loggedUser)// 일정과 보고있는 날짜 시간이같고 세팅한 유저와 현제유저가 같은걸 반환
+  //   });
+  //   return result; //원하는 값 반환
+  // };
 
   const parts = time.map((data, idx)=>{ // time으로 반복
     return( 

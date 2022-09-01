@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { getItem } from "../context/indexed";
 import { today } from "../context/today";
 import { time } from "../baseData"
@@ -39,9 +40,21 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
   let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
 
-  useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
-    getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
-  },[]);
+  // useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
+  //   getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
+  // },[]);
+
+  useEffect(()=>{
+    axios
+    .get("http://127.0.0.1:8000/todo/")
+    .then((response)=>{
+      setTodoData(response.data);
+      console.log(response.data)
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  },[])
 
   const viweAddTodo = (time, date) => { // 일정추가 할 수 있게 하는 버튼 함수
     const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
@@ -60,11 +73,11 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     const findWeekDay = weekDataArr.find((weekData)=>{ // 위에 선언한 배열에서 원하는 값을 찾는 함수
       return weekData.day === weekStr; // parameter로 받아온 weekStr와 배열에 있는 day와 같은걸 반환
     });
-    const result = data.find(({setTodoList})=>{ // indexedDB에서 원하는 데이터를 찾는 함수
-      if (!setTodoList) return false; // indexedDB에 setTodoList가 없으면 false반환
-      const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
-      const dateCheck = setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt); // 데이터와 날짜 비교
-      return (setTime === time && dateCheck && setUser === loggedUser); // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
+    const result = data.find((data)=>{ // indexedDB에서 원하는 데이터를 찾는 함수
+      if (!data) return false; // indexedDB에 setTodoList가 없으면 false반환
+      // const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
+      const dateCheck = data.setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt); // 데이터와 날짜 비교
+      return (data.setTime === time && dateCheck && data.setUser === loggedUser); // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });
     return result; // 찾은 데이터 반환
   };
