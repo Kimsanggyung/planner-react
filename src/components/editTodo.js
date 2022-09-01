@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import EditError from "../parts/editError";
 import axios from "axios";
-import { getItem, db } from "../context/indexed";
 import { time, monthArray, dateArray } from "../baseData";
 
 function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setDateData}){
@@ -68,32 +67,12 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       .catch(function(error){
         console.log(error);
       })
-    // getItem(targetID).then(value => { // indexedDB에서 id로 데이터 가져옴
-    //   setDate(value.setDate); // 가져온 데이터에 있는 setDate를 date에 세팅
-    //   setTodo(value.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
-    //   setDetails(value.setDetails); // 가져온 데이터에 있는 setDeatils를 details에 세팅
-    //   setTime(value.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
-    //   const setSelect = {
-    //     ...dateData, selectYear: value.selectYear,
-    //     selectMonth: value.selectMonth,
-    //     selectDate: value.selectDate
-    //   };
-    //   setDateData(setSelect);
-    // });
     
   },[]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
     setDate(dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate);
   }, [dateData.selectDate, dateData.selectMonth, dateData.selectYear]);
-
-  let edidtDatas = {
-    setDate: date,
-    setTodo: todo,
-    setDetails: details,
-    setTime: selectTime,
-    setUser: loggedUser
-  };
 
   const editTodoDatas = () => { //수정후 등록버튼
     if(dateData.selectedTime === "시간선택"){ //시간선택을 안했으면 
@@ -133,20 +112,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       .catch(function (error){
         console.log(error)
       });
-    }
-      // let store = db.transaction('datas', 'readwrite').objectStore('datas'); // indexedDB에 datas접근
-      // let putReq = store.put({ //indexedDB 수정
-      //   id:(targetID), //id는 props로 받아온 targetID
-      //   setTodoList: edidtDatas //setTodoList에 edidtDatast세팅
-      // });
-      // putReq.onsuccess = () => { //성공했을떄 함수
-      //   console.log('success'); // 성공했다는 콘솔로그
-      //   const setTodoState = {...stateData, todoState: false};
-      //   setStateData(setTodoState);
-      // };
-      // putReq.addEventListener('error',function(event){ //실패했을 때
-      //   console.log(event); //콘솔로그에 보여주기
-      // });
+    };
   };
 
   const cancel = () =>{ //취소버튼 함수

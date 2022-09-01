@@ -3,7 +3,6 @@ import CryptoJS from "crypto-js";
 import axios from 'axios';
 import LoginError from '../parts/loginError'
 import { OuserData } from "../context/userData"
-import { getItem } from "../context/indexed"
 
 function Login({stateData, setStateData, setLoggedUser}){
   const [inputID, setInputID] = useState('');
@@ -92,60 +91,6 @@ function Login({stateData, setStateData, setLoggedUser}){
     })
     .catch(function(error){
       console.log(error);
-    })
- // -----------------------------------------------------------------------------------------------------------------------------
-    getItem().then(data => { // indexedDB에서 데이터 가져옴
-      const indexedUser = data.find(({userData})=>{ // indexedDB을 사용해서 로그인하는 유저가 있는지 체크하기 위함
-        console.log(userData)
-        return userData;
-      }); 
-      if(data.length > 0){ // data 배열을 길이가 0보다 크면
-        const checkUserAll = data.find(({userData})=>{ //indexedDB에서 userData 찾기
-          if(userData){// userData가 있다면 
-            const findIndexedUser = userData.userId === inputID && userData.userPwd === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
-            const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
-            return findIndexedUser || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
-          }else{ // 조건에 맞지 않은면
-            return false; // 거짓이라고 반환
-          };
-        }); 
-        if(inputPWD === ""){ //아이디 입력창이 비어있다면
-          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
-          console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
-        };
-        if(inputID === ""){ //비밀번호 입력창이 비어있다면
-          setError("아이디를 입력해주세요"); //에러메시지 세팅
-          console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
-        };
-        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
-          if(checkUserAll){ //checkUserAll가 참이면
-            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
-          }else{//조건이 맞지 않으면
-            setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
-            console.log("틀림"); // 콘솔로그에 에러보여주기
-          };
-        };
-      }if(data.length === 0 || indexedUser === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
-        const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
-        if(inputPWD === ""){ //아이디 입력창이 비어있다면
-          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
-          console.log("비밀번호를 입력해주세요"); //콘솔로그에 에러보여주기
-        };
-        if(inputID === ""){ //비밀번호 입력창이 비어있다면
-          setError("아이디를 입력해주세요"); //에러메시지 세팅
-          console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
-        };
-        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
-          if(findUser){ //findUser가 참이면
-            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
-          }else{//조건이 맞지 않으면
-            setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
-            console.log("틀림"); // 콘솔로그에 에러보여주기
-          };
-        };
-      };
     });
     if(check === "checked"){
       localStorage.setItem('saveID', inputID);

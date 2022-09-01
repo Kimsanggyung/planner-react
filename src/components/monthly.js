@@ -1,6 +1,5 @@
 import MonthlyItem from "../parts/monthlyItem";
 import { useState, useEffect } from "react";
-import { getItem } from "../context/indexed";
 import { today } from "../context/today"
 import '../style/style.css';
 import axios from "axios";
@@ -34,10 +33,6 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
   useEffect(()=>{ // firstDayIndex, numberOfDays가 변경될 때 마다 실행
     setCalendarCellsQty(numberOfDays + firstDayIndex);
   }, [firstDayIndex, numberOfDays]);
-
-  // useEffect(()=>{ // 컴포넌트가 실행될 때 1회 실행
-  //   getItem().then((data)=> setTodoData(data));
-  // },[]);
 
   useEffect(()=>{
     axios
@@ -80,8 +75,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
 
   const findData = (data, i) => { // indexedDB에서 원하는 데이터 찾는 세팅
     const result = data.find((data)=>{ // indexedDB에서 setTodoList 찾기
-      if (!data) return false; // indexedDB에서 setTodoList를 못찾으면 false반환
-      // const {setDate, setUser} = setTodoList; // setTodoList에 있는 setDate, setUser를 상수로
+      if (!data) return false;
       return (data.setDate === year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1) && data.setUser === loggedUser); // parameter로 받아온 날짜값과 setDate가 같고 setUser과 loggedUser이랑 같은 것을 반환
     })
     return result; // 찾은 데이터를 반환

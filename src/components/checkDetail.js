@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getItem } from "../context/indexed"
 import axios from "axios"
 
 function CheckDetail({stateData, setStateData, targetID}){
@@ -7,7 +6,6 @@ function CheckDetail({stateData, setStateData, targetID}){
   const [todo, setTodo] = useState('');
   const [time, setTime] = useState('');
   const [detail, setDetail] = useState('');
-  const targetIDd = 2;
 
   useEffect(()=>{
     axios
@@ -24,15 +22,6 @@ function CheckDetail({stateData, setStateData, targetID}){
       });
   },[])
   
-
-  // getItem(targetID).then(data => { //indexedDB에서 props로 받은 아이디로 데이터 가져오기
-  //   setDate(data.setTodoList.setDate); //data에 있는 setDate로 date 세팅
-  //   setTodo(data.setTodoList.setTodo); //data에 있는 setTodo로 todo 세팅
-  //   setDetail(data.setTodoList.setDetails); // data에 있는 setDetail로 detail 세팅
-  //   setTime(data.setTodoList.setTime); // data에 있는 setTime로 time 세팅
-  //   return data;
-  // });
-
   const editMode = () =>{ //수정버튼함수 parameter id 받음
     const setState = {...stateData, selectedTodo: "editTodo"};
     setStateData(setState);

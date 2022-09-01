@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import SignUpError from "../parts/signUpError"
-import { getItem, setItem } from "../context/indexed"
 import CryptoJS from "crypto-js";
 import { OuserData } from "../context/userData"
 import axios from "axios";
@@ -102,49 +101,6 @@ function SignUp({stateData, setStateData}){
     })
   }
 
-  const checkId = () => { //종복아이디 확인 버튼 함수
-    getItem().then(data => { //indexedDB에서 데이터 가져오기
-      const indexedUser = data.find(({userData})=>{ //indexedDB를 통해 회원 가입을 한 사용자가 있는지 확인
-        return userData;
-      });
-      if(data.length > 0){ // indexedDB에 저장된 데이터가 있으면
-        // 이미 사용중인 아이디인지 체크
-        const checkSameId = data.find(({userData}) => { // indexedDB를 통해 회원 가입을 한 사용자를 찾는다
-          if(userData){ //indexedDB를 통해 회원 가입을 한 사용자기 있다면
-            const checkInputId = userData.userId === inputID; // indexedDB에 기존사용자 아이디 중에 같은게 있는지 확인
-            const findId = checkUser(inputID); // 메모리에 저징된 사용지 아이디 중에 같은게 있는지 확인
-            return checkInputId || findId // 둘중하나라도 있으면 반환
-          }else{ // 둘다 없다면
-            return false // false반환
-          };
-        });
-        if(checkSameId){ // 이미사용되고 있는 아이디라면
-          setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
-          console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
-          setChecked(''); // 사용가능 여부 메시지를 빈칸으로
-          setCheckState(false); // 회원가입이 안되도록 checkState를 false로 
-        } else { //같은게 없다면
-          setError(""); // 에러메시지 없애기
-          setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
-          setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
-        }
-      }
-      if(data.length === 0 || indexedUser === undefined){ // indexedDB에 저장된 데이터가 없거나 indexedDB를 통해 회원 가입한 사용자가 없으면
-        const findId = checkUser(inputID); // 메모리에 저장된 사용자 아이디 중에 같은게 있는지 체크
-        if(findId){ // 같은게 있다면
-          setError("이미사용되고있는 아이디입니다."); // 에러메시지 세팅
-          console.log("이미사용되고있는 아이디입니다."); // 콘솔에 에러메시지
-          setChecked(''); // 사용가능 여부 메시지를 빈칸으로
-          setCheckState(false); //회원가입이 안되도록 checkState를 false로     
-        }else{
-          setError(""); // 에러메시지 없애기
-          setChecked("사용가능한 아이디입니다."); // 사용가능하다는 메시지 보여주기
-          setCheckState(true); // 회원가입이 가능하도록 checkState를 true로
-        };
-      };
-    });
-  };
-
   const submit = () => { //등록 버튼 함수
     if(checkState === false){ //중복확인을 하지않았다면
       setError("아이디 중복확인을 해주세요."); // 에러메시지 세팅
@@ -163,9 +119,6 @@ function SignUp({stateData, setStateData}){
       console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
     };
     if(inputID !== null && inputPWD !== null && inputPWD !== null && checkPWD === inputPWD && password.test(inputPWD) && checkState === true){ // 입력창에 모두 비어있지 않고 중복확인을 하고 입력한 비밀번호와 비밀번호 확인이 같다면
-      setItem({userData}); // indexedDB에 userData 저장
-      console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
-      setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
       axios
       .post("http://127.0.0.1:8000/user/", {
         userID: inputID,
@@ -177,6 +130,8 @@ function SignUp({stateData, setStateData}){
       .catch(function (error){
         console.log(error)
       });
+      console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
+      setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
     };
   };
 

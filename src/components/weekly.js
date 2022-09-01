@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getItem } from "../context/indexed";
 import { today } from "../context/today";
 import { time } from "../baseData"
 import WeeklyItem from '../parts/weeklyItem';
@@ -38,12 +37,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
   let wedDate = getAddDate(weekStart, 3); // 수요일 날짜는 이번주 시작하는 날짜에서 사흘 뒤
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
-  let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜  
-
-  // useEffect(()=>{ //컴포넌트가 실행될 떄 1회 실행
-  //   getItem().then((data)=> setTodoData(data)); // indexedDB에 저장되있는 데이터를 가져와서 todoDate에 세팅
-  // },[]);
-
+  let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜
+  
   useEffect(()=>{
     axios
     .get("http://127.0.0.1:8000/todo/")
