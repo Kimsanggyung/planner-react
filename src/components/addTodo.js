@@ -11,6 +11,10 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
   const [list, setList] = useState(undefined);
   const pattern = /^\d{4}$/;
 
+  /**
+   * dataData의 일부데이터가 변경됐을때 실행
+   * 서버와 통신해서 원하는 데이터를 
+   */
   useEffect(()=>{
     axios
       .get("http://127.0.0.1:8000/todo/")
@@ -27,21 +31,14 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
       });
   },[dateData.addDate, dateData.selectedTime, loggedUser])
   
+  /**
+   * selectYear, selectMonth, selectDate가 변경 될때 마다 실행
+   * 변경된 데이터로 setDateData  
+   */
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
     const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate };
     setDateData(setAddDate);
   },[dateData.selectYear, dateData.selectMonth, dateData.selectDate]);
-
-  let setTodoList = {
-	  setTodo: todo,
-	  setDetails: details,
-    setDate: dateData.addDate,
-    setTime: dateData.selectedTime,
-    setUser: loggedUser,
-    selectYear: dateData.selectYear,
-    selectMonth: dateData.selectMonth,
-    selectDate: dateData.selectDate
-  };
 
   const inputTodoChange = event => { // 제목 입력창에 입력을 하는 등 이벤트가 발생하면 setTodo
     setTodo(event.target.value);

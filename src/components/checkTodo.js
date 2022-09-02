@@ -5,22 +5,32 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
 
   const [list, setList] = useState()
 
-  useEffect(()=>{
+  useEffect(()=>{ // list가 변경될때 마다 실행되도록
 
-    const cancel = (todo, id) => { //일정취소 버튼 함수
+    /**
+     * 일정취소 버튼 함수(삭제)
+     * @param {string} todo 해당 데이터의 할일 제목을 받아옴
+     * @param {number} id 해당 데이터의 아이디를 받아옴
+     */
+    const cancel = (todo, id) => {
       if (window.confirm(`${todo.setTodo} 일정을 취소 하시겠습니까?`) === true){ 
         axios.delete(`http://127.0.0.1:8000/todo/${id}`)
       }
-      // const setTodoState = {...stateData, todoState: false}
-      // setStateData(setTodoState); // 삭제를 했다면 달력화면을 보여주기 위해 todoState false로
     };
 
-    const checkDetail = (id) =>{ // 상세내용 확인 버튼 함수
+    /**
+     * 일정 상세내용확인 버튼 함수
+     * @param {number} id 상세내용을 확인할 데이터의 id 값을 받아옴
+     */
+    const checkDetail = (id) =>{ 
       const setTodoState = {...stateData, selectedTodo: "checkDetail"};
       setStateData(setTodoState);
       setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
     };
     
+    /**
+     * 서버와 통신해서 현제로그인한 유져의 모든일정을 찾아 list에 세팅하는 함수
+     */
     axios
     .get("http://127.0.0.1:8000/todo/")
     .then((response)=>{
@@ -45,7 +55,6 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
       }else{
         setList(<span className="pl-4">일정이 없습니다.</span>)
         console.log("일정없음")
-        // setGetList(<span className="pl-4">일정이 없습니다.</span>)
       }
       console.log("success");
     })

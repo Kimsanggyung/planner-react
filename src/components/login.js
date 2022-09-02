@@ -30,19 +30,19 @@ function Login({stateData, setStateData, setLoggedUser}){
   },[]);
 
   const checkUser = (id, pwd) => { // 원하는 유저 찾기
-		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); //OuserData에 아이디 비밀번호 입력한 아이디 비밀번호 비교
-		return findUser; // 비교한값 반환
+		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); 
+		return findUser;
 	};
  
-  const login = () => {// 로그인 함수
+  const login = () => { // 로그인 버튼 함수
     axios
     .get("http://127.0.0.1:8000/user/")
     .then((response)=>{
-      const userFromSever = response.data.find((data)=>{ // indexedDB을 사용해서 로그인하는 유저가 있는지 체크하기 위함
+      const userFromSever = response.data.find((data)=>{ // 서버에 등록되어 로그인하는 유저가 있는지 체크하기 위함
         return data;
       }); 
       if(response.data.length > 0){ // data 배열을 길이가 0보다 크면
-        const checkUserAll = response.data.find((data)=>{ //indexedDB에서 userData 찾기
+        const checkUserAll = response.data.find((data)=>{ // 가져온 데이터에서 userData 찾기
           if(data){// userData가 있다면 
             const findUserInServer = data.userID === inputID && data.userPWD === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
             const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
@@ -104,9 +104,9 @@ function Login({stateData, setStateData, setLoggedUser}){
     setInputPWD(event.target.value);
   };
   const signUp = () => { // 회원가입 버튼 함수
-    setStateData(setSignUp); // 회원 가입 화면을 보여주기 위해 signUpState를 ture로
+    setStateData(setSignUp);
   };
-  const clickCheck = () => {
+  const clickCheck = () => { // 로그인 저장버튼 함수
     setCheck("checked");
   };
 

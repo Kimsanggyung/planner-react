@@ -68,9 +68,8 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     const findWeekDay = weekDataArr.find((weekData)=>{ // 위에 선언한 배열에서 원하는 값을 찾는 함수
       return weekData.day === weekStr; // parameter로 받아온 weekStr와 배열에 있는 day와 같은걸 반환
     });
-    const result = data.find((data)=>{ // indexedDB에서 원하는 데이터를 찾는 함수
-      if (!data) return false; // indexedDB에 setTodoList가 없으면 false반환
-      // const {setTime, setDate, setUser} = setTodoList; // setTodoList에 있는 setTime, setDate, setUser를 상수로 선언
+    const result = data.find((data)=>{ // 원하는 데이터를 찾는 함수
+      if (!data) return false; // data가 없으면 false반환
       const dateCheck = data.setDate === year+"."+(month+1)+'.'+(findWeekDay.weekInt); // 데이터와 날짜 비교
       return (data.setTime === time && dateCheck && data.setUser === loggedUser); // 지정한 시간, 날짜가 같고 사용자가 같은걸 반환
     });

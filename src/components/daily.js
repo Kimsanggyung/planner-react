@@ -9,7 +9,7 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
   const [todoData, setTodoData] = useState(null);
 
   useEffect(()=>{ //컴포넌트가 실행됐을 때
-
+    // 서버와 통신해서 데이터를 todo 가져옴
     axios
       .get("http://127.0.0.1:8000/todo/")
       .then((response)=>{
@@ -22,35 +22,66 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
 
   },[]);
 
-  const viweAddTodo = (time) => { //일정추가 함수
+  /**
+   * 일정추가 컴포넌트 실행 함수 
+   * @param {*} time 일정을 추가할 시간을 받아옴
+   * 해당일짜로 dateDate 세팅
+   */
+  const viweAddTodo = (time) => { 
     const setDate = {...dateDate, selectedTime: time, selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()};
     setDateData(setDate);
     const setState = {...stateData, todoState: true, selectedTodo: "addTodo"};
     setStateData(setState);
   };
 
-  const nextDay = () => { //다음날 버튼 함수
-    const adddDate = (date) => { //날짜 추가 함수
-      let result = new Date(date); //result date날짜로
-      result.setDate(result.getDate() + 1);// data에 1을 더하기
-      return result; // result값 반환
+  /**
+   * 다음날 버튼함수
+   * 다음날 날짜로 dateData세팅
+   * @returns 계산된 다음날 날짜를 date에 세팅한다
+   */
+  const nextDay = () => {
+    /**
+     * 다음날 계산 함수
+     * @param {*} date 현재 보고있는 날짜
+     * @returns 계산된 다음날 날짜 반환
+     */
+    const adddDate = (date) => { 
+      let result = new Date(date); 
+      result.setDate(result.getDate() + 1);
+      return result;
     };
     const setAddDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()+1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()+1};
     setDateData(setAddDate);
-    return setDate(adddDate(date)); //data를 다음날 날짜로 세팅
+    return setDate(adddDate(date)); 
   };
 
-  const prevDay = () => { //전날 버튼 함수
-    const minusDate = (date) => { //날짜 뻬기 함수
-      var result = new Date(date); //result date날짜로
-      result.setDate(result.getDate() - 1); // data에 1을 더하기
-      return result; // result값 반환
+  /**
+   * 전날 버튼함수
+   * dateData전날 날짜로 세팅
+   * @returns 계산된 전날 날짜를 date에 세팅한다
+   */
+  const prevDay = () => {
+    /**
+     * 
+     * @param {*} date 현재 보고있는 날짜
+     * @returns 게산된 전날 날짜 반환
+     */
+    const minusDate = (date) => {
+      var result = new Date(date);
+      result.setDate(result.getDate() - 1);
+      return result;
     };
     const setMinusDate = {...dateDate, addDate: date.getFullYear()+"."+(date.getMonth()+1)+"."+(date.getDate()-1), selectYear: date.getFullYear(), selectMonth: date.getMonth()+1, selectDate: date.getDate()-1};
     setDateData(setMinusDate);
-    return setDate(minusDate(date)); //data를 전날 날짜로 세팅
+    return setDate(minusDate(date)); 
   };
- 
+
+  /**
+   * 가져온 데이터에서 원하는 값을 찾는 함수
+   * @param {*} time 시간값을 받아옴
+   * @param {*} data 모든 데이터를 받아옴
+   * @returns 원하는 값을 찾아서 반환
+   */
   const findData = (time, data) => { //inedxedDB에서 원하는 값찾기
     const result = data.find((data)=>{ //setTodoList 찾음
       if (!data) return false; // setTodoList가 없다면 false반환

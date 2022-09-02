@@ -13,13 +13,13 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   const pattern = /^\d{4}$/; // 년도는 4자리 숫자여야한다
 
   const timeOptions =  time.map((data, idx)=>{ // 시간 선택 반복문
-    return <option value={data.time} key={idx}>{data.time}</option> // 값을 배열에 있는 숫자로 키값을 index로
+    return <option value={data.time} key={idx}>{data.time}</option>
   });
   const monthOptions = monthArray.map((num , idx)=>{ // 월 선택 반복문
     return <option value={num} key={idx}>{num}월</option>
   });
   const dateOptions = dateArray.map((num, idx)=>{ // 일 선택 빈복문
-    return <option value={num} key={idx}>{num}일</option> // 값을 배열에 있는 숫자로 키값을 index로
+    return <option value={num} key={idx}>{num}일</option> 
   });
 
   const inputTodoChange = event => { // 제목 입력창에 입력을 하는 등 이벤트가 발생하면 setTodo
@@ -46,7 +46,10 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   };
 
   useEffect(() => { // 컴포넌트가 실행될 떄 1회 실행
-
+    /**
+     * 서버에서 아이디를 이용해 해당 데이터를 가져옴
+     * 가져온 데이터로 state값 세팅
+     */
     axios
       .get(`http://127.0.0.1:8000/todo/${targetID}`)
       .then((response)=>{
@@ -92,7 +95,10 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
     if(todo !== "" && details !== "" && dateData.selectedTime !== "시간선택" && pattern.test(dateData.selectYear)){
-      //입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+      /**
+       * 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
+       * 해당일정을 수정
+       */
       axios
       .put(`http://127.0.0.1:8000/todo/${targetID}/`,{
         setTodo: todo,
@@ -115,7 +121,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
     };
   };
 
-  const cancel = () =>{ //취소버튼 함수
+  const cancel = () =>{ // 수정 취소버튼 함수
     const setTodoState = {...stateData, todoState: false};
     setStateData(setTodoState);
   };

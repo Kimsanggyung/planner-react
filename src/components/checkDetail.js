@@ -7,13 +7,19 @@ function CheckDetail({stateData, setStateData, targetID}){
   const [time, setTime] = useState('');
   const [detail, setDetail] = useState('');
 
+ /**
+  * 컴포넌트가 실행될떄 최초1회 실행
+  * 서버와 통신해서 해당데이터의 id로 데이터를 받아옴
+  * 받아온 데이로 setState
+  */
+
   useEffect(()=>{
     axios
       .get(`http://127.0.0.1:8000/todo/${targetID}`)
       .then((response)=>{
-        setDate(response.data.setDate); //data에 있는 setDate로 date 세팅
-        setTodo(response.data.setTodo); //data에 있는 setTodo로 todo 세팅
-        setDetail(response.data.setDetails); // data에 있는 setDetail로 detail 세팅
+        setDate(response.data.setDate); 
+        setTodo(response.data.setTodo); 
+        setDetail(response.data.setDetails);
         setTime(response.data.setTime); 
         console.log("success")
       })
@@ -22,12 +28,12 @@ function CheckDetail({stateData, setStateData, targetID}){
       });
   },[])
   
-  const editMode = () =>{ //수정버튼함수 parameter id 받음
+  const editMode = () =>{ // 수정버튼함수
     const setState = {...stateData, selectedTodo: "editTodo"};
     setStateData(setState);
   };
 
-  const exit = () => { //닫기 버튼 함수
+  const exit = () => { // 닫기 버튼 함수
     const setTodoState = {...stateData, todoState: false};
     setStateData(setTodoState); // 달력이 보이도록 todoState 값을 false로
   };
