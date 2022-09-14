@@ -5,7 +5,7 @@ import { time } from "../baseData"
 import WeeklyItem from '../parts/weeklyItem';
 
 
-function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID}){
+function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, token}){
   const [getDate, setGetDate] = useState(odate);
   const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
@@ -41,7 +41,11 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
   
   useEffect(()=>{
     axios
-    .get("http://127.0.0.1:8000/todo/")
+    .get("http://127.0.0.1:8000/todo/",{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
     .then((response)=>{
       setTodoData(response.data);
       console.log("success")

@@ -3,7 +3,7 @@ function Logout({stateData, setStateData}){
     let newObject = {...stateData};
     newObject.loginState = false;
     setStateData(newObject);
-    localStorage.removeItem('saveID');
+    localStorage.clear()
   };
 
   return(

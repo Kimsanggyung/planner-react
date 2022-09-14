@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
 
-function CheckDetail({stateData, setStateData, targetID}){
+function CheckDetail({stateData, setStateData, targetID, token}){
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
   const [time, setTime] = useState('');
@@ -15,7 +15,11 @@ function CheckDetail({stateData, setStateData, targetID}){
 
   useEffect(()=>{
     axios
-      .get(`http://127.0.0.1:8000/todo/${targetID}`)
+      .get(`http://127.0.0.1:8000/todo/${targetID}`,{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
       .then((response)=>{
         setDate(response.data.setDate); 
         setTodo(response.data.setTodo); 

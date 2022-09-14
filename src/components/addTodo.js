@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { time, monthArray, dateArray } from "../baseData";
 
-function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
+function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, token}){
 
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
@@ -17,7 +17,11 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
    */
   useEffect(()=>{
     axios
-      .get("http://127.0.0.1:8000/todo/")
+      .get("http://127.0.0.1:8000/todo/",{
+        headers: {
+          Authorization: `${token}`
+        }
+      })
       .then((response)=>{
         if(response.data.length > 0){
           const list = response.data;
@@ -89,6 +93,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
     };
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && list === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
+      console.log(token)
       axios
       .post("http://127.0.0.1:8000/todo/", {
         setTodo: todo,
@@ -99,6 +104,11 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData}){
         selectYear: dateData.selectYear,
         selectMonth: dateData.selectMonth,
         selectDate: dateData.selectDate
+      },
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        },
       })
       .then(function (response){
         console.log(response.status);

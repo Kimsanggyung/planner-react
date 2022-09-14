@@ -4,14 +4,18 @@ import { time } from "../baseData"
 import DaillyItem from "../parts/dailyItem"
 import axios from 'axios';
 
-function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, targetID, setTargetID}){
+function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, token, setTargetID}){
 
   const [todoData, setTodoData] = useState(null);
 
   useEffect(()=>{ //컴포넌트가 실행됐을 때
     // 서버와 통신해서 데이터를 todo 가져옴
     axios
-      .get("http://127.0.0.1:8000/todo/")
+      .get("http://127.0.0.1:8000/todo/",{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
       .then((response)=>{
         setTodoData([...response.data]);
         console.log("success")

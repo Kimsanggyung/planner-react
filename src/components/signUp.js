@@ -10,7 +10,6 @@ function SignUp({stateData, setStateData}){
   const [checkPWD, setCheckPWD] = useState("");
   const [error, setError] = useState("")
   const [checkState, setCheckState] = useState(false);
-  const [userData, setUserData] = useState(OuserData);
   const [hashPwd, setHashPwd] = useState(null);
   const [checked, setChecked] = useState('');
   const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
@@ -22,7 +21,7 @@ function SignUp({stateData, setStateData}){
      
     setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
   
-  }, [inputPWD, saltKey]);
+  }, [inputPWD]);
   
   const checkUser = (id) => { //기존유저 아이디중 같은게 있는지 확인하는 함수
 		const findUser = OuserData.find(user => user.id === id); // parameter로 받아온 id로 같은게 있는지 확인
@@ -110,7 +109,7 @@ function SignUp({stateData, setStateData}){
       axios
       .post("http://127.0.0.1:8000/user/", {
         userID: inputID,
-        userPWD: hashPwd
+        userPWD: hashPwd,
       })
       .then(function (response){
         console.log(response.status);
@@ -118,9 +117,20 @@ function SignUp({stateData, setStateData}){
       .catch(function (error){
         console.log(error)
       });
-      console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
-      setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
     };
+    axios
+    .post("http://127.0.0.1:8000/signup/", {
+      id: inputID,
+      password: inputPWD
+    })
+    .then(function (response){
+      console.log(response.status);
+    })
+    .catch(function (error){
+      console.log(error)
+    });
+    console.log('회원이 되신 것을 환영합니다'); // 회원가입성공시 콘솔에 메시지보여주기
+    setStateData(newObject); // 로그인화면이 보이도록 singUpState를 false로
   };
 
   const cancel = () => { // 취소버튼 함수

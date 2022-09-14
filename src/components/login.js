@@ -4,7 +4,7 @@ import axios from 'axios';
 import LoginError from '../parts/loginError'
 import { OuserData } from "../context/userData"
 
-function Login({stateData, setStateData, setLoggedUser}){
+function Login({stateData, setStateData, setLoggedUser, setToken}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
@@ -35,9 +35,24 @@ function Login({stateData, setStateData, setLoggedUser}){
 	};
  
   const login = () => { // 로그인 버튼 함수
+    
+      axios
+      .post("http://127.0.0.1:8000/login/", {
+        id: inputID,
+        password: inputPWD
+      })
+      .then(function (response){
+        console.log(response.status);
+        localStorage.setItem('Token', response.data.Token)
+        setToken(response.data.Token)
+      })
+      .catch(function (error){
+        console.log(error)
+      });
     axios
     .get("http://127.0.0.1:8000/user/")
     .then((response)=>{
+      console.log(response.status)
       const userFromSever = response.data.find((data)=>{ // 서버에 등록되어 로그인하는 유저가 있는지 체크하기 위함
         return data;
       }); 

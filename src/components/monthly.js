@@ -4,9 +4,7 @@ import { today } from "../context/today"
 import '../style/style.css';
 import axios from "axios";
 
-
-
-function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID}){
+function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, token}){
 
   const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
   const [getDate, setGetDate] = useState(odate);
@@ -39,7 +37,11 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
      * 서버와 통신해서 todo데이터를 가져옴
      */
     axios
-    .get("http://127.0.0.1:8000/todo/")
+    .get("http://127.0.0.1:8000/todo/", {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
     .then((response)=>{
       setTodoData(response.data)
       console.log("success")

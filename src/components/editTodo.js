@@ -3,7 +3,7 @@ import EditError from "../parts/editError";
 import axios from "axios";
 import { time, monthArray, dateArray } from "../baseData";
 
-function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setDateData}){
+function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setDateData, token}){
 
   const [date, setDate] = useState('');
   const [todo, setTodo] = useState('');
@@ -51,7 +51,11 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
      * 가져온 데이터로 state값 세팅
      */
     axios
-      .get(`http://127.0.0.1:8000/todo/${targetID}`)
+      .get(`http://127.0.0.1:8000/todo/${targetID}`, {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
       .then((response)=>{
         setDate(response.data.setDate); // 가져온 데이터에 있는 setDate를 date에 세팅
         setTodo(response.data.setTodo); // 가져온 데이터에 있는 setTodo를 todo에 세팅
@@ -59,6 +63,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
         setTime(response.data.setTime); // 가져온 데이터에 있는 setTime을 time에 세팅
         const setSelect = {
           ...dateData, 
+          addDate: response.data.setDate,
           selectYear: response.data.selectYear,
           selectMonth: response.data.selectMonth,
           selectDate: response.data.selectDate,
@@ -74,7 +79,8 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
   },[]);
 
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경될 때 마다 실행
-    setDate(dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate);
+    const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate };
+    setDateData(setAddDate);
   }, [dateData.selectDate, dateData.selectMonth, dateData.selectYear]);
 
   const editTodoDatas = () => { //수정후 등록버튼
@@ -99,8 +105,10 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
        * 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
        * 해당일정을 수정
        */
+      console.log(dateData)
       axios
-      .put(`http://127.0.0.1:8000/todo/${targetID}/`,{
+      .put(`http://127.0.0.1:8000/todo/${targetID}/`,
+      {
         setTodo: todo,
         setDetails: details,
         setDate: dateData.addDate,
@@ -109,6 +117,10 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
         selectYear: dateData.selectYear,
         selectMonth: dateData.selectMonth,
         selectDate: dateData.selectDate,
+      },{
+        headers: {
+          Authorization: `Token ${token}`
+        }
       })
       .then(function (response){
         const setTodoState = {...stateData, todoState: false};

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
+function CheckTodo({loggedUser, stateData, setStateData, setTargetID,  token}){
 
   const [list, setList] = useState()
 
@@ -14,7 +14,11 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
      */
     const cancel = (todo, id) => {
       if (window.confirm(`${todo.setTodo} 일정을 취소 하시겠습니까?`) === true){ 
-        axios.delete(`http://127.0.0.1:8000/todo/${id}`)
+        axios.delete(`http://127.0.0.1:8000/todo/${id}`,{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
       }
     };
 
@@ -32,7 +36,11 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
      * 서버와 통신해서 현제로그인한 유져의 모든일정을 찾아 list에 세팅하는 함수
      */
     axios
-    .get("http://127.0.0.1:8000/todo/")
+    .get("http://127.0.0.1:8000/todo/",{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
     .then((response)=>{
       const todoList = response.data;
       const result = todoList.find(todoList => todoList.setUser === loggedUser);
@@ -51,10 +59,8 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID}){
             } 
           })
         )
-        console.log("일정있음")
       }else{
         setList(<span className="pl-4">일정이 없습니다.</span>)
-        console.log("일정없음")
       }
       console.log("success");
     })

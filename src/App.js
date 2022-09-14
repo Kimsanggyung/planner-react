@@ -8,7 +8,7 @@ import Todo from "./contents/todo";
 import SelectTodo from "./components/selectTodo";
 import Welcome from "./components/welcome";
 import Logout from "./components/logout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App(){
   let selectSign;
@@ -18,6 +18,7 @@ function App(){
   const [date, setDate] = useState(new Date());
   const [loggedUser, setLoggedUser] = useState(null);
   const [targetID, setTargetID] =useState(null);
+  const [token, setToken] = useState(null);
 
   const [stateData, setStateData] = useState({
     loginState: false,
@@ -35,10 +36,16 @@ function App(){
     addDate: null
   });
 
+  useEffect(()=>{
+    if(localStorage.getItem('Token')!==null){
+      setToken(localStorage.getItem('Token'))
+    }
+  },[])
+
   if(stateData.todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
     selected =  <Todo 
                   stateData={stateData} setStateData={setStateData}
-                  dateData={dateData} setDateData={setDateData}
+                  dateData={dateData} setDateData={setDateData} token={token}
                   targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser}
                 />
   }else if(stateData.todoState === false){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
@@ -47,13 +54,14 @@ function App(){
                   dateDate={dateData} setDateData={setDateData}
                   loggedUser={loggedUser} date={date} setDate={setDate}
                   targetID={targetID} setTargetID={setTargetID}
+                  token={token}
                 />
   };
 
   if(stateData.signUpState === true){ //signUpState가 참이면 signUp컴포넌트 보여주기
     selectSign = <SignUp stateData={stateData} setStateData={setStateData}/>
   }else if(stateData.signUpState === false){  //signUpState가 거짓이면 login컴포넌트 보여주기
-    selectSign =  <Login setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
+    selectSign =  <Login setToken={setToken} setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
   };
 
   if(!stateData.loginState){ //loginState가 참이 아니면 
