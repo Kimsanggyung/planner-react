@@ -93,7 +93,6 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
     };
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && list === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
-      console.log(token)
       axios
       .post("http://127.0.0.1:8000/todo/", {
         setTodo: todo,
