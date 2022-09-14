@@ -13,15 +13,14 @@ function SignUp({stateData, setStateData}){
   const [hashPwd, setHashPwd] = useState(null);
   const [checked, setChecked] = useState('');
   const password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 10자리이상에 문자와 숫자가 같이있어한다는 정규표현식
-  let saltKey = "nuguseyo";
   let newObject = {...stateData};
   newObject.signUpState = false;
 
   useEffect(()=>{ // inputPWD가 변경될 때 마다 실행
      
-    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
+    setHashPwd(CryptoJS.MD5(inputID+inputPWD).toString()); // inputPWD랑 saltKey를 합쳐서 hash처리
   
-  }, [inputPWD]);
+  }, [inputID, inputPWD]);
   
   const checkUser = (id) => { //기존유저 아이디중 같은게 있는지 확인하는 함수
 		const findUser = OuserData.find(user => user.id === id); // parameter로 받아온 id로 같은게 있는지 확인

@@ -10,14 +10,13 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
   const [error, setError] = useState('');
   const [hashPwd, setHashPwd] =useState('');
   const [check, setCheck] = useState(null);
-  const saltKey = 'nuguseyo';
 
   const setLogin = {...stateData, loginState: true};
   const setSignUp = {...stateData, signUpState: true};
 
 
   useEffect(()=>{// inputID inputPWD가 변경될 때 마다 실행
-    setHashPwd(CryptoJS.MD5(inputPWD+saltKey).toString()); //inputPWD saltKey를 합쳐서 hash처리
+    setHashPwd(CryptoJS.MD5(inputID+inputPWD).toString()); //inputPWD saltKey를 합쳐서 hash처리
   },[inputID, inputPWD]);
 
   let saveID = localStorage.getItem('saveID');
