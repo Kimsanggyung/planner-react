@@ -105,7 +105,6 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
        * 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
        * 해당일정을 수정
        */
-      console.log(dateData)
       axios
       .put(`http://127.0.0.1:8000/todo/${targetID}/`,
       {
