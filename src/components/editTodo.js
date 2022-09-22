@@ -101,10 +101,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
       console.log("정확한 날짜를 입력해주세요"); //콘솔로그에 에러 보여주기
     };
     if(todo !== "" && details !== "" && dateData.selectedTime !== "시간선택" && pattern.test(dateData.selectYear)){
-      /**
-       * 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면
-       * 해당일정을 수정
-       */
+      // 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면 해당일정을 수정
       axios
       .put(`http://127.0.0.1:8000/todo/${targetID}/`,
       {

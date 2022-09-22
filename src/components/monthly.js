@@ -49,7 +49,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
     .catch(function(error){
       console.log(error);
     })
-  },[])
+  },[token])
 	
 	const goToNextMonth = () => { // 다음달 버튼 함수
 		if (monthIndex >= 11) { // monthIndex보다 크거나 같으면

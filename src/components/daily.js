@@ -24,7 +24,7 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
         console.log(error);
       });
 
-  },[]);
+  },[token]);
 
   /**
    * 일정추가 컴포넌트 실행 함수 

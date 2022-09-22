@@ -32,9 +32,7 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID,  token}){
       setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
     };
     
-    /**
-     * 서버와 통신해서 현제로그인한 유져의 모든일정을 찾아 list에 세팅하는 함수
-     */
+    // 서버와 통신해서 현제로그인한 유져의 모든일정을 찾아 list에 세팅하는 함수
     axios
     .get("http://127.0.0.1:8000/todo/",{
       headers: {

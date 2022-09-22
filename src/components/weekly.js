@@ -53,7 +53,7 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     .catch(function(error){
       console.log(error);
     })
-  },[])
+  },[token])
 
   const viweAddTodo = (time, date) => { // 일정추가 할 수 있게 하는 버튼 함수
     const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수

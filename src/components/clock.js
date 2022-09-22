@@ -3,9 +3,7 @@ import {useState, useEffect } from 'react';
 function Clock() {
   const [time, setTime] = useState(new Date());
 
-  /**
-   * 시계컴포넌트 1초마다 time를 세팅하고 컴포넌트가 종료되면 실행하지 않음
-   */
+  // 시계컴포넌트 1초마다 현재시간를 세팅하고 컴포넌트가 종료되면 실행을 종료
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());

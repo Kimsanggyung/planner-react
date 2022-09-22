@@ -11,10 +11,8 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
   const [list, setList] = useState(undefined);
   const pattern = /^\d{4}$/;
 
-  /**
-   * dataData의 일부데이터가 변경됐을때 실행
-   * 서버와 통신해서 원하는 데이터를 
-   */
+  
+  // dataData의 일부데이터가 변경됐을때 실행 서버와 통신해서 원하는 데이터를
   useEffect(()=>{
     axios
       .get("http://127.0.0.1:8000/todo/",{
@@ -33,12 +31,9 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
       .catch(function(error){
         console.log(error);
       });
-  },[dateData.addDate, dateData.selectedTime, loggedUser])
+  },[dateData.addDate, dateData.selectedTime, loggedUser, token])
   
-  /**
-   * selectYear, selectMonth, selectDate가 변경 될때 마다 실행
-   * 변경된 데이터로 setDateData  
-   */
+  //selectYear, selectMonth, selectDate가 변경 될때 마다 실행 변경된 데이터로 setDateData  
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
     const setAddDate = {...dateData, addDate: dateData.selectYear+"."+dateData.selectMonth+"."+dateData.selectDate };
     setDateData(setAddDate);
@@ -93,6 +88,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
     };
     if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && list === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
+      // API를 사용해 DB에 데이터 저장
       axios
       .post("http://127.0.0.1:8000/todo/", {
         setTodo: todo,

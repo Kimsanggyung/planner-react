@@ -7,12 +7,7 @@ function CheckDetail({stateData, setStateData, targetID, token}){
   const [time, setTime] = useState('');
   const [detail, setDetail] = useState('');
 
- /**
-  * 컴포넌트가 실행될떄 최초1회 실행
-  * 서버와 통신해서 해당데이터의 id로 데이터를 받아옴
-  * 받아온 데이로 setState
-  */
-
+  // 컴포넌트가 실행될떄 최초1회 실행 서버와 통신해서 해당데이터의 id로 데이터를 받아옴 받아온 데이터로 setState
   useEffect(()=>{
     axios
       .get(`http://127.0.0.1:8000/todo/${targetID}`,{
@@ -30,7 +25,7 @@ function CheckDetail({stateData, setStateData, targetID, token}){
       .catch(function(error){
         console.log(error);
       });
-  },[])
+  },[targetID, token])
   
   const editMode = () =>{ // 수정버튼함수
     const setState = {...stateData, selectedTodo: "editTodo"};
