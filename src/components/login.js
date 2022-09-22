@@ -9,22 +9,25 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
   const [hashPwd, setHashPwd] =useState('');
-  const [check, setCheck] = useState(null);
+  const [check, setCheck] = useState('');
 
   const setLogin = {...stateData, loginState: true};
   const setSignUp = {...stateData, signUpState: true};
-
-
+  
   useEffect(()=>{// inputID inputPWD가 변경될 때 마다 실행
     setHashPwd(CryptoJS.MD5(inputID+inputPWD).toString()); //inputPWD saltKey를 합쳐서 hash처리
   },[inputID, inputPWD]);
 
   let saveID = localStorage.getItem('saveID');
+  let loggedID = sessionStorage.getItem('loggedID')
   
   useEffect(()=>{ // 컴포넌트가 실행될 때
     if(saveID){
       setStateData(setLogin);
       setLoggedUser(saveID);
+    }else if(loggedID){
+      setStateData(setLogin);
+      setLoggedUser(loggedID);
     }
   },[]);
 
@@ -34,7 +37,7 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
 	};
  
   const login = () => { // 로그인 버튼 함수
-    
+      // API 호출해서 유저 데이터 조회
       axios
       .post("http://127.0.0.1:8000/login/", {
         id: inputID,
@@ -109,6 +112,7 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
     if(check === "checked"){
       localStorage.setItem('saveID', inputID);
     };
+    sessionStorage.setItem('loggedID', inputID)
   };
 
   const inputIdChange = event => { // 아이디 입력창에 입력을 하는 등 이벤트가 발생하면 setInputID
