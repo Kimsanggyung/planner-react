@@ -1,9 +1,17 @@
-function Logout({stateData, setStateData}){
+import axios from "axios";
+
+function Logout({stateData, setStateData, token }){
   const logout = () => {
     let newObject = {...stateData};
     newObject.loginState = false;
     setStateData(newObject);
     localStorage.clear()
+    sessionStorage.clear()
+    axios.delete(`http://127.0.0.1:8000/logout`,{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
   };
 
   return(
