@@ -61,7 +61,7 @@ function App(){
   if(stateData.signUpState === true){ //signUpState가 참이면 signUp컴포넌트 보여주기
     selectSign = <SignUp stateData={stateData} setStateData={setStateData}/>
   }else if(stateData.signUpState === false){  //signUpState가 거짓이면 login컴포넌트 보여주기
-    selectSign =  <Login setToken={setToken} setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
+    selectSign =  <Login token={token} setToken={setToken} setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
   };
 
   if(!stateData.loginState){ //loginState가 참이 아니면 
@@ -71,7 +71,7 @@ function App(){
   </div>
   }else if(stateData.loginState){ //loginState 참이면
     now = <div className="border border-yellow-700 rounded w-96 ml-8 pl-4 float-left">
-    <Welcome loggedUser={loggedUser}/> <Logout stateData={stateData} setStateData={setStateData}/>
+    <Welcome loggedUser={loggedUser}/> <Logout token={token} stateData={stateData} setStateData={setStateData}/>
     <Today/>
     <Clock/>
   </div>

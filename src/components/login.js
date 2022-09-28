@@ -4,7 +4,7 @@ import axios from 'axios';
 import LoginError from '../parts/loginError'
 import { OuserData } from "../context/userData"
 
-function Login({stateData, setStateData, setLoggedUser, setToken}){
+function Login({stateData, setStateData, setLoggedUser, token, setToken}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
@@ -31,13 +31,101 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
     }
   },[]);
 
-  const checkUser = (id, pwd) => { // 원하는 유저 찾기
-		const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); 
-		return findUser;
-	};
+  // const checkUser = (id, pwd) => { // 원하는 유저 찾기
+	// 	const findUser = OuserData.find(user => user.id === id && user.pwd === pwd); 
+	// 	return findUser;
+	// };
  
+  // const login = () => { // 로그인 버튼 함수
+  //     // API 호출해서 유저 데이터 조회
+  //     axios
+  //     .post("http://127.0.0.1:8000/login/", {
+  //       id: inputID,
+  //       password: inputPWD
+  //     })
+  //     .then(function (response){
+  //       console.log(response.status);
+  //       localStorage.setItem('Token', response.data.Token)
+  //       setToken(response.data.Token)
+  //     })
+  //     .catch(function (error){
+  //       console.log(error)
+  //     });
+  //   axios
+  //   .get("http://127.0.0.1:8000/user/")
+  //   .then((response)=>{
+  //     console.log(response.status)
+  //     const userFromSever = response.data.find((data)=>{ // 서버에 등록되어 로그인하는 유저가 있는지 체크하기 위함
+  //       return data;
+  //     }); 
+  //     if(response.data.length > 0){ // data 배열을 길이가 0보다 크면
+  //       const checkUserAll = response.data.find((data)=>{ // 가져온 데이터에서 userData 찾기
+  //         if(data){// userData가 있다면 
+  //           const findUserInServer = data.userID === inputID && data.userPWD === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
+  //           const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
+  //           return findUserInServer || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
+  //         }else{ // 조건에 맞지 않은면
+  //           return false; // 거짓이라고 반환
+  //         };
+  //       }); 
+  //       if(inputPWD === ""){ //아이디 입력창이 비어있다면
+  //         setError("비밀번호를 입력해주세요"); //에러메시지 세팅
+  //         console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
+  //       };
+  //       if(inputID === ""){ //비밀번호 입력창이 비어있다면
+  //         setError("아이디를 입력해주세요"); //에러메시지 세팅
+  //         console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
+  //       };
+  //       if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
+  //         if(checkUserAll){ //checkUserAll가 참이면
+  //           setLoggedUser(inputID); // loggedUser를 inputID로 세팅
+  //           setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+  //         }else{//조건이 맞지 않으면
+  //           setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
+  //           console.log("틀림"); // 콘솔로그에 에러보여주기
+  //         };
+  //       };
+  //     }if(response.data.length === 0 || userFromSever === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
+  //       const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
+  //       if(inputPWD === ""){ //아이디 입력창이 비어있다면
+  //         setError("비밀번호를 입력해주세요"); //에러메시지 세팅
+  //         console.log("비밀번호를 입력해주세요"); //콘솔로그에 에러보여주기
+  //       };
+  //       if(inputID === ""){ //비밀번호 입력창이 비어있다면
+  //         setError("아이디를 입력해주세요"); //에러메시지 세팅
+  //         console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
+  //       };
+  //       if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
+  //         if(findUser){ //findUser가 참이면
+  //           setLoggedUser(inputID); // loggedUser를 inputID로 세팅
+  //           setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+  //         }else{//조건이 맞지 않으면
+  //           setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
+  //           console.log("틀림"); // 콘솔로그에 에러보여주기
+  //         };
+  //       };
+  //     };
+  //   })
+  //   .catch(function(error){
+  //     console.log(error);
+  //   });
+  //   if(check === "checked"){
+  //     localStorage.setItem('saveID', inputID);
+  //   };
+  //   sessionStorage.setItem('loggedID', inputID)
+  // };
+
   const login = () => { // 로그인 버튼 함수
-      // API 호출해서 유저 데이터 조회
+    // API 호출해서 유저 데이터 조회
+    if(inputPWD === ""){ //아이디 입력창이 비어있다면
+      setError("비밀번호를 입력해주세요"); //에러메시지 세팅
+      console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
+      };
+    if(inputID === ""){ //비밀번호 입력창이 비어있다면
+      setError("아이디를 입력해주세요"); //에러메시지 세팅
+      console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
+    };
+    if(inputID !== "" && inputPWD !== ""){
       axios
       .post("http://127.0.0.1:8000/login/", {
         id: inputID,
@@ -47,72 +135,23 @@ function Login({stateData, setStateData, setLoggedUser, setToken}){
         console.log(response.status);
         localStorage.setItem('Token', response.data.Token)
         setToken(response.data.Token)
+        if(token){
+          setLoggedUser(inputID); // loggedUser를 inputID로 세팅
+          setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
+          setError("")
+          console.log(token)
+          if(check === "checked"){
+            localStorage.setItem('saveID', inputID);
+          };
+          sessionStorage.setItem('loggedID', inputID)
+        };
       })
       .catch(function (error){
         console.log(error)
+        setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
+        console.log("틀림"); // 콘솔로그에 에러보여주기
       });
-    axios
-    .get("http://127.0.0.1:8000/user/")
-    .then((response)=>{
-      console.log(response.status)
-      const userFromSever = response.data.find((data)=>{ // 서버에 등록되어 로그인하는 유저가 있는지 체크하기 위함
-        return data;
-      }); 
-      if(response.data.length > 0){ // data 배열을 길이가 0보다 크면
-        const checkUserAll = response.data.find((data)=>{ // 가져온 데이터에서 userData 찾기
-          if(data){// userData가 있다면 
-            const findUserInServer = data.userID === inputID && data.userPWD === hashPwd; // 로그인하는 유저와 가져온 데이터에 있는 유저정보와 비교
-            const findUser = checkUser(inputID, inputPWD); //로그인하는 유저와 메모리에 있는 유저정보랑 비교
-            return findUserInServer || findUser; //findIndexedUser findUser 둘중하나가 참인것 반환
-          }else{ // 조건에 맞지 않은면
-            return false; // 거짓이라고 반환
-          };
-        }); 
-        if(inputPWD === ""){ //아이디 입력창이 비어있다면
-          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
-          console.log("비밀번호를 입력해주세요"); // 콘솔로그에 에러보여주기
-        };
-        if(inputID === ""){ //비밀번호 입력창이 비어있다면
-          setError("아이디를 입력해주세요"); //에러메시지 세팅
-          console.log("아이디를 입력해주세요"); // 콘솔로그에 에러보여주기
-        };
-        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
-          if(checkUserAll){ //checkUserAll가 참이면
-            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
-          }else{//조건이 맞지 않으면
-            setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
-            console.log("틀림"); // 콘솔로그에 에러보여주기
-          };
-        };
-      }if(response.data.length === 0 || userFromSever === undefined){ // data배열 갈이가 0이거나 indexedUser가 없다면
-        const findUser = checkUser(inputID, inputPWD); //로그인하는 유저정보와 메모리에 있는 유저정보랑 비교
-        if(inputPWD === ""){ //아이디 입력창이 비어있다면
-          setError("비밀번호를 입력해주세요"); //에러메시지 세팅
-          console.log("비밀번호를 입력해주세요"); //콘솔로그에 에러보여주기
-        };
-        if(inputID === ""){ //비밀번호 입력창이 비어있다면
-          setError("아이디를 입력해주세요"); //에러메시지 세팅
-          console.log("아이디를 입력해주세요"); //콘솔로그에 에러보여주기
-        };
-        if(inputID !== "" && inputPWD !== ""){ //입력창이 모두 비어있지않다면
-          if(findUser){ //findUser가 참이면
-            setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-            setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
-          }else{//조건이 맞지 않으면
-            setError("아이디 또는 비밀번호를 확인해주세요"); //에러메시지 세팅
-            console.log("틀림"); // 콘솔로그에 에러보여주기
-          };
-        };
-      };
-    })
-    .catch(function(error){
-      console.log(error);
-    });
-    if(check === "checked"){
-      localStorage.setItem('saveID', inputID);
-    };
-    sessionStorage.setItem('loggedID', inputID)
+    }
   };
 
   const inputIdChange = event => { // 아이디 입력창에 입력을 하는 등 이벤트가 발생하면 setInputID
