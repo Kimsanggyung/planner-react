@@ -19,6 +19,7 @@ function App(){
   const [loggedUser, setLoggedUser] = useState(null);
   const [targetID, setTargetID] =useState(null);
   const [token, setToken] = useState(null);
+  const [list, setList] = useState(null);
 
   const [stateData, setStateData] = useState({
     loginState: false,
@@ -40,28 +41,28 @@ function App(){
     if(localStorage.getItem('Token')!==null){
       setToken(localStorage.getItem('Token'))
     }
-  },[])
+  }, [])
 
-  if(stateData.todoState === true){ //todoState가 참이면 todo컴포넌트 보여주기
+  if(stateData.todoState === true && stateData.loginState === true){ //todoState가 참이면 todo컴포넌트 보여주기
     selected =  <Todo 
                   stateData={stateData} setStateData={setStateData}
-                  dateData={dateData} setDateData={setDateData} token={token}
-                  targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser}
+                  dateData={dateData} setDateData={setDateData} token={token} setList={setList}
+                  targetID={targetID} setTargetID={setTargetID} loggedUser={loggedUser} list={list}
                 />
-  }else if(stateData.todoState === false){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
+  }else if(stateData.todoState === false && stateData.loginState === true){ //todoState가 거짓이면 calendar 컴포넌트 보여주기
     selected =  <Calendar
                   stateData={stateData} setStateData={setStateData}
                   dateDate={dateData} setDateData={setDateData}
                   loggedUser={loggedUser} date={date} setDate={setDate}
                   targetID={targetID} setTargetID={setTargetID}
-                  token={token}
+                  token={token} list={list} setList={setList}
                 />
   };
 
   if(stateData.signUpState === true){ //signUpState가 참이면 signUp컴포넌트 보여주기
     selectSign = <SignUp stateData={stateData} setStateData={setStateData}/>
   }else if(stateData.signUpState === false){  //signUpState가 거짓이면 login컴포넌트 보여주기
-    selectSign =  <Login token={token} setToken={setToken} setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
+    selectSign =  <Login token={token} setList={setList} setToken={setToken} setLoggedUser={setLoggedUser} stateData={stateData} setStateData={setStateData}/>
   };
 
   if(!stateData.loginState){ //loginState가 참이 아니면 

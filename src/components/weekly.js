@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { today } from "../context/today";
 import { time } from "../baseData"
 import WeeklyItem from '../parts/weeklyItem';
 
 
-function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, token}){
+function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, list}){
   const [getDate, setGetDate] = useState(odate);
-  const [todoData, setTodoData] = useState(null);
   let year = getDate.getFullYear();
   let month = getDate.getMonth();
   let date = getDate.getDate();
@@ -38,22 +36,6 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
   let thuDate = getAddDate(weekStart, 4); // 목요일 날짜는 이번주 시작하는 날짜에서 나흘 뒤
   let friDate = getAddDate(weekStart, 5); // 금요일 날짜는 이번주 시작하는 날짜에서 닷새 뒤
   let satdayDate = weekEnd.getDate()// 토요일 날짜는 이번주가 끝나는 날짜
-  
-  useEffect(()=>{
-    axios
-    .get("http://127.0.0.1:8000/todo/",{
-      headers: {
-        Authorization: `Token ${token}`
-      }
-    })
-    .then((response)=>{
-      setTodoData(response.data);
-      console.log("success")
-    })
-    .catch(function(error){
-      console.log(error);
-    })
-  },[token])
 
   const viweAddTodo = (time, date) => { // 일정추가 할 수 있게 하는 버튼 함수
     const selectDate = date.getFullYear()+"."+date.getMonth()+"."+date.getDate(); // 선택 날짜 상수
@@ -84,9 +66,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-8" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekStart)}>{data.time}:</span>
-        {todoData? 
+        {list? 
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "일")} 
+            <WeeklyItem getList={findWeekData(data.time, list, "일")} 
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -101,9 +83,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekMon)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "월")}
+            <WeeklyItem getList={findWeekData(data.time, list, "월")}
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -118,9 +100,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekTue)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "화")} 
+            <WeeklyItem getList={findWeekData(data.time, list, "화")} 
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -135,9 +117,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekWed)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "수")} 
+            <WeeklyItem getList={findWeekData(data.time, list, "수")} 
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -152,9 +134,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekThu)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "목")}
+            <WeeklyItem getList={findWeekData(data.time, list, "목")}
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -169,9 +151,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekFri)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "금")} 
+            <WeeklyItem getList={findWeekData(data.time, list, "금")} 
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>
@@ -186,9 +168,9 @@ function Weekly({dateDate, setDateData, stateData, setStateData, loggedUser, oda
     return(
       <div className="mt-4 pl-2" key={idx}>  
         <span className='mr-2' onClick={()=>viweAddTodo(data.time, weekEnd)}>{data.time}:</span>
-        {todoData?
+        {list?
           <>
-            <WeeklyItem getList={findWeekData(data.time, todoData, "토")}
+            <WeeklyItem getList={findWeekData(data.time, list, "토")}
               setTargetID={setTargetID} stateData={stateData} setStateData={setStateData}
             />
           </>

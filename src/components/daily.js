@@ -2,29 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { today } from "../context/today"
 import { time } from "../baseData"
 import DaillyItem from "../parts/dailyItem"
-import axios from 'axios';
 
-function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, token, setTargetID}){
-
-  const [todoData, setTodoData] = useState(null);
-
-  useEffect(()=>{ //컴포넌트가 실행됐을 때
-    // 서버와 통신해서 데이터를 todo 가져옴
-    axios
-      .get("http://127.0.0.1:8000/todo/",{
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      })
-      .then((response)=>{
-        setTodoData([...response.data]);
-        console.log("success")
-      })
-      .catch(function(error){
-        console.log(error);
-      });
-
-  },[token]);
+function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date, setDate, list, setTargetID}){
 
   /**
    * 일정추가 컴포넌트 실행 함수 
@@ -98,9 +77,9 @@ function Daily({dateDate, setDateData, loggedUser, stateData, setStateData, date
     return( 
             <div className="text-xl font-Do mb-4 underline cursor-pointer" key={idx}> 
               <span className='mr-4' onClick={()=>viweAddTodo(data.time)}>{data.time}:</span>
-              {todoData? 
+              {list? 
                 <>
-                <DaillyItem getList={findData(data.time, todoData)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID}/>
+                <DaillyItem getList={findData(data.time, list)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID}/>
                 </>
                 :
                 <span></span>

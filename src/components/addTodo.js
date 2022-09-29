@@ -3,35 +3,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { time, monthArray, dateArray } from "../baseData";
 
-function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, token}){
+function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, token, list}){
 
   const [todo, setTodo] = useState('');
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
-  const [list, setList] = useState(undefined);
+  const [checkSame, setCheck] = useState(null);
   const pattern = /^\d{4}$/;
 
   
   // dataData의 일부데이터가 변경됐을때 실행 서버와 통신해서 원하는 데이터를
   useEffect(()=>{
-    axios
-      .get("http://127.0.0.1:8000/todo/",{
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-      .then((response)=>{
-        if(response.data.length > 0){
-          const list = response.data;
-          const checkUserTodo = list.find(data => data.setTime === dateData.selectedTime && data.setDate === dateData.addDate && data.setUser === loggedUser)
-          setList(checkUserTodo)
-        }
-        console.log("success")
-      })
-      .catch(function(error){
-        console.log(error);
-      });
-  },[dateData.addDate, dateData.selectedTime, loggedUser, token])
+    const checkUserTodo = list.find(data => data.setTime === dateData.selectedTime && data.setDate === dateData.addDate && data.setUser === loggedUser)
+    setCheck(checkUserTodo)
+    console.log('change')
+  },[dateData.addDate, dateData.selectedTime, list, loggedUser])
   
   //selectYear, selectMonth, selectDate가 변경 될때 마다 실행 변경된 데이터로 setDateData  
   useEffect(()=>{ // selectYear, selectMonth, selectDate가 변경 될때 마다 실행
@@ -48,6 +34,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
   const selectTimeChange = event => { // 시간선택창에서 시간을 선택하면 그 시간으로 setSelectedTime
     const selectedTime = {...dateData, selectedTime: event.target.value};
     setDateData(selectedTime);
+    console.log('c')
   };
   const selectYearChange = event => { // 년도 입력창에 입력을 하는 등 이벤트가 발생하면 setSelectYear
     const selectYear = {...dateData, selectYear: event.target.value};
@@ -66,8 +53,9 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
   const setTodoState = {...stateData, todoState: false};
   
   const submit = () => { // 등록버튼 함수
-    if(list !==undefined){
+    if(checkSame !== undefined){
       setError("해당 일자에 일정이 있습니다"); // 날짜가 정확하지 않다면 에러메시지 세팅
+      console.log(checkSame)
       console.log("해당 일자에 일정이 있습니다");
     };
     if(dateData.selectedTime === "시간선택" || dateData.selectedTime === ""){  //시간을 선택했는지 확인
@@ -86,7 +74,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
       setError("정확한 년도를 입력해주세요"); // 날짜가 정확하지 않다면 에러메시지 세팅
       console.log("정확한 년도를 입력해주세요"); // 콘솔로그에 에러메시지 보여주기
     };
-    if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && list === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
+    if(dateData.selectedTime !== "시간선택" && dateData.selectedTime !== "" && details !== "" && todo !== "" && pattern.test(dateData.selectYear) && checkSame === undefined){ //시간선택을 했고 모든 입력창이 빈칸이 아니고 날짜를 정확하게 입력했다면 
       setError("");// 에러메시지 없애기
       // API를 사용해 DB에 데이터 저장
       axios

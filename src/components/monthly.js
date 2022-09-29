@@ -4,7 +4,7 @@ import { today } from "../context/today"
 import '../style/style.css';
 import axios from "axios";
 
-function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, token}){
+function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, odate, setDate, setTargetID, token, list, setList}){
 
   const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
   const [getDate, setGetDate] = useState(odate);
@@ -14,8 +14,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
   const [firstDayIndex, setFirstDayIndex] = useState(new Date(year, monthIndex, 1).getDay());
   const [numberOfDays, setNumberOfDays] = useState(new Date(year, monthIndex+1, 0).getDate());
   const [calendarCellsQty, setCalendarCellsQty] = useState(numberOfDays + firstDayIndex);
-  const [todoData, setTodoData] = useState(null);
-
+  
   useEffect(()=>{ // odate가 변경될 때 마다
     setGetDate(odate); // getDate에 odate 세팅
     setMonthIndex(odate.getMonth()); // monthIndex에 odate monthIndex값 세팅
@@ -43,13 +42,13 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
       }
     })
     .then((response)=>{
-      setTodoData(response.data)
+      setList(response.data)
       console.log("success")
     })
     .catch(function(error){
       console.log(error);
     })
-  },[token])
+  },[])
 	
 	const goToNextMonth = () => { // 다음달 버튼 함수
 		if (monthIndex >= 11) { // monthIndex보다 크거나 같으면
@@ -99,10 +98,10 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
                       <div className="w-48 h-7 overflow-hidden"></div>
                       <div></div>
                     </li>
-    }else if(todoData && !noting){ // 이번달 날짜 자리면
+    }else if(list && !noting){ // 이번달 날짜 자리면
       monthList  =  <li className={classActive} key={i}>
                       <div className="dateList" onClick={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
-                      <MonthlyItem month={month} getList={findData(todoData, i)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
+                      <MonthlyItem month={month} getList={findData(list, i)} stateData={stateData} setStateData={setStateData} setTargetID={setTargetID} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
                     </li>
     };
  

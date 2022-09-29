@@ -4,7 +4,7 @@ import axios from 'axios';
 import LoginError from '../parts/loginError'
 import { OuserData } from "../context/userData"
 
-function Login({stateData, setStateData, setLoggedUser, token, setToken}){
+function Login({stateData, setStateData, setLoggedUser, token, setToken, setList}){
   const [inputID, setInputID] = useState('');
   const [inputPWD, setInputPWD] = useState('');
   const [error, setError] = useState('');
@@ -135,9 +135,9 @@ function Login({stateData, setStateData, setLoggedUser, token, setToken}){
         console.log(response.status);
         localStorage.setItem('Token', response.data.Token)
         setToken(response.data.Token)
-        if(token){
+        setStateData(setLogin);
+        if(token !== null){
           setLoggedUser(inputID); // loggedUser를 inputID로 세팅
-          setStateData(setLogin); //loginState를 true로 해서 달력이나 다른 화면을 보여줌
           setError("")
           console.log(token)
           if(check === "checked"){

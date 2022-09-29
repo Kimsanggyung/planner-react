@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function CheckTodo({loggedUser, stateData, setStateData, setTargetID,  token}){
+function CheckTodo({loggedUser, stateData, setStateData, setTargetID, list, token, setList}){
 
-  const [list, setList] = useState()
+  const [listView, setView] = useState()
 
   useEffect(()=>{ // list가 변경될때 마다 실행되도록
 
@@ -18,6 +18,19 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID,  token}){
           headers: {
             Authorization: `Token ${token}`
           }
+        }).then(()=>{
+          axios.get("http://127.0.0.1:8000/todo/", {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+          })
+          .then((response)=>{
+            setList(response.data)
+            console.log("success get")
+          })
+          .catch(function(error){
+            console.log(error);
+          })
         })
       }
     };
@@ -31,45 +44,29 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID,  token}){
       setStateData(setTodoState);
       setTargetID(id); //targetID를 parameter로 받아온 id로 세팅
     };
-    
-    // 서버와 통신해서 현제로그인한 유져의 모든일정을 찾아 list에 세팅하는 함수
-    axios
-    .get("http://127.0.0.1:8000/todo/",{
-      headers: {
-        Authorization: `Token ${token}`
-      }
-    })
-    .then((response)=>{
-      const todoList = response.data;
-      const result = todoList.find(todoList => todoList.setUser === loggedUser);
-      if(todoList!== null && todoList.length > 0 && result !== undefined && result && loggedUser === result.setUser){
-        setList(
-          todoList.map( (todo, index) => {
-            if(todo.setUser === loggedUser){ //setTodoList에 setUser랑 loggedUser이 같다면
-              return(
-                <div className="mb-2 pl-4" key={index}>
-                  <div onClick={()=>checkDetail(todo.id)} className="float-left ">
-                    일자:{todo.setDate} 제목:{todo.setTodo} 내용:{todo.setDetails}
-                  </div>
-                  <button className="text-red-500 ml-3" onClick={()=> {cancel(todo,todo.id)}}>X</button>
+    if(list!== null && list.length > 0 ){
+      setView(
+        list.map( (todo, index) => {
+          if(todo.setUser === loggedUser){ //setTodoList에 setUser랑 loggedUser이 같다면
+            return(
+              <div className="mb-2 pl-4" key={index}>
+                <div onClick={()=>checkDetail(todo.id)} className="float-left ">
+                  일자:{todo.setDate} 제목:{todo.setTodo} 내용:{todo.setDetails}
                 </div>
-              )
-            } 
-          })
-        )
-      }else{
-        setList(<span className="pl-4">일정이 없습니다.</span>)
-      }
-      console.log("success");
-    })
-    .catch(function(error){
-      console.log(error);
-    });
+                <button className="text-red-500 ml-3" onClick={()=> {cancel(todo,todo.id)}}>X</button>
+              </div>
+            )
+          } 
+        })
+      )
+    }else{
+      setView(<span className="pl-4">일정이 없습니다.</span>)
+    }
   },[list])
 
   return(
     <div className="font-Do underline bg-sky-100 mt-32 h-full text-2xl">
-      {list}
+      {listView}
     </div>
   )
 }
