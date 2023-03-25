@@ -39,7 +39,7 @@ function SignUp({stateData, setStateData}){
 
   const checkSameID = () => {
     axios
-    .get("http://127.0.0.1:8000/user/")
+    .get("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/user/")
     .then((response)=>{
       const userFromServer = response.data.find((data)=>{ //indexedDB를 통해 회원 가입을 한 사용자가 있는지 확인
         return data;
