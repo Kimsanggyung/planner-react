@@ -51,7 +51,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
      * 가져온 데이터로 state값 세팅
      */
     axios
-      .get(`http://127.0.0.1:8000/todo/${targetID}`, {
+      .get(`https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/${targetID}`, {
         headers: {
           Authorization: `Token ${token}`
         }
@@ -103,7 +103,7 @@ function EditTodo({targetID, loggedUser, stateData, setStateData, dateData, setD
     if(todo !== "" && details !== "" && dateData.selectedTime !== "시간선택" && pattern.test(dateData.selectYear)){
       // 입력창이 모두 입력되고 시간선택이 되고 올바른 날짜를 입력했다면 해당일정을 수정
       axios
-      .put(`http://127.0.0.1:8000/todo/${targetID}/`,
+      .put(`https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/${targetID}/`,
       {
         setTodo: todo,
         setDetails: details,

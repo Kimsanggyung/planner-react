@@ -14,12 +14,12 @@ function CheckTodo({loggedUser, stateData, setStateData, setTargetID, list, toke
      */
     const cancel = (todo, id) => {
       if (window.confirm(`${todo.setTodo} 일정을 취소 하시겠습니까?`) === true){ 
-        axios.delete(`http://127.0.0.1:8000/todo/${id}`,{
+        axios.delete(`https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/${id}`,{
           headers: {
             Authorization: `Token ${token}`
           }
         }).then(()=>{
-          axios.get("http://127.0.0.1:8000/todo/", {
+          axios.get("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/", {
           headers: {
             Authorization: `Token ${token}`
           }

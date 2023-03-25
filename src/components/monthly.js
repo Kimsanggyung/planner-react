@@ -36,7 +36,7 @@ function Monthly({dateDate, setDateData, stateData, setStateData, loggedUser, od
      * 서버와 통신해서 todo데이터를 가져옴
      */
     axios
-    .get("http://127.0.0.1:8000/todo/", {
+    .get("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/", {
       headers: {
         Authorization: `Token ${token}`
       }

@@ -106,7 +106,7 @@ function SignUp({stateData, setStateData}){
     };
     if(inputID !== null && inputPWD !== null && inputPWD !== null && checkPWD === inputPWD && password.test(inputPWD) && checkState === true){ // 입력창에 모두 비어있지 않고 중복확인을 하고 입력한 비밀번호와 비밀번호 확인이 같다면
       axios
-      .post("http://127.0.0.1:8000/user/", {
+      .post("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/user/", {
         userID: inputID,
         userPWD: hashPwd,
       })
@@ -118,7 +118,7 @@ function SignUp({stateData, setStateData}){
       });
     };
     axios
-    .post("http://127.0.0.1:8000/signup/", {
+    .post("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/signup/", {
       id: inputID,
       password: inputPWD
     })

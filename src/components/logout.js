@@ -6,7 +6,7 @@ function Logout({stateData, setStateData, token }){
     newObject.loginState = false;
     setStateData(newObject);
     axios
-      .get(`http://127.0.0.1:8000/logout/`,{
+      .get(`https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/logout/`,{
         headers: {
           Authorization: `Token ${token}`
         }

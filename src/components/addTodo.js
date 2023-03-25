@@ -78,7 +78,7 @@ function AddTodo({dateData, setDateData, loggedUser, stateData, setStateData, to
       setError("");// 에러메시지 없애기
       // API를 사용해 DB에 데이터 저장
       axios
-      .post("http://127.0.0.1:8000/todo/", {
+      .post("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/todo/", {
         setTodo: todo,
         setDetails: details,
         setDate: dateData.addDate,
