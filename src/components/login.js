@@ -127,7 +127,7 @@ function Login({stateData, setStateData, setLoggedUser, token, setToken, setList
     };
     if(inputID !== "" && inputPWD !== ""){
       axios
-      .post("http://127.0.0.1:8000/login/", {
+      .post("https://port-0-djangoproject-11er1a24lbd3kpne.gksl2.cloudtype.app/login/", {
         id: inputID,
         password: inputPWD
       })
